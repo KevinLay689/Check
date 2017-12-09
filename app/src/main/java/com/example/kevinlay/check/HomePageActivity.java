@@ -18,7 +18,7 @@ public class HomePageActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
-    private NavigationView navigationView;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
-        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
 
         // Setup navigation bar and toolbar
         setSupportActionBar(mToolbar);
@@ -41,11 +41,11 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void setupNavigationView() {
 
-        View hView =  navigationView.getHeaderView(0);
-        ImageView navigationUserImage = (ImageView) hView.findViewById(R.id.navigation_header_image);
-        TextView navigationUsername = (TextView)hView.findViewById(R.id.navigation_header_text);
+        View headerView =  mNavigationView.getHeaderView(0);
+        ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
+        TextView navigationUsername = (TextView)headerView.findViewById(R.id.navigation_header_text);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -73,9 +73,6 @@ public class HomePageActivity extends AppCompatActivity {
         if(mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }
