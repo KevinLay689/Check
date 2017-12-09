@@ -5,4 +5,7 @@
     <string name="preferences_menu">Preferences</string>
     <string name="log_out_menu">Log out</string>
 
+    <string name="open_menu">Open</string>
+    <string name="close_menu">Close</string>
+
 </resources>
