@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Check</string>
+
+    <string name="my_profile_menu">My Profile</string>
+    <string name="preferences_menu">Preferences</string>
+    <string name="log_out_menu">Log out</string>
+
 </resources>
