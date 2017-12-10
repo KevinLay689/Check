@@ -40,6 +40,7 @@ public class HomePageActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
+        mNavigationView.setItemIconTintList(null);
 
         // Setup navigation bar and toolbar
         setSupportActionBar(mToolbar);
