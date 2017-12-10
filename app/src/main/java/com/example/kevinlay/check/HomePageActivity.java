@@ -49,6 +49,8 @@ public class HomePageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
 
+        // closes nav drawer every time there is a click
+
         setupNavigationView();
     }
 
@@ -64,15 +66,19 @@ public class HomePageActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         createFragment(NAV_HOME);
+                        mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_profile:
                         createFragment(NAV_PROFILE);
+                        mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_preferences:
                         createFragment(NAV_PREREFENCES);
+                        mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_logout:
                         createFragment(NAV_LOGOUT);
+                        mDrawerLayout.closeDrawers();
                         break;
                     default:
                         break;
