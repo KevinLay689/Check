@@ -2,6 +2,8 @@ package com.example.kevinlay.check;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +15,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kevinlay.check.Fragments.HomeFragment;
+import com.example.kevinlay.check.Fragments.MyProfileFragment;
+import com.example.kevinlay.check.Fragments.PreferencesFragment;
+
 public class HomePageActivity extends AppCompatActivity {
+
+    private static final String NAV_HOME = "nav_home";
+    private static final String NAV_PROFILE = "nav_profile";
+    private static final String NAV_PREREFENCES = "nav_preferences";
+    private static final String NAV_LOGOUT = "nav_logout";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,7 @@ public class HomePageActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        fragmentManager = getSupportFragmentManager();
 
         setupNavigationView();
     }
@@ -42,21 +55,24 @@ public class HomePageActivity extends AppCompatActivity {
     private void setupNavigationView() {
 
         View headerView =  mNavigationView.getHeaderView(0);
-        ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
+//      ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
         TextView navigationUsername = (TextView)headerView.findViewById(R.id.navigation_header_text);
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        createFragment(NAV_HOME);
+                        break;
                     case R.id.nav_profile:
-                        Toast.makeText(getApplicationContext(), "Profile Clicked", Toast.LENGTH_SHORT).show();
+                        createFragment(NAV_PROFILE);
                         break;
                     case R.id.nav_preferences:
-                        Toast.makeText(getApplicationContext(), "Preferences Clicked", Toast.LENGTH_SHORT).show();
+                        createFragment(NAV_PREREFENCES);
                         break;
                     case R.id.nav_logout:
-                        Toast.makeText(getApplicationContext(), "Logout Clicked", Toast.LENGTH_SHORT).show();
+                        createFragment(NAV_LOGOUT);
                         break;
                     default:
                         break;
@@ -64,7 +80,32 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
             }
         });
+        navigationUsername.setText("Kevin L.");
+    }
 
+    private void createFragment(String fragmentName) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        String fragmentTag = "fragmentTag";
+
+        switch (fragmentName) {
+            case NAV_HOME:
+                fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+            case NAV_PROFILE:
+                fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+            case NAV_PREREFENCES:
+                fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+            case NAV_LOGOUT:
+                break;
+        }
     }
 
     @Override

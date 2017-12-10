@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607D8B</color>
-    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
     <!-- Used for gradients -->
@@ -11,6 +11,9 @@
     <color name="indigo">#3B4371</color>
     <color name="aqua_blue">#06beb6</color>
     <color name="dark_aqua_blue">#48b1bf</color>
+
+    <color name="vanilla">#ffd89b</color>
+    <color name="dusk_blue">#19547b</color>
 
 
 </resources>
