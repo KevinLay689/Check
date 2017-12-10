@@ -17,4 +17,28 @@
 
     <string name="logo_description">Logo</string>
 
+    <string name="preference_category">My Preferences</string>
+    <string name="preference_notification">Notifications</string>
+    <string name="notification_summary">Get push notifications</string>
+    <string name="preference_major">Preferred Major</string>
+    <string name="major_summary">Select your preferred major</string>
+
+    <array name="entries_list_preference">
+        <item name="computer_science">Computer Science</item>
+        <item name="biology">Biology</item>
+        <item name="art">Art</item>
+        <item name="marketing">Marketing</item>
+        <item name="business">Business</item>
+        <item name="any">Any</item>
+    </array>
+
+    <array name="entryvalues_list_preference">
+        <item>computerScienceMajor</item>
+        <item>biologyMajor</item>
+        <item>artMajor</item>
+        <item>marketingMajor</item>
+        <item>businessMajor</item>
+        <item>anyMajor</item>
+    </array>
+
 </resources>

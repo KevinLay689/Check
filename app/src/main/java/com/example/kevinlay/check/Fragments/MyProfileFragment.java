@@ -1,8 +1,10 @@
 package com.example.kevinlay.check.Fragments;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
 
@@ -42,6 +45,13 @@ public class MyProfileFragment extends Fragment {
         mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
 
         setInitialData();
+
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        boolean strUserName = sharedPreferences.getBoolean("notifications", false);
+//        String downloadType = sharedPreferences.getString("major","none");
+//        Toast.makeText(getActivity(),
+//                "Notifications :" + strUserName + " Major :" + downloadType,
+//                Toast.LENGTH_SHORT).show();
     }
 
     private void setInitialData() {
