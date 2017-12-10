@@ -42,7 +42,7 @@ public class HomePageActivity extends AppCompatActivity {
     private void setupNavigationView() {
 
         View headerView =  mNavigationView.getHeaderView(0);
-        ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
+//        ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
         TextView navigationUsername = (TextView)headerView.findViewById(R.id.navigation_header_text);
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -64,6 +64,8 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        navigationUsername.setText("Kevin L.");
 
     }
 
