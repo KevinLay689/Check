@@ -2,6 +2,7 @@ package com.example.kevinlay.check;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -92,23 +93,40 @@ public class HomePageActivity extends AppCompatActivity {
     private void createFragment(String fragmentName) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         String fragmentTag = "fragmentTag";
-
+        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         switch (fragmentName) {
             case NAV_HOME:
-                fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
+                }
+
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
+
             case NAV_PROFILE:
-                fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
+                }
+
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
+
             case NAV_PREREFENCES:
-                fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
+                }
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
+
             case NAV_LOGOUT:
                 break;
         }
