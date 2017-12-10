@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Used for gradients -->
+    <color name="turquoise_blue">#0575E6</color>
+    <color name="lime_green">#00F260</color>
+    <color name="orange">#F3904F</color>
+    <color name="indigo">#3B4371</color>
+    <color name="aqua_blue">#06beb6</color>
+    <color name="dark_aqua_blue">#48b1bf</color>
+
+
 </resources>
