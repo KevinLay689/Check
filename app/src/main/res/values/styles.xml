@@ -27,6 +27,7 @@
         <item name="android:layout_marginTop">50dp</item>
         <item name="android:layout_marginBottom">150dp</item>
         <item name="android:src">@drawable/ic_local_dining_black_96dp</item>
+        <item name="android:contentDescription">@string/logo_description</item>
     </style>
 
     <style name="ButtonLoginStyle">
