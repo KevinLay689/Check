@@ -19,7 +19,7 @@
         android:id="@+id/loginUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoIcon"
+        android:layout_above="@+id/loginPassword"
         android:hint="@string/username"
         android:inputType="textPersonName"
         android:drawableLeft="@drawable/ic_person_black_24dp"
@@ -30,7 +30,7 @@
         android:id="@+id/loginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginUsername"
+        android:layout_above="@+id/buttonLogin"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:drawableLeft="@drawable/ic_lock_black_24dp"
@@ -41,7 +41,7 @@
         android:text="@string/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginPassword"
+        android:layout_above="@+id/tvSignup"
         style="@style/ButtonLoginStyle"/>
 
     <TextView
@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
         android:gravity="center"
-        android:layout_below="@+id/buttonLogin" />
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>
