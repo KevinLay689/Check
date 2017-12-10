@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:text="Kevin Lay"
         android:padding="20dp"/>
 
 </LinearLayout>

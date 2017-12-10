@@ -8,4 +8,10 @@
     <string name="open_menu">Open</string>
     <string name="close_menu">Close</string>
 
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="sign_up">Sign up now</string>
+    <string name="login_button">Log in</string>
+
 </resources>

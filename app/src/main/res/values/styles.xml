@@ -13,4 +13,28 @@
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
     </style>
+
+    <style name="EditTextLoginStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:background">@drawable/login_edit_text_background</item>
+    </style>
+
+    <style name="ImageViewLoginStyle">
+        <item name="android:layout_marginTop">50dp</item>
+        <item name="android:layout_marginBottom">150dp</item>
+        <item name="android:src">@drawable/ic_local_dining_black_96dp</item>
+    </style>
+
+    <style name="ButtonLoginStyle">
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/login_button</item>
+    </style>
 </resources>
