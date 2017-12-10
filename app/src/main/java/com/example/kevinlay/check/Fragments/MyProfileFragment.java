@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kevinlay.check.R;
 
@@ -17,7 +19,10 @@ import com.example.kevinlay.check.R;
  * Created by kevinlay on 12/9/17.
  */
 
-public class MyProfileFragment extends Fragment{
+public class MyProfileFragment extends Fragment {
+
+    private TextView mTextMajor, mTextAboutMe, mTextHometown;
+    private ImageView mImageProfilePic;
 
     @Nullable
     @Override
@@ -29,6 +34,23 @@ public class MyProfileFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mImageProfilePic = (ImageView) view.findViewById(R.id.profileUserImage);
+
+        mTextMajor = (TextView) view.findViewById(R.id.profileUserMajor);
+        mTextAboutMe = (TextView) view.findViewById(R.id.profileUserAboutMe);
+        mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
+
+        setInitialData();
+    }
+
+    private void setInitialData() {
+//        Uncomment these when database is setup and returns data
+//        mTextMajor.setText(database.getUsername);
+//        mTextAboutMe.setText(database.getAboutMe);
+//        mTextHometown.setText(database.getHometown);
+
+//        mImageProfilePic.setImageBitmap(database.getProfileImage());
     }
 
     @Override

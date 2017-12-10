@@ -18,6 +18,15 @@
         android:layout_height="wrap_content"
         style="@style/ImageViewProfileStyle"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/editProfileActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profileUserImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        style="@style/ActionButtonProfileStyle"/>
+
     <TextView
         android:id="@+id/profileUsername"
         android:layout_width="wrap_content"
