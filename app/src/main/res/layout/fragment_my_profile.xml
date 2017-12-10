@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/profileHeaderImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/image_header_background" />
+
+    <ImageView
+        android:id="@+id/profileUserImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_shape" />
+
+    <TextView
+        android:id="@+id/profileUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileUserImage"
+        android:layout_marginTop="5dp"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"
+        android:text="Kevin Lay"/>
+
+    <TextView
+        android:id="@+id/profileUserMajorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileUsername"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="2dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:text="Major"/>
+
+    <TextView
+        android:id="@+id/profileUserMajor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileUserMajorLabel"
+        android:layout_marginTop="4dp"
+        android:paddingLeft="10dp"
+        android:textSize="12sp"
+        android:text="Computer Science"/>
+
+    <TextView
+        android:id="@+id/profileUserAboutMeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileUserMajor"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="2dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:text="About me"/>
+
+    <TextView
+        android:id="@+id/profileUserAboutMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus egestas lorem, nec facili von nec sem. Etiam lacus mauris, pharetra ac eleifend eget, sagittis ut sapien. Etiam ut sem vehicula nisi bibendum eleifend eu quis velit. Nullam quis augue consequat massa rutrum maximus sit amet id nisl. Proin eget odio sit amet odio rhoncus finibus quis vel purus. Proin quam urna, sodales fringilla egestas a, molestie in enim. Vivamus venenatis hendrerit eros, eget mollis turpis. Suspendisse potenti."
+        android:scrollbars="vertical"
+        android:textSize="12sp"
+        android:layout_below="@id/profileUserAboutMeLabel"/>
+</RelativeLayout>

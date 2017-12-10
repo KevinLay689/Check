@@ -21,4 +21,9 @@ public class MyProfileFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
         return view;
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 }
