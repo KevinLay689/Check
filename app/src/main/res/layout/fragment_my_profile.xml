@@ -1,98 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/profileHeaderImage"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:scaleType="fitXY"
+        android:layout_height="150dp"
         app:srcCompat="@drawable/gradient_profile_header"
-        android:elevation="12dp"/>
+        style="@style/ImageViewHeaderProfileStyle"/>
 
     <ImageView
         android:id="@+id/profileUserImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_shape"
-        android:elevation="16dp"/>
+        style="@style/ImageViewProfileStyle"/>
 
     <TextView
         android:id="@+id/profileUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profileUserImage"
-        android:layout_marginTop="5dp"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:layout_centerHorizontal="true"
-        android:text="Kevin Lay"/>
+        android:text="Kevin Lay"
+        android:layout_below="@+id/profileUserImage"
+        style="@style/TextViewNameProfileStyle"/>
 
-    <TextView
-        android:id="@+id/profileUserMajorLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profileUsername"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="5dp"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:text="Major"/>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/profileUserMajorCard"
+    <ScrollView
+        android:id="@+id/profileScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        app:cardElevation="5dp"
-        android:layout_below="@id/profileUserMajorLabel">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/profileUsername">
 
-        <TextView
-            android:id="@+id/profileUserMajor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profileUserMajorLabel"
-            android:layout_marginTop="4dp"
-            android:padding="10dp"
-            android:textSize="12sp"
-            android:text="Computer Science"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/profileUserMajorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Major"
+                style="@style/TextViewLabelStyle"/>
 
-    <TextView
-        android:id="@+id/profileUserAboutMeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profileUserMajorCard"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="5dp"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:text="About me"/>
+            <android.support.v7.widget.CardView
+                android:id="@+id/profileUserMajorCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileUserMajorLabel"
+                style="@style/CardViewProfileStyle">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        app:cardElevation="5dp"
-        android:layout_below="@id/profileUserAboutMeLabel">
+                <TextView
+                    android:id="@+id/profileUserMajor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profileUserMajorLabel"
+                    android:text="Computer Science"
+                    style="@style/TextViewDescriptionStyle"/>
 
-        <TextView
-            android:id="@+id/profileUserAboutMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus egestas lorem, nec facili von nec sem. Etiam lacus mauris, pharetra ac eleifend eget, sagittis ut sapien. Etiam ut sem vehicula nisi bibendum eleifend eu quis velit. Nullam quis augue consequat massa rutrum maximus sit amet id nisl."
-            android:scrollbars="vertical"
-            android:textSize="12sp" />
+            </android.support.v7.widget.CardView>
 
-    </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/profileUserAboutMeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileUserMajorCard"
+                android:text="About me"
+                style="@style/TextViewLabelStyle"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/profileUserAboutMeCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileUserAboutMeLabel"
+                style="@style/CardViewProfileStyle">
+
+                <TextView
+                    android:id="@+id/profileUserAboutMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus egestas lorem, nec facili von nec sem. Etiam lacus mauris, pharetra ac eleifend eget, sagittis ut sapien. Etiam ut sem vehicula nisi bibendum eleifend eu quis velit. Nullam quis augue consequat massa rutrum maximus sit amet id nisl."
+                    style="@style/TextViewDescriptionStyle"/>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/profileUserHometownLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileUserAboutMeCard"
+                android:text="Hometown"
+                style="@style/TextViewLabelStyle"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileUserHometownLabel"
+                style="@style/CardViewProfileStyle">
+
+                <TextView
+                    android:id="@+id/profileUserHometown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="San Diego"
+                    style="@style/TextViewDescriptionStyle"/>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
