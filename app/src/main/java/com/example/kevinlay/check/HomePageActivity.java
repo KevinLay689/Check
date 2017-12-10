@@ -21,6 +21,11 @@ import com.example.kevinlay.check.Fragments.PreferencesFragment;
 
 public class HomePageActivity extends AppCompatActivity {
 
+    private static final String NAV_HOME = "nav_home";
+    private static final String NAV_PROFILE = "nav_profile";
+    private static final String NAV_PREREFENCES = "nav_preferences";
+    private static final String NAV_LOGOUT = "nav_logout";
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
@@ -58,16 +63,16 @@ public class HomePageActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        createFragment("nav_home");
+                        createFragment(NAV_HOME);
                         break;
                     case R.id.nav_profile:
-                        createFragment("nav_profile");
+                        createFragment(NAV_PROFILE);
                         break;
                     case R.id.nav_preferences:
-                        createFragment("nav_preferences");
+                        createFragment(NAV_PREREFENCES);
                         break;
                     case R.id.nav_logout:
-                        createFragment("nav_logout");
+                        createFragment(NAV_LOGOUT);
                         break;
                     default:
                         break;
@@ -83,22 +88,22 @@ public class HomePageActivity extends AppCompatActivity {
         String fragmentTag = "fragmentTag";
 
         switch (fragmentName) {
-            case "nav_home":
+            case NAV_HOME:
                 fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
-            case "nav_profile":
+            case NAV_PROFILE:
                 fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
-            case "nav_preferences":
+            case NAV_PREREFENCES:
                 fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
-            case "nav_logout":
+            case NAV_LOGOUT:
                 break;
         }
     }
