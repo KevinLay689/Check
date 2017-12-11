@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +24,11 @@ import com.example.kevinlay.check.R;
  * Created by kevinlay on 12/9/17.
  */
 
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment implements EditProfileFragment.EditDialogListener{
 
     private TextView mTextMajor, mTextAboutMe, mTextHometown;
     private ImageView mImageProfilePic;
+    private FloatingActionButton mFloatingActionButton;
 
     @Nullable
     @Override
@@ -44,6 +47,15 @@ public class MyProfileFragment extends Fragment {
         mTextAboutMe = (TextView) view.findViewById(R.id.profileUserAboutMe);
         mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
 
+        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEditDialog();
+            }
+        });
+
         setInitialData();
 
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -52,6 +64,15 @@ public class MyProfileFragment extends Fragment {
 //        Toast.makeText(getActivity(),
 //                "Notifications :" + strUserName + " Major :" + downloadType,
 //                Toast.LENGTH_SHORT).show();
+    }
+
+    // This allows a callback to the dialog fragment
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        EditProfileFragment editNameDialogFragment = EditProfileFragment.newInstance("Some Title");
+        // SETS the target fragment for use later when sending results
+        editNameDialogFragment.setTargetFragment(MyProfileFragment.this, 300);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
     private void setInitialData() {
@@ -72,5 +93,13 @@ public class MyProfileFragment extends Fragment {
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    // This will eventually just update the UI page
+    // Data will be saved in the edit profile dialog fragment,
+    // then this will pull the new data from firebase
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast.makeText(getActivity(), inputText, Toast.LENGTH_SHORT).show();
     }
 }
