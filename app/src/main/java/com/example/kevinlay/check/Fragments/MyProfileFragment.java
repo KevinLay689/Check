@@ -28,7 +28,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
 
     private TextView mTextMajor, mTextAboutMe, mTextHometown;
     private ImageView mImageProfilePic;
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton mFloatingActionButton;
 
     @Nullable
     @Override
@@ -47,12 +47,12 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         mTextAboutMe = (TextView) view.findViewById(R.id.profileUserAboutMe);
         mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
 
-        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
+        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog();
+                showEditDialog();
             }
         });
 
@@ -66,10 +66,13 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
 //                Toast.LENGTH_SHORT).show();
     }
 
-    private void showAlertDialog() {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        EditProfileFragment alertDialog = EditProfileFragment.newInstance("Some title");
-        alertDialog.show(fm, "fragment_alert");
+    // This allows a callback to the dialog fragment
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        EditProfileFragment editNameDialogFragment = EditProfileFragment.newInstance("Some Title");
+        // SETS the target fragment for use later when sending results
+        editNameDialogFragment.setTargetFragment(MyProfileFragment.this, 300);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
     private void setInitialData() {
@@ -92,8 +95,11 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
+    // This will eventually just update the UI page
+    // Data will be saved in the edit profile dialog fragment,
+    // then this will pull the new data from firebase
     @Override
     public void onFinishEditDialog(String inputText) {
-        Toast.makeText(getActivity(), "Data passed back", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), inputText, Toast.LENGTH_SHORT).show();
     }
 }
