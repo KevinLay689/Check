@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +24,11 @@ import com.example.kevinlay.check.R;
  * Created by kevinlay on 12/9/17.
  */
 
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment implements EditProfileFragment.EditDialogListener{
 
     private TextView mTextMajor, mTextAboutMe, mTextHometown;
     private ImageView mImageProfilePic;
+    private FloatingActionButton floatingActionButton;
 
     @Nullable
     @Override
@@ -44,6 +47,15 @@ public class MyProfileFragment extends Fragment {
         mTextAboutMe = (TextView) view.findViewById(R.id.profileUserAboutMe);
         mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
 
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertDialog();
+            }
+        });
+
         setInitialData();
 
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -52,6 +64,12 @@ public class MyProfileFragment extends Fragment {
 //        Toast.makeText(getActivity(),
 //                "Notifications :" + strUserName + " Major :" + downloadType,
 //                Toast.LENGTH_SHORT).show();
+    }
+
+    private void showAlertDialog() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        EditProfileFragment alertDialog = EditProfileFragment.newInstance("Some title");
+        alertDialog.show(fm, "fragment_alert");
     }
 
     private void setInitialData() {
@@ -72,5 +90,10 @@ public class MyProfileFragment extends Fragment {
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast.makeText(getActivity(), "Data passed back", Toast.LENGTH_SHORT).show();
     }
 }
