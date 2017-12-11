@@ -85,4 +85,17 @@
         <item name="srcCompat">@android:drawable/ic_menu_edit</item>
     </style>
 
+    <style name="EditTextSingleInput">
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="ParagraphEditText">
+        <item name="android:lines">6</item>
+        <item name="android:maxLines">6</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:gravity">top|start</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
 </resources>

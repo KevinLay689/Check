@@ -14,40 +14,41 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Major"
+        android:text="@string/major_label"
         style="@style/TextViewLabelStyle"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"/>
+        style="EditTextSingleInput"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Me"
+        android:text="@string/about_me_label"
         style="@style/TextViewLabelStyle"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="5"/>
+        style="@style/ParagraphEditText"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hometown"
+        android:text="@string/hometown_label"
         style="@style/TextViewLabelStyle"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"/>
+        style="EditTextSingleInput"/>
 
     <Button
         android:id="@+id/saveProfile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:text="@string/save"
+        style="@style/ButtonLoginStyle"/>
 
 </LinearLayout>

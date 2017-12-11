@@ -23,6 +23,11 @@
     <string name="preference_major">Preferred Major</string>
     <string name="major_summary">Select your preferred major</string>
 
+    <string name="major_label">Major</string>
+    <string name="about_me_label">About me</string>
+    <string name="hometown_label">Hometown</string>
+    <string name="save">Save</string>
+
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
         <item name="biology">Biology</item>
