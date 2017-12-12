@@ -27,6 +27,7 @@ public class HomePageActivity extends AppCompatActivity {
     private static final String NAV_PROFILE = "nav_profile";
     private static final String NAV_PREREFENCES = "nav_preferences";
     private static final String NAV_LOGOUT = "nav_logout";
+    private static final String FRAGMENT_TAG = "fragmentTag";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -52,8 +53,9 @@ public class HomePageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
 
-        // closes nav drawer every time there is a click
-
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+        fragmentTransaction.commit();
         setupNavigationView();
     }
 
@@ -94,14 +96,13 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void createFragment(String fragmentName) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        String fragmentTag = "fragmentTag";
-        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
+        Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
         switch (fragmentName) {
             case NAV_HOME:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), fragmentTag);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
                 }
 
                 fragmentTransaction.addToBackStack("");
@@ -110,9 +111,9 @@ public class HomePageActivity extends AppCompatActivity {
 
             case NAV_PROFILE:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), fragmentTag);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), FRAGMENT_TAG);
                 }
 
                 fragmentTransaction.addToBackStack("");
@@ -121,9 +122,9 @@ public class HomePageActivity extends AppCompatActivity {
 
             case NAV_PREREFENCES:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), fragmentTag);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
                 }
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
@@ -131,9 +132,9 @@ public class HomePageActivity extends AppCompatActivity {
 
             case NAV_LOGOUT:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), fragmentTag);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), fragmentTag);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 }
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
