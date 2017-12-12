@@ -13,6 +13,22 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/medium_circle_shape"/>
 
+    <ImageView
+        android:id="@+id/ringImage1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/medium_circle_shape"/>
+
+    <ImageView
+        android:id="@+id/ringImage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/medium_circle_shape"/>
+
     <LinearLayout
         android:id="@+id/timeLayout"
         android:layout_width="match_parent"
@@ -51,11 +67,20 @@
         style="@style/ButtonActionStyle"/>
 
     <Button
-        android:id="@+id/selectTime"
+        android:id="@+id/selectStartTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/set_start_time"
+        style="@style/ButtonActionStyle"/>
+
+    <Button
+        android:id="@+id/selectEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/set_end_time"
+        android:visibility="invisible"
         style="@style/ButtonActionStyle"/>
 
     <Button
