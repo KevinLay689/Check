@@ -28,6 +28,11 @@
     <string name="hometown_label">Hometown</string>
     <string name="save">Save</string>
 
+    <string name="home_fragment_header">Youve been paired up!</string>
+    <string name="location_label">Location: </string>
+    <string name="time_label">Meet time: </string>
+    <string name="rating_label">Flake rating: </string>
+
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
         <item name="biology">Biology</item>

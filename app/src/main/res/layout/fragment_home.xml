@@ -13,54 +13,46 @@
             android:id="@+id/matchText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="24sp"
-            android:text="You've been paired up!"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"
-            style="@style/TextViewLabelStyle"/>
+            android:text="@string/home_fragment_header"
+            style="@style/TextViewHeaderLabelStyle"/>
+
+        <ImageView
+            android:id="@+id/userProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/medium_circle_shape"
+            style="@style/ProfileImageStyle"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/medium_circle_shape"/>
+            android:src="@drawable/small_circle"
+            style="@style/SmallCircleStyle"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/small_circle"/>
+            android:src="@drawable/small_circle"
+            style="@style/SmallCircleStyle"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/small_circle"/>
+            android:src="@drawable/small_circle"
+            style="@style/SmallCircleStyle"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/small_circle"/>
+            android:src="@drawable/small_circle"
+            style="@style/SmallCircleStyle"/>
 
         <ImageView
+            android:id="@+id/otherProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/small_circle"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/medium_circle_shape"/>
+            android:src="@drawable/medium_circle_shape"
+            style="@style/ProfileImageStyle"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -78,10 +70,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cafe Russo"
-                android:textColor="@color/white"
-                android:gravity="center_horizontal"
-                style="@style/TextViewLabelStyle"/>
+                android:text="@string/location_label"
+                style="@style/TextViewProfile"/>
 
         </LinearLayout>
 
@@ -101,13 +91,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1:15pm"
-                android:textColor="@color/white"
-                android:gravity="center_horizontal"
-                style="@style/TextViewLabelStyle"/>
+                android:text="@string/time_label"
+                style="@style/TextViewProfile"/>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_star_white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rating_label"
+                style="@style/TextViewProfile"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
