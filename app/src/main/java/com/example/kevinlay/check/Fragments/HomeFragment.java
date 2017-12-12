@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,5 +34,17 @@ public class HomeFragment extends Fragment {
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "blacklist.ttf");
         mMatchText = (TextView) view.findViewById(R.id.matchText);
         mMatchText.setTypeface(typeface);
+    }
+
+    @Override
+    public void onStop() {
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Check");
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
     }
 }
