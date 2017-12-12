@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,10 @@ import com.example.kevinlay.check.R;
  */
 
 public class UnpairedHomeFragment extends Fragment {
+
+    private static final String TAG = "UnpairedHomeFragment";
+    private final int ANIMATION_DURATION = 2000;
+    private final float SCALE_ANIMATION_END = 3f;
 
     private Button mSelectStartTime, mSelectEndTime, mFindPartner, mCancelSearch;
     private TextView mTimeStart, mTimeEnd;
@@ -84,6 +89,7 @@ public class UnpairedHomeFragment extends Fragment {
             public void onClick(View view) {
                 mSelectStartTime.setVisibility(View.VISIBLE);
                 mFindPartner.setVisibility(View.INVISIBLE);
+                mFindPartner.setEnabled(true);
                 mCancelSearch.setVisibility(View.INVISIBLE);
                 stopAnimations();
             }
@@ -106,11 +112,11 @@ public class UnpairedHomeFragment extends Fragment {
     private void startAnimations() {
 
         ObjectAnimator alpha = ObjectAnimator.ofFloat(mRingImage1, View.ALPHA, .5f, 0f);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_X, 1f, 3f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_Y, 1f, 3f);
-        alpha.setDuration(2000);
-        scaleX.setDuration(2000);
-        scaleY.setDuration(2000);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_X, SCALE_ANIMATION_END);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_Y, SCALE_ANIMATION_END);
+        alpha.setDuration(ANIMATION_DURATION);
+        scaleX.setDuration(ANIMATION_DURATION);
+        scaleY.setDuration(ANIMATION_DURATION);
         alpha.setRepeatCount(Animation.INFINITE);
         scaleX.setRepeatCount(Animation.INFINITE);
         scaleY.setRepeatCount(Animation.INFINITE);
@@ -120,18 +126,18 @@ public class UnpairedHomeFragment extends Fragment {
         animatorSet.start();
 
         ObjectAnimator alpha2 = ObjectAnimator.ofFloat(mRingImage2, View.ALPHA, .5f, 0f);
-        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_X, 1f, 3f);
-        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_Y, 1f, 3f);
-        alpha2.setDuration(2000);
-        scaleX2.setDuration(2000);
-        scaleY2.setDuration(2000);
+        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_X, SCALE_ANIMATION_END);
+        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_Y, SCALE_ANIMATION_END);
+        alpha2.setDuration(ANIMATION_DURATION);
+        scaleX2.setDuration(ANIMATION_DURATION);
+        scaleY2.setDuration(ANIMATION_DURATION);
 
         alpha2.setRepeatCount(Animation.INFINITE);
         scaleX2.setRepeatCount(Animation.INFINITE);
         scaleY2.setRepeatCount(Animation.INFINITE);
 
         animatorSet2 = new AnimatorSet();
-        animatorSet2.setStartDelay(1000);
+        animatorSet2.setStartDelay(ANIMATION_DURATION);
         animatorSet2.playTogether(alpha2, scaleX2, scaleY2);
 
         animatorSet2.start();
