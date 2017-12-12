@@ -33,6 +33,13 @@
     <string name="time_label">Meet time: </string>
     <string name="rating_label">Flake rating: </string>
 
+    <string name="time_start_label">Time start: </string>
+    <string name="time_end_label">Time end: </string>
+    <string name="find_partner">Find Partner</string>
+    <string name="cancel">Cancel</string>
+    <string name="set_start_time">Select start time</string>
+    <string name="set_end_time">Select end time</string>
+
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
         <item name="biology">Biology</item>

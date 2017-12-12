@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.kevinlay.check.Fragments.HomeFragment;
 import com.example.kevinlay.check.Fragments.MyProfileFragment;
 import com.example.kevinlay.check.Fragments.PreferencesFragment;
+import com.example.kevinlay.check.Fragments.UnpairedHomeFragment;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -129,6 +130,13 @@ public class HomePageActivity extends AppCompatActivity {
                 break;
 
             case NAV_LOGOUT:
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), fragmentTag);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), fragmentTag);
+                }
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
                 break;
         }
     }
