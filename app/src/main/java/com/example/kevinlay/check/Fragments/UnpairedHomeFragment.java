@@ -71,7 +71,7 @@ public class UnpairedHomeFragment extends Fragment {
             public void onClick(View view) {
                 mSelectStartTime.setVisibility(View.INVISIBLE);
                 mSelectEndTime.setVisibility(View.VISIBLE);
-                mTimeStart.setVisibility(View.VISIBLE);
+//                mTimeStart.setVisibility(View.VISIBLE);
             }
         });
 
@@ -81,7 +81,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mSelectEndTime.setVisibility(View.INVISIBLE);
                 mFindPartner.setVisibility(View.VISIBLE);
                 mCancelSearch.setVisibility(View.VISIBLE);
-                mTimeEnd.setVisibility(View.VISIBLE);
+//                mTimeEnd.setVisibility(View.VISIBLE);
             }
         });
 
@@ -102,8 +102,8 @@ public class UnpairedHomeFragment extends Fragment {
                 mFindPartner.setText(R.string.find_partner);
                 mFindPartner.setEnabled(true);
                 mCancelSearch.setVisibility(View.INVISIBLE);
-                mTimeStart.setVisibility(View.INVISIBLE);
-                mTimeEnd.setVisibility(View.INVISIBLE);
+//                mTimeStart.setVisibility(View.INVISIBLE);
+//                mTimeEnd.setVisibility(View.INVISIBLE);
                 stopAnimations();
             }
         });

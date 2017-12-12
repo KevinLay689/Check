@@ -145,9 +145,9 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">30sp</item>
-        <item name="android:visibility">invisible</item>
+        <!--<item name="android:visibility">invisible</item>-->
     </style>
 
 
