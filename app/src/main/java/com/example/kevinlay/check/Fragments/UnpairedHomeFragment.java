@@ -27,10 +27,11 @@ public class UnpairedHomeFragment extends Fragment {
 
     private static final String TAG = "UnpairedHomeFragment";
     private final int ANIMATION_DURATION = 2000;
-    private final float SCALE_ANIMATION_END = 3f;
+    private final float SCALE_ANIMATION_END = 3.5f;
+    private final long START_DELAY = 1000;
 
     private Button mSelectStartTime, mSelectEndTime, mFindPartner, mCancelSearch;
-    private TextView mTimeStart, mTimeEnd;
+    private TextView mTimeStartLabel, mTimeEndLabel, mTimeEnd, mTimeStart;
     private ImageView mUserProfilePicture ,mRingImage1 ,mRingImage2;
     private AnimatorSet animatorSet, animatorSet2;
 
@@ -51,8 +52,11 @@ public class UnpairedHomeFragment extends Fragment {
         mFindPartner = (Button) view.findViewById(R.id.findPartner);
         mCancelSearch = (Button) view.findViewById(R.id.cancelPartner);
 
-        mTimeStart = (TextView) view.findViewById(R.id.timeStartLabel);
-        mTimeEnd = (TextView) view.findViewById(R.id.timeEndLabel);
+        mTimeStartLabel = (TextView) view.findViewById(R.id.timeStartLabel);
+        mTimeEndLabel = (TextView) view.findViewById(R.id.timeEndLabel);
+
+        mTimeStart = (TextView) view.findViewById(R.id.timeStart);
+        mTimeEnd = (TextView) view.findViewById(R.id.timeEnd);
 
         mUserProfilePicture = (ImageView) view.findViewById(R.id.userProfileImage);
         mRingImage1 = (ImageView) view.findViewById(R.id.ringImage1);
@@ -67,30 +71,39 @@ public class UnpairedHomeFragment extends Fragment {
             public void onClick(View view) {
                 mSelectStartTime.setVisibility(View.INVISIBLE);
                 mSelectEndTime.setVisibility(View.VISIBLE);
+                mTimeStart.setVisibility(View.VISIBLE);
             }
         });
+
         mSelectEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSelectEndTime.setVisibility(View.INVISIBLE);
                 mFindPartner.setVisibility(View.VISIBLE);
                 mCancelSearch.setVisibility(View.VISIBLE);
+                mTimeEnd.setVisibility(View.VISIBLE);
             }
         });
+
         mFindPartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startAnimations();
                 mFindPartner.setEnabled(false);
+                mFindPartner.setText(R.string.searching_partner);
             }
         });
+
         mCancelSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSelectStartTime.setVisibility(View.VISIBLE);
                 mFindPartner.setVisibility(View.INVISIBLE);
+                mFindPartner.setText(R.string.find_partner);
                 mFindPartner.setEnabled(true);
                 mCancelSearch.setVisibility(View.INVISIBLE);
+                mTimeStart.setVisibility(View.INVISIBLE);
+                mTimeEnd.setVisibility(View.INVISIBLE);
                 stopAnimations();
             }
         });
@@ -112,8 +125,8 @@ public class UnpairedHomeFragment extends Fragment {
     private void startAnimations() {
 
         ObjectAnimator alpha = ObjectAnimator.ofFloat(mRingImage1, View.ALPHA, .5f, 0f);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_X, SCALE_ANIMATION_END);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_Y, SCALE_ANIMATION_END);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_X, 1f, SCALE_ANIMATION_END);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_Y, 1f, SCALE_ANIMATION_END);
         alpha.setDuration(ANIMATION_DURATION);
         scaleX.setDuration(ANIMATION_DURATION);
         scaleY.setDuration(ANIMATION_DURATION);
@@ -126,8 +139,8 @@ public class UnpairedHomeFragment extends Fragment {
         animatorSet.start();
 
         ObjectAnimator alpha2 = ObjectAnimator.ofFloat(mRingImage2, View.ALPHA, .5f, 0f);
-        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_X, SCALE_ANIMATION_END);
-        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_Y, SCALE_ANIMATION_END);
+        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_X, 1f, SCALE_ANIMATION_END);
+        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(mRingImage2, View.SCALE_Y, 1f, SCALE_ANIMATION_END);
         alpha2.setDuration(ANIMATION_DURATION);
         scaleX2.setDuration(ANIMATION_DURATION);
         scaleY2.setDuration(ANIMATION_DURATION);
@@ -137,7 +150,7 @@ public class UnpairedHomeFragment extends Fragment {
         scaleY2.setRepeatCount(Animation.INFINITE);
 
         animatorSet2 = new AnimatorSet();
-        animatorSet2.setStartDelay(ANIMATION_DURATION);
+        animatorSet2.setStartDelay(START_DELAY);
         animatorSet2.playTogether(alpha2, scaleX2, scaleY2);
 
         animatorSet2.start();

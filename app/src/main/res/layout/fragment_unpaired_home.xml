@@ -9,7 +9,7 @@
         android:id="@+id/userProfileImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/medium_circle_shape"/>
 
@@ -17,7 +17,7 @@
         android:id="@+id/ringImage1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/medium_circle_shape"/>
 
@@ -25,7 +25,7 @@
         android:id="@+id/ringImage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/medium_circle_shape"/>
 
@@ -37,23 +37,59 @@
         android:layout_above="@id/findPartner"
         style="@style/SplitLayoutStyle">
 
-        <TextView
-            android:id="@+id/timeStartLabel"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:text="@string/time_start_label"
-            style="@style/TextViewLabelStyle"/>
+            android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/timeEndLabel"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/timeStartLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/white"
+                android:text="@string/time_start_label"
+                style="@style/TextViewLabelStyle"/>
+
+            <TextView
+                android:id="@+id/timeStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/timeStartLabel"
+                android:text="@string/time_start_placeholder"
+                style="@style/LargeTextViewLabelStyle"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:text="@string/time_end_label"
-            style="@style/TextViewLabelStyle"/>
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/timeEndLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/white"
+                android:text="@string/time_end_label"
+                style="@style/TextViewLabelStyle"/>
+
+            <TextView
+                android:id="@+id/timeEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/timeEndLabel"
+                android:text="@string/time_end_placeholder"
+                style="@style/LargeTextViewLabelStyle"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
