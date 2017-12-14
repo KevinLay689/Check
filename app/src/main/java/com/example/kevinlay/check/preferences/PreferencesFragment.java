@@ -1,12 +1,7 @@
-package com.example.kevinlay.check.Fragments;
+package com.example.kevinlay.check.preferences;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.kevinlay.check.R;
 

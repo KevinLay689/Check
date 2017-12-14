@@ -12,14 +12,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kevinlay.check.Fragments.HomeFragment;
-import com.example.kevinlay.check.Fragments.MyProfileFragment;
-import com.example.kevinlay.check.Fragments.PreferencesFragment;
-import com.example.kevinlay.check.Fragments.UnpairedHomeFragment;
+import com.example.kevinlay.check.home.HomeFragment;
+import com.example.kevinlay.check.profile.MyProfileFragment;
+import com.example.kevinlay.check.preferences.PreferencesFragment;
+import com.example.kevinlay.check.home.UnpairedHomeFragment;
 
 public class HomePageActivity extends AppCompatActivity {
 

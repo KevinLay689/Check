@@ -1,4 +1,4 @@
-package com.example.kevinlay.check.Fragments;
+package com.example.kevinlay.check.profile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

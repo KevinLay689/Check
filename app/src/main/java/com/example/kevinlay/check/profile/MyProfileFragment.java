@@ -1,10 +1,6 @@
-package com.example.kevinlay.check.Fragments;
+package com.example.kevinlay.check.profile;
 
-import android.app.ActionBar;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -13,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +19,7 @@ import com.example.kevinlay.check.R;
  * Created by kevinlay on 12/9/17.
  */
 
-public class MyProfileFragment extends Fragment implements EditProfileFragment.EditDialogListener{
+public class MyProfileFragment extends Fragment implements EditProfileFragment.EditDialogListener {
 
     private TextView mTextMajor, mTextAboutMe, mTextHometown;
     private ImageView mImageProfilePic;

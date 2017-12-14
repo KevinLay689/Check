@@ -1,4 +1,4 @@
-package com.example.kevinlay.check.Fragments;
+package com.example.kevinlay.check.home;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
