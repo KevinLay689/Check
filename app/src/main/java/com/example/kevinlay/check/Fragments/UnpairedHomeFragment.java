@@ -74,7 +74,7 @@ public class UnpairedHomeFragment extends Fragment {
         setupOnClickListeners();
     }
 
-    private void showTimePickerDialog(final TextView textView) {
+    private void showTimePickerDialog(final TextView textView, final boolean isTimeStart) {
         Calendar mCurrentTime = Calendar.getInstance();
         int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mCurrentTime.get(Calendar.MINUTE);
@@ -106,6 +106,12 @@ public class UnpairedHomeFragment extends Fragment {
                 } else {
                     textView.setText(timeHour + ":" + timeMinute + " " + amPm);
                 }
+
+                if(isTimeStart) {
+                    //databaseObject.updateTimeStart(timeHour, timeMinute);
+                } else {
+                    //databaseObject.updateTimeEnd(timeHour, timeMinute);
+                }
             }
         }, hour, minute, false);
         mTimePicker.setTitle("Select Time");
@@ -119,7 +125,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mSelectStartTime.setVisibility(View.INVISIBLE);
                 mSelectEndTime.setVisibility(View.VISIBLE);
 //                mTimeStart.setVisibility(View.VISIBLE);
-                showTimePickerDialog(mTimeStart);
+                showTimePickerDialog(mTimeStart, true);
             }
         });
 
@@ -130,7 +136,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mFindPartner.setVisibility(View.VISIBLE);
                 mCancelSearch.setVisibility(View.VISIBLE);
 //                mTimeEnd.setVisibility(View.VISIBLE);
-                showTimePickerDialog(mTimeEnd);
+                showTimePickerDialog(mTimeEnd, false);
             }
         });
 
@@ -171,8 +177,8 @@ public class UnpairedHomeFragment extends Fragment {
         }
     }
 
+    // This method is in charge of starting the ring animation
     private void startAnimations() {
-
         ObjectAnimator alpha = ObjectAnimator.ofFloat(mRingImage1, View.ALPHA, .5f, 0f);
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_X, 1f, SCALE_ANIMATION_END);
         ObjectAnimator scaleY = ObjectAnimator.ofFloat(mRingImage1, View.SCALE_Y, 1f, SCALE_ANIMATION_END);
