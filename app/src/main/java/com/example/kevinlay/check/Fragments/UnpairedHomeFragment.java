@@ -4,10 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +18,12 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
+
+import java.util.Calendar;
 
 /**
  * Created by kevinlay on 12/12/17.
@@ -34,6 +40,9 @@ public class UnpairedHomeFragment extends Fragment {
     private TextView mTimeStartLabel, mTimeEndLabel, mTimeEnd, mTimeStart;
     private ImageView mUserProfilePicture ,mRingImage1 ,mRingImage2;
     private AnimatorSet animatorSet, animatorSet2;
+
+    private int timeHour, timeMinute;
+    private String amPm;
 
     @Nullable
     @Override
@@ -65,6 +74,44 @@ public class UnpairedHomeFragment extends Fragment {
         setupOnClickListeners();
     }
 
+    private void showTimePickerDialog(final TextView textView) {
+        Calendar mCurrentTime = Calendar.getInstance();
+        int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mCurrentTime.get(Calendar.MINUTE);
+
+        TimePickerDialog mTimePicker;
+
+        mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                int format;
+
+                if(selectedHour > 11) {
+                    amPm = "PM";
+                    format = selectedHour - 12;
+                } else {
+                    format = selectedHour;
+                    amPm = "AM";
+                }
+
+                if(format == 0) {
+                    format = 12;
+                }
+
+                timeHour = format;
+                timeMinute = selectedMinute;
+
+                if(timeMinute < 10) {
+                    textView.setText(timeHour + ":0" + timeMinute +" " + amPm);
+                } else {
+                    textView.setText(timeHour + ":" + timeMinute + " " + amPm);
+                }
+            }
+        }, hour, minute, false);
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
+
     private void setupOnClickListeners() {
         mSelectStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +119,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mSelectStartTime.setVisibility(View.INVISIBLE);
                 mSelectEndTime.setVisibility(View.VISIBLE);
 //                mTimeStart.setVisibility(View.VISIBLE);
+                showTimePickerDialog(mTimeStart);
             }
         });
 
@@ -82,6 +130,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mFindPartner.setVisibility(View.VISIBLE);
                 mCancelSearch.setVisibility(View.VISIBLE);
 //                mTimeEnd.setVisibility(View.VISIBLE);
+                showTimePickerDialog(mTimeEnd);
             }
         });
 
