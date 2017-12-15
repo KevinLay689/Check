@@ -23,5 +23,8 @@
 
     <color name="purple">#452c89</color>
 
+    <color name="forty_opacity_black">#66000000</color>
+
+
 
 </resources>
