@@ -36,6 +36,10 @@ public class EditProfileFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mMajor = (EditText) view.findViewById(R.id.majorEdit);
+        mAboutMe = (EditText) view.findViewById(R.id.aboutMeEdit);
+        mHometown = (EditText) view.findViewById(R.id.hometownEdit);
+
         mSaveProfile = (Button) view.findViewById(R.id.saveProfile);
         mSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +66,7 @@ public class EditProfileFragment extends DialogFragment {
     public void sendBackResult() {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         EditDialogListener listener = (EditDialogListener) getTargetFragment();
-        listener.onFinishEditDialog("Making edits callback");
+        listener.onFinishEditDialog(mMajor.getText().toString());
         dismiss();
     }
 }

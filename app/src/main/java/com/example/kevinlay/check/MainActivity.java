@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.kevinlay.check.database.DatabaseObject;
 import com.example.kevinlay.check.login.LoginActivity;
 import com.example.kevinlay.check.profile.MyProfileFragment;
 import com.example.kevinlay.check.preferences.PreferencesFragment;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private FragmentManager fragmentManager;
+    DatabaseObject databaseObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
         fragmentTransaction.commit();
         setupNavigationView();
+
+        databaseObject = DatabaseObject.getInstance();
     }
 
     private void setupNavigationView() {
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         navigationUsername.setText("Kevin L.");
+
     }
 
     private void createFragment(String fragmentName) {

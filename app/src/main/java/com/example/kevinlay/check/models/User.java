@@ -10,6 +10,11 @@ public class User {
     private String hometown;
     private String email;
     private String major;
+    private String timeStart, timeEnd, userState, partner;
+
+    public User() {
+
+    }
 
     public User(String firstName, String lastName, String hometown, String major, String email) {
         this.firstName = firstName;
@@ -57,5 +62,37 @@ public class User {
 
     public void setHometown(String hometown) {
         this.hometown = hometown;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
+    }
+
+    public String getUserState() {
+        return userState;
+    }
+
+    public void setUserState(String userState) {
+        this.userState = userState;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
     }
 }

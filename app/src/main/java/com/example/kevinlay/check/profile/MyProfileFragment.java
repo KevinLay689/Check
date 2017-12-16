@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
+import com.example.kevinlay.check.database.DatabaseObject;
 
 /**
  * Created by kevinlay on 12/9/17.
@@ -24,7 +25,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     private TextView mTextMajor, mTextAboutMe, mTextHometown;
     private ImageView mImageProfilePic;
     private FloatingActionButton mFloatingActionButton;
-
+    private DatabaseObject object;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        object = DatabaseObject.getInstance();
 
         mImageProfilePic = (ImageView) view.findViewById(R.id.profileUserImage);
 
@@ -96,5 +99,6 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     @Override
     public void onFinishEditDialog(String inputText) {
         Toast.makeText(getActivity(), inputText, Toast.LENGTH_SHORT).show();
+        object.changeData(DatabaseObject.MAJOR_REFERENCE, inputText);
     }
 }

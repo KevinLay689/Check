@@ -27,8 +27,6 @@ public class RegisterActivity extends AppCompatActivity{
 
     private static final String TAG = "EmailPassword";
 
-    ProgressBar mProgressDialog;
-
     private EditText mEmailField, mPasswordField, mFirstName, mLastName, mHometown, mMajor;
     private Button mCreateAccount;
     private ProgressBar mProgressBar;
