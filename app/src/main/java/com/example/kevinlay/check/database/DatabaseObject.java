@@ -1,5 +1,16 @@
 package com.example.kevinlay.check.database;
 
+import android.support.annotation.NonNull;
+
+import com.example.kevinlay.check.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Database should contain these references at bare minimum
  *
@@ -18,6 +29,13 @@ public class DatabaseObject {
     public static final String ABOUT_ME_REFERENCE = "aboutMe";
     public static final String HOMETOWN_REFERENCE = "hometown";
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
+
+    public DatabaseObject() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+    }
 
     public void changeData(String reference, String newData) {
 

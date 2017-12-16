@@ -1,5 +1,6 @@
 package com.example.kevinlay.check;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,12 +19,13 @@ import com.example.kevinlay.check.home.HomeFragment;
 import com.example.kevinlay.check.profile.MyProfileFragment;
 import com.example.kevinlay.check.preferences.PreferencesFragment;
 import com.example.kevinlay.check.home.UnpairedHomeFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomePageActivity extends AppCompatActivity {
 
     private static final String NAV_HOME = "nav_home";
     private static final String NAV_PROFILE = "nav_profile";
-    private static final String NAV_PREREFENCES = "nav_preferences";
+    private static final String NAV_PREFERENCES = "nav_preferences";
     private static final String NAV_LOGOUT = "nav_logout";
     private static final String FRAGMENT_TAG = "fragmentTag";
 
@@ -76,7 +78,7 @@ public class HomePageActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_preferences:
-                        createFragment(NAV_PREREFENCES);
+                        createFragment(NAV_PREFERENCES);
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_logout:
@@ -98,9 +100,9 @@ public class HomePageActivity extends AppCompatActivity {
         switch (fragmentName) {
             case NAV_HOME:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 }
 
                 fragmentTransaction.addToBackStack("");
@@ -118,7 +120,7 @@ public class HomePageActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
                 break;
 
-            case NAV_PREREFENCES:
+            case NAV_PREFERENCES:
                 if(fragment == null) {
                     fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
                 } else {
@@ -129,14 +131,20 @@ public class HomePageActivity extends AppCompatActivity {
                 break;
 
             case NAV_LOGOUT:
-                if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-                } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-                }
-                fragmentTransaction.addToBackStack("");
-                fragmentTransaction.commit();
-                break;
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                Intent i = new Intent(HomePageActivity.this, LoginActivity.class);
+                startActivity(i);
+
+//                if(fragment == null) {
+//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+//                } else {
+//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+//                }
+//                fragmentTransaction.addToBackStack("");
+//                fragmentTransaction.commit();
+//                break;
         }
     }
 
