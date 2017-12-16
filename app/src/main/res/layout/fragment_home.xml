@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_home_background">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/matchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_fragment_header"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        style="@style/TextViewHeaderLabelStyle"/>
+
+    <RelativeLayout
+        android:id="@+id/containerRelative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/matchText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/home_fragment_header"
-            style="@style/TextViewHeaderLabelStyle"/>
+        android:layout_below="@id/matchText"
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/userProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/medium_circle_shape"
+            android:layout_toLeftOf="@id/smallCircle3"
             style="@style/ProfileImageStyle"/>
 
         <ImageView
+            android:id="@+id/smallCircle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/small_circle"
+            android:layout_centerHorizontal="true"
             style="@style/SmallCircleStyle"/>
 
         <ImageView
+            android:id="@+id/smallCircle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/small_circle"
+            android:layout_toRightOf="@id/smallCircle1"
             style="@style/SmallCircleStyle"/>
 
         <ImageView
+            android:id="@+id/smallCircle3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/small_circle"
-            style="@style/SmallCircleStyle"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/small_circle"
+            android:layout_toLeftOf="@id/smallCircle1"
             style="@style/SmallCircleStyle"/>
 
         <ImageView
@@ -52,74 +57,97 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/medium_circle_shape"
+            android:layout_toRightOf="@id/smallCircle2"
             style="@style/ProfileImageStyle"/>
 
-        <LinearLayout
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/containerLinear1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/containerLinear2"
+        android:orientation="horizontal">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:tint="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_pin_drop_white"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tint="@color/white"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_pin_drop_white"/>
-
-            <TextView
-                android:id="@+id/locationText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location_label"
-                style="@style/TextViewProfile"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/locationText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tint="@color/white"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_access_time_white"/>
-
-            <TextView
-                android:id="@+id/timeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time_label"
-                style="@style/TextViewProfile"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tint="@color/white"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_star_white"/>
-
-            <TextView
-                android:id="@+id/ratingText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rating_label"
-                style="@style/TextViewProfile"/>
-
-        </LinearLayout>
+            android:text="@string/location_label"
+            style="@style/TextViewProfile"/>
 
     </LinearLayout>
 
-</ScrollView>
+    <LinearLayout
+        android:id="@+id/containerLinear2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/containerLinear3"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_access_time_white"/>
+
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_label"
+            style="@style/TextViewProfile"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerLinear3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/acceptButton"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_star_white"/>
+
+        <TextView
+            android:id="@+id/ratingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating_label"
+            style="@style/TextViewProfile"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/declineButton"
+        android:text="@string/accept"
+        style="@style/ButtonActionStyle"/>
+
+    <Button
+        android:id="@+id/declineButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/decline"
+        style="@style/ButtonLoginStyle"/>
+
+</RelativeLayout>

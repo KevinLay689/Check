@@ -43,6 +43,9 @@
     <string name="set_start_time">Select start time</string>
     <string name="set_end_time">Select end time</string>
 
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
         <item name="biology">Biology</item>
