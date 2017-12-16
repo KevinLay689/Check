@@ -163,7 +163,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
             String encodedPicture = Base64.encodeToString(b, Base64.DEFAULT);
 
             databaseObject.setProfilePic(encodedPicture);
-
+            databaseObject.getProfilePic(mUserProfileImage);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

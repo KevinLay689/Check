@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
+import com.example.kevinlay.check.database.DatabaseObject;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 
@@ -49,6 +50,8 @@ public class UnpairedHomeFragment extends Fragment {
 
     private CircleImageView mUserProfileImage;
 
+    private DatabaseObject databaseObject;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class UnpairedHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        databaseObject = DatabaseObject.getInstance();
 
         mSelectStartTime = (Button) view.findViewById(R.id.selectStartTime);
         mSelectEndTime = (Button) view.findViewById(R.id.selectEndTime);
@@ -76,6 +81,8 @@ public class UnpairedHomeFragment extends Fragment {
         mRingImage2 = (ImageView) view.findViewById(R.id.ringImage2);
 
         mUserProfileImage = view.findViewById(R.id.userProfileImage);
+
+        databaseObject.getProfilePic(mUserProfileImage);
 
         setupOnClickListeners();
     }
