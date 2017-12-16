@@ -178,11 +178,14 @@ public class DatabaseObject {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-                circleImageView.setImageBitmap(decodedByte);
-                decodedByte = null;
+                // Check to see if the profile pic has been uploaded yet
+                if(user.getProfilePic().length() > 1) {
+                    byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+                    circleImageView.setImageBitmap(decodedByte);
+                    decodedByte = null;
+                }
             }
 
             @Override
