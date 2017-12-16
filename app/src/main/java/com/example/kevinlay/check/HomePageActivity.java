@@ -134,7 +134,7 @@ public class HomePageActivity extends AppCompatActivity {
 
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
-                Intent i = new Intent(HomePageActivity.this, LoginActivity.class);
+                Intent i = new Intent(HomePageActivity.this, MainActivity.class);
                 startActivity(i);
 
 //                if(fragment == null) {
