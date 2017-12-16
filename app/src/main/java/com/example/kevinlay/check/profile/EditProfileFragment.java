@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.kevinlay.check.R;
+import com.example.kevinlay.check.database.DatabaseObject;
 
 /**
  * Created by kevinlay on 12/11/17.
@@ -20,6 +21,7 @@ public class EditProfileFragment extends DialogFragment {
 
     private EditText mMajor, mAboutMe, mHometown;
     private Button mSaveProfile;
+    private DatabaseObject databaseObject;
 
     public EditProfileFragment() {
 
@@ -36,6 +38,8 @@ public class EditProfileFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        databaseObject = DatabaseObject.getInstance();
+
         mMajor = (EditText) view.findViewById(R.id.majorEdit);
         mAboutMe = (EditText) view.findViewById(R.id.aboutMeEdit);
         mHometown = (EditText) view.findViewById(R.id.hometownEdit);
@@ -47,6 +51,8 @@ public class EditProfileFragment extends DialogFragment {
                 sendBackResult();
             }
         });
+
+        databaseObject.setProfileUserData(mMajor, mAboutMe, mHometown);
     }
 
     public static EditProfileFragment newInstance(String title) {
@@ -58,7 +64,7 @@ public class EditProfileFragment extends DialogFragment {
     }
 
     public interface EditDialogListener {
-        void onFinishEditDialog(String inputText);
+        void onFinishEditDialog(String majorText, String aboutMeText, String hometownText);
     }
 
     // Call this method to send the data back to the parent fragment
@@ -66,7 +72,7 @@ public class EditProfileFragment extends DialogFragment {
     public void sendBackResult() {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         EditDialogListener listener = (EditDialogListener) getTargetFragment();
-        listener.onFinishEditDialog(mMajor.getText().toString());
+        listener.onFinishEditDialog(mMajor.getText().toString(), mAboutMe.getText().toString(), mHometown.getText().toString());
         dismiss();
     }
 }

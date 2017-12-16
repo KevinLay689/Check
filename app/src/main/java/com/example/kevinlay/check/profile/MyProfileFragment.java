@@ -25,7 +25,8 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     private TextView mTextMajor, mTextAboutMe, mTextHometown;
     private ImageView mImageProfilePic;
     private FloatingActionButton mFloatingActionButton;
-    private DatabaseObject object;
+    private DatabaseObject databaseObject;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        object = DatabaseObject.getInstance();
+        databaseObject = DatabaseObject.getInstance();
 
         mImageProfilePic = (ImageView) view.findViewById(R.id.profileUserImage);
 
@@ -54,7 +55,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
             }
         });
 
-        setInitialData();
+        setUserData();
 
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 //        boolean strUserName = sharedPreferences.getBoolean("notifications", false);
@@ -73,12 +74,8 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
-    private void setInitialData() {
-//        Uncomment these when database is setup and returns data
-//        mTextMajor.setText(database.getUsername);
-//        mTextAboutMe.setText(database.getAboutMe);
-//        mTextHometown.setText(database.getHometown);
-
+    private void setUserData() {
+        databaseObject.setProfileUserData(mTextMajor, mTextAboutMe, mTextHometown);
 //        mImageProfilePic.setImageBitmap(database.getProfileImage());
     }
 
@@ -97,8 +94,12 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     // Data will be saved in the edit profile dialog fragment,
     // then this will pull the new data from firebase
     @Override
-    public void onFinishEditDialog(String inputText) {
-        Toast.makeText(getActivity(), inputText, Toast.LENGTH_SHORT).show();
-        object.changeData(DatabaseObject.MAJOR_REFERENCE, inputText);
+    public void onFinishEditDialog(String majorText, String aboutMeText, String hometownText) {
+        Toast.makeText(getActivity(), "Data updated", Toast.LENGTH_SHORT).show();
+        databaseObject.changeData(DatabaseObject.MAJOR_REFERENCE, majorText);
+        databaseObject.changeData(DatabaseObject.ABOUT_ME_REFERENCE, aboutMeText);
+        databaseObject.changeData(DatabaseObject.HOMETOWN_REFERENCE, hometownText);
+
+        setUserData();
     }
 }

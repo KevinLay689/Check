@@ -1,6 +1,7 @@
 package com.example.kevinlay.check.database;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.kevinlay.check.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -9,6 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * Database should contain these references at bare minimum
@@ -44,7 +47,7 @@ public class DatabaseObject {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.i(TAG, "onDataChange: " + user.getMajor());
+                //Log.i(TAG, "onDataChange: " + user.getMajor());
             }
 
             @Override
@@ -98,13 +101,83 @@ public class DatabaseObject {
         }
     }
 
+//    public String getUserData(String reference) {
+//
+//        User user = getUser();
+//
+//        switch (reference) {
+//            case USER_STATE:
+//               return user.getUserState();
+//            case HOMETOWN_REFERENCE:
+//               return user.getHometown();
+//            case MAJOR_REFERENCE:
+//                return user.getMajor();
+//            case TIME_START_REFERENCE:
+//                return user.getTimeStart();
+//            case TIME_END_REFERENCE:
+//                return user.getTimeEnd();
+//            default:
+//                return "";
+//        }
+//    }
+//
+//    private void getUser() {
+//        final ArrayList<User> cachedUser = new ArrayList<>();
+//
+//        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                cachedUser.clear();
+//                User user = dataSnapshot.getValue(User.class);
+//                cachedUser.add(user);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//        Log.i(TAG, "onDataChange: " + cachedUser.get(0).getMajor());
+//        return cachedUser.get(0);
+//    }
+
     public String searchDatabase(String reference, String search) {
         return null;
     }
 
-    public void insertData(String reference, String data) {
+    public void setProfileUserData(final TextView major,
+                                   final TextView aboutMe,
+                                   final TextView hometown) {
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                major.setText(user.getMajor());
+                aboutMe.setText(user.getAboutMe());
+                hometown.setText(user.getHometown());
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
+//    public void setProfileUserData(String reference, final TextView textView, final String data) {
+//        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//                sw
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     public static DatabaseObject getInstance(){
         if(obj == null){

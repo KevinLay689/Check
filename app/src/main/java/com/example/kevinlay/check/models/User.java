@@ -10,7 +10,7 @@ public class User {
     private String hometown;
     private String email;
     private String major;
-    private String timeStart, timeEnd, userState, partner;
+    private String timeStart, timeEnd, userState, partner, aboutMe;
 
     public User() {
 
@@ -22,6 +22,11 @@ public class User {
         this.hometown = hometown;
         this.major = major;
         this.email = email;
+        this.timeStart = "";
+        this.timeEnd = "";
+        this.userState = "";
+        this.partner = "";
+        this.aboutMe = "";
     }
 
     public String getFirstName() {
@@ -94,5 +99,13 @@ public class User {
 
     public void setPartner(String partner) {
         this.partner = partner;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 }
