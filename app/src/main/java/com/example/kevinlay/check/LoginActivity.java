@@ -1,5 +1,6 @@
 package com.example.kevinlay.check;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,10 +29,13 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final String TAG = "EmailPassword";
 
+    ProgressBar mProgressDialog;
+
     private TextView mStatusTextView;
     private TextView mDetailTextView;
     private EditText mEmailField;
     private EditText mPasswordField;
+    private ProgressBar mProgressBar;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -54,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements
         mDetailTextView = findViewById(R.id.detail);
         mEmailField = findViewById(R.id.field_email);
         mPasswordField = findViewById(R.id.field_password);
+        mProgressBar = findViewById(R.id.progressBar2);
 
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
@@ -79,6 +85,8 @@ public class LoginActivity extends AppCompatActivity implements
             return;
         }
 
+        mProgressBar.setVisibility(View.VISIBLE);
+
         if(mAuth == null) {
             Log.e(TAG, "createAccount: Error mauth is null" );
         }
@@ -96,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements
                             //Toast.makeText(getApplicationContext(), "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
                             String uID = currentFirebaseUser.getUid();
                             insertUserIntoDatabase(uID);
-
                             goToDashboard(uID);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -106,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements
                             updateUI(null);
                         }
 
+                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
         // [END create_user_with_email]
@@ -128,6 +136,8 @@ public class LoginActivity extends AppCompatActivity implements
         if (!validateForm()) {
             return;
         }
+
+        mProgressBar.setVisibility(View.VISIBLE);
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -156,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText("Sign in failed");
                         }
+                        mProgressBar.setVisibility(View.INVISIBLE);
                         // [END_EXCLUDE]
                     }
                 });
@@ -190,6 +201,8 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void updateUI(FirebaseUser user) {
+
+        mProgressBar.setVisibility(View.INVISIBLE);
 
         if (user != null) {
             findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
