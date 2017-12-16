@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        databaseObject = DatabaseObject.getInstance();
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
@@ -59,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
         fragmentTransaction.commit();
         setupNavigationView();
-
-        databaseObject = DatabaseObject.getInstance();
     }
 
     private void setupNavigationView() {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        navigationUsername.setText("Kevin L.");
+        databaseObject.setUserData(navigationUsername, DatabaseObject.FIRST_NAME_REFERENCE);
 
     }
 

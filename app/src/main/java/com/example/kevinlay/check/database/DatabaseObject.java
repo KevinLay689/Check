@@ -24,6 +24,8 @@ public class DatabaseObject {
 
     public static final String USERS_REFERENCE = "users";
     public static final String USER_REFERENCE = "userReference";
+    public static final String FIRST_NAME_REFERENCE = "firstName";
+    public static final String LAST_NAME_REFERENCE = "lastName";
     public static final String TIME_START_REFERENCE = "timeStart";
     public static final String TIME_END_REFERENCE = "timeEnd";
     public static final String USER_STATE = "userState";
@@ -101,53 +103,11 @@ public class DatabaseObject {
         }
     }
 
-//    public String getUserData(String reference) {
-//
-//        User user = getUser();
-//
-//        switch (reference) {
-//            case USER_STATE:
-//               return user.getUserState();
-//            case HOMETOWN_REFERENCE:
-//               return user.getHometown();
-//            case MAJOR_REFERENCE:
-//                return user.getMajor();
-//            case TIME_START_REFERENCE:
-//                return user.getTimeStart();
-//            case TIME_END_REFERENCE:
-//                return user.getTimeEnd();
-//            default:
-//                return "";
-//        }
-//    }
-//
-//    private void getUser() {
-//        final ArrayList<User> cachedUser = new ArrayList<>();
-//
-//        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                cachedUser.clear();
-//                User user = dataSnapshot.getValue(User.class);
-//                cachedUser.add(user);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        Log.i(TAG, "onDataChange: " + cachedUser.get(0).getMajor());
-//        return cachedUser.get(0);
-//    }
-
     public String searchDatabase(String reference, String search) {
         return null;
     }
 
-    public void setProfileUserData(final TextView major,
-                                   final TextView aboutMe,
-                                   final TextView hometown) {
+    public void setProfileUserData(final TextView major, final TextView aboutMe, final TextView hometown) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -164,20 +124,40 @@ public class DatabaseObject {
         });
     }
 
-//    public void setProfileUserData(String reference, final TextView textView, final String data) {
-//        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-//                sw
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+    public void setUserData(final TextView textView, final String reference) {
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                switch (reference) {
+                    case USER_STATE:
+                        break;
+                    case HOMETOWN_REFERENCE:
+                        break;
+                    case MAJOR_REFERENCE:
+                        break;
+                    case MAJOR__PREFERENCE_REFERENCE:
+                        break;
+                    case TIME_START_REFERENCE:
+                        break;
+                    case TIME_END_REFERENCE:
+                        break;
+                    case ABOUT_ME_REFERENCE:
+                        break;
+                    case FIRST_NAME_REFERENCE:
+                        textView.setText(user.getFirstName());
+                        break;
+                    case LAST_NAME_REFERENCE:
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     public static DatabaseObject getInstance(){
         if(obj == null){
