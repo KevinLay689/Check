@@ -20,8 +20,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
+import com.nguyenhoanglam.imagepicker.model.Image;
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by kevinlay on 12/12/17.
@@ -41,6 +46,8 @@ public class UnpairedHomeFragment extends Fragment {
 
     private int timeHour, timeMinute;
     private String amPm;
+
+    private CircleImageView mUserProfileImage;
 
     @Nullable
     @Override
@@ -65,9 +72,10 @@ public class UnpairedHomeFragment extends Fragment {
         mTimeStart = (TextView) view.findViewById(R.id.timeStart);
         mTimeEnd = (TextView) view.findViewById(R.id.timeEnd);
 
-        mUserProfilePicture = (ImageView) view.findViewById(R.id.userProfileImage);
         mRingImage1 = (ImageView) view.findViewById(R.id.ringImage1);
         mRingImage2 = (ImageView) view.findViewById(R.id.ringImage2);
+
+        mUserProfileImage = view.findViewById(R.id.userProfileImage);
 
         setupOnClickListeners();
     }
