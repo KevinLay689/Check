@@ -132,4 +132,10 @@ public class MainActivity extends AppCompatActivity {
                 });
         // [END sign_in_with_email]
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateUI(mAuth.getCurrentUser());
+    }
 }
