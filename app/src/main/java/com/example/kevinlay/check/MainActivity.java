@@ -2,140 +2,158 @@ package com.example.kevinlay.check;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.kevinlay.check.login.LoginActivity;
+import com.example.kevinlay.check.profile.MyProfileFragment;
+import com.example.kevinlay.check.preferences.PreferencesFragment;
+import com.example.kevinlay.check.home.UnpairedHomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String NAV_HOME = "nav_home";
+    private static final String NAV_PROFILE = "nav_profile";
+    private static final String NAV_PREFERENCES = "nav_preferences";
+    private static final String NAV_LOGOUT = "nav_logout";
+    private static final String FRAGMENT_TAG = "fragmentTag";
 
-    private Button buttonLogin;
-    private EditText mEmail, mPassword;
-    private ProgressBar mProgressBar;
-    private TextView mSignUp;
-
-    private FirebaseAuth mAuth;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    private Toolbar mToolbar;
+    private NavigationView mNavigationView;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mToolbar = (Toolbar) findViewById(R.id.nav_action);
+        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
+        mNavigationView.setItemIconTintList(null);
 
-        mEmail = findViewById(R.id.loginUsername);
-        mPassword = findViewById(R.id.loginPassword);
-        mProgressBar = findViewById(R.id.progressBar);
-        mSignUp = findViewById(R.id.tvSignup);
+        // Setup navigation bar and toolbar
+        setSupportActionBar(mToolbar);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open_menu, R.string.close_menu);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        fragmentManager = getSupportFragmentManager();
 
-        buttonLogin = (Button) findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+        fragmentTransaction.commit();
+        setupNavigationView();
+    }
+
+    private void setupNavigationView() {
+
+        View headerView =  mNavigationView.getHeaderView(0);
+//      ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
+        TextView navigationUsername = (TextView)headerView.findViewById(R.id.navigation_header_text);
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                signIn(mEmail.getText().toString(), mPassword.getText().toString());
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        createFragment(NAV_HOME);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_profile:
+                        createFragment(NAV_PROFILE);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_preferences:
+                        createFragment(NAV_PREFERENCES);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_logout:
+                        createFragment(NAV_LOGOUT);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
             }
         });
+        navigationUsername.setText("Kevin L.");
+    }
 
-        mSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    private void createFragment(String fragmentName) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+        switch (fragmentName) {
+            case NAV_HOME:
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                }
+
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+
+            case NAV_PROFILE:
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), FRAGMENT_TAG);
+                }
+
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+
+            case NAV_PREFERENCES:
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
+                }
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+
+            case NAV_LOGOUT:
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
-            }
-        });
-    }
 
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String email = mEmail.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmail.setError("Required.");
-            valid = false;
-        } else {
-            mEmail.setError(null);
+//                if(fragment == null) {
+//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+//                } else {
+//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+//                }
+//                fragmentTransaction.addToBackStack("");
+//                fragmentTransaction.commit();
+//                break;
         }
-
-        String password = mPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            mPassword.setError("Required.");
-            valid = false;
-        } else {
-            mPassword.setError(null);
-        }
-
-        return valid;
-    }
-
-    private void updateUI(FirebaseUser user) {
-
-        mProgressBar.setVisibility(View.INVISIBLE);
-
-        if (user != null) {
-            Intent i = new Intent(MainActivity.this, HomePageActivity.class);
-            startActivity(i);
-        }
-    }
-
-    private void signIn(String email, String password) {
-        //Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-                            //Toast.makeText(getApplicationContext(), "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
-                            String uID = currentFirebaseUser.getUid();
-                            updateUI(currentFirebaseUser);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Sign in failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END sign_in_with_email]
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        updateUI(mAuth.getCurrentUser());
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

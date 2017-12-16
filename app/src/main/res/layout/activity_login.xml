@@ -5,75 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_login_background"
-    tools:context="com.example.kevinlay.check.MainActivity">
+    tools:context="com.example.kevinlay.check.login.LoginActivity">
 
     <ProgressBar
-        android:id="@+id/progressBar3"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"/>
 
-    <EditText
-        android:id="@+id/loginFirstName"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/logoIcon"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:hint="@string/first_name"
-        android:inputType="textPersonName"
-        style="@style/EditTextLoginStyle"/>
+        android:layout_centerHorizontal="true"
+        style="@style/ImageViewLoginStyle"/>
 
-    <EditText
-        android:id="@+id/loginLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginFirstName"
-        android:hint="@string/last_name"
-        android:inputType="textPersonName"
-        style="@style/EditTextLoginStyle"/>
-
-    <EditText
-        android:id="@+id/loginHometown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginLastName"
-        android:hint="@string/hometown"
-        android:inputType="textPersonName"
-        style="@style/EditTextLoginStyle"/>
-
-    <EditText
-        android:id="@+id/loginMajor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginHometown"
-        android:hint="@string/major_label"
-        android:inputType="textPersonName"
-        style="@style/EditTextLoginStyle"/>
 
     <EditText
         android:id="@+id/loginUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginMajor"
+        android:layout_above="@+id/loginPassword"
         android:hint="@string/username"
         android:inputType="textPersonName"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
         style="@style/EditTextLoginStyle"/>
+
 
     <EditText
         android:id="@+id/loginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginUsername"
+        android:layout_above="@+id/buttonLogin"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:drawableLeft="@drawable/ic_lock_black_24dp"
         style="@style/EditTextLoginStyle"/>
 
     <Button
-        android:id="@+id/createAccount"
-        android:text="@string/create_account"
+        android:id="@+id/buttonLogin"
+        android:text="@string/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/tvSignup"
         style="@style/ButtonLoginStyle"/>
+
+    <TextView
+        android:id="@+id/tvSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true" />
+
 
 </RelativeLayout>

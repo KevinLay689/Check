@@ -1,4 +1,4 @@
-package com.example.kevinlay.check;
+package com.example.kevinlay.check.models;
 
 /**
  * Created by kevinlay on 12/15/17.
