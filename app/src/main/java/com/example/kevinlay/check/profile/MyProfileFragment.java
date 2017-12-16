@@ -36,7 +36,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class MyProfileFragment extends Fragment implements EditProfileFragment.EditDialogListener {
 
-    private TextView mTextMajor, mTextAboutMe, mTextHometown;
+    private TextView mTextMajor, mTextAboutMe, mTextHometown, mProfileUsername;
     private CircleImageView mUserProfileImage;
     private FloatingActionButton mFloatingActionButton;
     private DatabaseObject databaseObject;
@@ -57,6 +57,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         mTextMajor = (TextView) view.findViewById(R.id.profileUserMajor);
         mTextAboutMe = (TextView) view.findViewById(R.id.profileUserAboutMe);
         mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
+        mProfileUsername = (TextView) view.findViewById(R.id.profileUsername);
 
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
 
@@ -118,6 +119,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     private void setUserData() {
         databaseObject.setProfileUserData(mTextMajor, mTextAboutMe, mTextHometown);
         databaseObject.getProfilePic(mUserProfileImage);
+        databaseObject.setUserData(mProfileUsername, DatabaseObject.FIRST_NAME_REFERENCE);
 //        mImageProfilePic.setImageBitmap(database.getProfileImage());
     }
 
