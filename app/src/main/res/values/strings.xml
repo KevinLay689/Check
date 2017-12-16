@@ -9,11 +9,15 @@
     <string name="open_menu">Open</string>
     <string name="close_menu">Close</string>
 
-    <string name="username">Username</string>
+    <string name="username">Email</string>
     <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="hometown">Hometown</string>
 
-    <string name="sign_up">Sign up now</string>
+    <string name="sign_up"> <u>Sign up now</u> </string>
     <string name="login_button">Log in</string>
+    <string name="create_account">Create Account</string>
 
     <string name="logo_description">Logo</string>
 

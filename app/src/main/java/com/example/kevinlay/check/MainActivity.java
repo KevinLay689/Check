@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonLogin;
     private EditText mEmail, mPassword;
     private ProgressBar mProgressBar;
+    private TextView mSignUp;
 
     private FirebaseAuth mAuth;
 
@@ -38,12 +40,21 @@ public class MainActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.loginUsername);
         mPassword = findViewById(R.id.loginPassword);
         mProgressBar = findViewById(R.id.progressBar);
+        mSignUp = findViewById(R.id.tvSignup);
 
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn(mEmail.getText().toString(), mPassword.getText().toString());
+            }
+        });
+
+        mSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         });
     }

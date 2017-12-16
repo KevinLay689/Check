@@ -5,22 +5,26 @@ package com.example.kevinlay.check;
  */
 
 public class User {
-    private String name;
+    private String firstName;
+    private String lastName;
+    private String hometown;
     private String email;
     private String major;
 
-    public User(String name, String email, String major) {
-        this.name = name;
-        this.email = email;
+    public User(String firstName, String lastName, String hometown, String major, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.hometown = hometown;
         this.major = major;
+        this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public String getEmail() {
@@ -37,5 +41,21 @@ public class User {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getHometown() {
+        return hometown;
+    }
+
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
     }
 }

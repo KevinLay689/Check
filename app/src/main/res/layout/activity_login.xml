@@ -1,104 +1,79 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
-    android:orientation="vertical"
-    android:weightSum="4">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Welcome" />
-
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Please Login" />
-
-        <TextView
-            android:id="@+id/detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Firebase User ID: 123456789abc" />
-
-    </LinearLayout>
+    android:background="@drawable/gradient_login_background"
+    tools:context="com.example.kevinlay.check.MainActivity">
 
     <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyle"
+        android:id="@+id/progressBar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/loginFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:indeterminate="false"/>
+        android:layout_alignParentTop="true"
+        android:hint="@string/first_name"
+        android:inputType="textPersonName"
+        style="@style/EditTextLoginStyle"/>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/dusk_blue"
-        android:gravity="center_vertical">
+    <EditText
+        android:id="@+id/loginLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginFirstName"
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        style="@style/EditTextLoginStyle"/>
 
-        <LinearLayout
-            android:id="@+id/email_password_fields"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+    <EditText
+        android:id="@+id/loginHometown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginLastName"
+        android:hint="@string/hometown"
+        android:inputType="textPersonName"
+        style="@style/EditTextLoginStyle"/>
 
-            <EditText
-                android:id="@+id/field_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
+    <EditText
+        android:id="@+id/loginMajor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginHometown"
+        android:hint="@string/major_label"
+        android:inputType="textPersonName"
+        style="@style/EditTextLoginStyle"/>
 
-            <EditText
-                android:id="@+id/field_password"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/password"
-                android:inputType="textPassword" />
-        </LinearLayout>
+    <EditText
+        android:id="@+id/loginUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginMajor"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        style="@style/EditTextLoginStyle"/>
 
-        <LinearLayout
-            android:id="@+id/email_password_buttons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/email_password_fields"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginUsername"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        style="@style/EditTextLoginStyle"/>
 
-            <Button
-                android:id="@+id/email_sign_in_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Sign in"
-                android:layout_weight="1" />
+    <Button
+        android:id="@+id/createAccount"
+        android:text="@string/create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        style="@style/ButtonLoginStyle"/>
 
-            <Button
-                android:id="@+id/email_create_account_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Create Account"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
