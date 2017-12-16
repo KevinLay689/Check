@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private FragmentManager fragmentManager;
+
+    private MyProfileFragment myProfileFragment;
     DatabaseObject databaseObject;
 
     @Override
@@ -115,10 +117,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case NAV_PROFILE:
+                myProfileFragment = new MyProfileFragment();
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, myProfileFragment, FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new MyProfileFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, myProfileFragment, FRAGMENT_TAG);
                 }
 
                 fragmentTransaction.addToBackStack("");
@@ -160,5 +163,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (myProfileFragment != null ) {
+            myProfileFragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

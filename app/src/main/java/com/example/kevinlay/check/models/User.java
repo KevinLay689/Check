@@ -10,7 +10,7 @@ public class User {
     private String hometown;
     private String email;
     private String major;
-    private String timeStart, timeEnd, userState, partner, aboutMe;
+    private String timeStart, timeEnd, userState, partner, aboutMe, profilePic;
 
     public User() {
 
@@ -27,6 +27,7 @@ public class User {
         this.userState = "";
         this.partner = "";
         this.aboutMe = "";
+        this.profilePic = "";
     }
 
     public String getFirstName() {
@@ -107,5 +108,13 @@ public class User {
 
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

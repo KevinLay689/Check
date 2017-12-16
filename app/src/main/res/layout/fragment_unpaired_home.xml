@@ -5,13 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_unpaired_background">
 
-    <ImageView
-        android:id="@+id/userProfileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/medium_circle_shape"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/userProfileImage"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:src="@drawable/medium_circle_shape"/>-->
 
     <ImageView
         android:id="@+id/ringImage1"
@@ -25,6 +25,14 @@
         android:id="@+id/ringImage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/medium_circle_shape"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userProfileImage"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/medium_circle_shape"/>

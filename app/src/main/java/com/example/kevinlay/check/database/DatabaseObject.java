@@ -1,5 +1,8 @@
 package com.example.kevinlay.check.database;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -12,6 +15,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Database should contain these references at bare minimum
@@ -33,6 +38,7 @@ public class DatabaseObject {
     public static final String MAJOR__PREFERENCE_REFERENCE = "majorPreference";
     public static final String PARTNER_REFERENCE = "partner";
     public static final String MAJOR_REFERENCE = "major";
+    public static final String PROFILE_PIC_REFERENCE = "profilePic";
     public static final String ABOUT_ME_REFERENCE = "aboutMe";
     public static final String HOMETOWN_REFERENCE = "hometown";
 
@@ -164,5 +170,29 @@ public class DatabaseObject {
             obj = new DatabaseObject();
         }
         return obj;
+    }
+
+    public void getProfilePic(final CircleImageView circleImageView) {
+
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+                circleImageView.setImageBitmap(decodedByte);
+                decodedByte = null;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setProfilePic(String encoded) {
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PROFILE_PIC_REFERENCE).setValue(encoded);
     }
 }

@@ -12,17 +12,23 @@
         app:srcCompat="@drawable/gradient_profile_header"
         style="@style/ImageViewHeaderProfileStyle"/>
 
-    <ImageView
-        android:id="@+id/profileUserImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/editProfileImage"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         style="@style/ImageViewProfileStyle"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/profileUserImage"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--style="@style/ImageViewProfileStyle"/>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/editProfileActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/profileUserImage"
+        android:layout_alignBottom="@+id/editProfileImage"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         style="@style/ActionButtonProfileStyle"/>
@@ -32,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Kevin Lay"
-        android:layout_below="@+id/profileUserImage"
+        android:layout_below="@+id/editProfileImage"
         style="@style/TextViewNameProfileStyle"/>
 
 
@@ -40,8 +46,9 @@
         android:id="@+id/profileScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:scrollbars="vertical"
-        android:layout_below="@id/profileUsername">
+        android:layout_below="@id/editProfileImage">
 
         <RelativeLayout
             android:layout_width="match_parent"
