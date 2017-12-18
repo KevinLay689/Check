@@ -130,9 +130,9 @@ public class UnpairedHomeFragment extends Fragment {
                 }
 
                 if(isTimeStart) {
-                    databaseObject.changeData(DatabaseObject.TIME_START_REFERENCE, timeHour+""+timeMinute);
+                    databaseObject.changeData(DatabaseObject.TIME_START_REFERENCE, timeHour+""+timeMinute+amPm);
                 } else {
-                    databaseObject.changeData(DatabaseObject.TIME_END_REFERENCE, timeHour+""+timeMinute);
+                    databaseObject.changeData(DatabaseObject.TIME_END_REFERENCE, timeHour+""+timeMinute+amPm);
                 }
             }
         }, hour, minute, false);
@@ -168,6 +168,7 @@ public class UnpairedHomeFragment extends Fragment {
                 startAnimations();
                 mFindPartner.setEnabled(false);
                 mFindPartner.setText(R.string.searching_partner);
+                databaseObject.changeData(DatabaseObject.USER_STATE, "Searching");
             }
         });
 
