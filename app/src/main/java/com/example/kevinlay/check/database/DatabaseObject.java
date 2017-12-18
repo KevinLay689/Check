@@ -185,8 +185,6 @@ public class DatabaseObject {
                     if(snapshot.getKey().equals(mAuth.getUid())) {
                         if(user.getTimeStart().length() > 1 && user.getTimeEnd().length() > 1) {
                             yourInfo.add(user);
-                        } else {
-
                         }
                     } else {
                         otherProfiles.add(user);
@@ -199,6 +197,51 @@ public class DatabaseObject {
 
             }
         });
+
+        yourTimeStart = yourInfo.get(0).getTimeStart();
+        yourTimeEnd = yourInfo.get(0).getTimeEnd();
+
+        for(int i = 0; i < otherProfiles.size(); i++) {
+
+            if(otherProfiles.get(i).getUserState().equals("Searching")) {
+                String otherUserTimeStart, otherUserTimeEnd;
+
+                int eatTime = 20;
+
+                otherUserTimeStart = otherProfiles.get(i).getTimeStart();
+                otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
+
+
+                int yourTotalMinute, otherTotalMinute;
+
+                yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
+
+                otherTotalMinute = minuteConversion(otherUserTimeEnd) - minuteConversion(otherUserTimeStart);
+
+                int yourRange = yourTotalMinute + minuteConversion(yourTimeStart);
+                int otherRange = otherTotalMinute + minuteConversion(otherUserTimeStart);
+
+
+                if( (yourTotalMinute + minuteConversion(yourTimeStart)) <= (minuteConversion(otherUserTimeStart)+20)) {
+                    return;
+                } else if((otherTotalMinute + minuteConversion(otherUserTimeStart)) <= (minuteConversion(yourTimeStart)+20)) {
+                    return;
+                } else {
+//                    int timeDate = yourTimeStart+20;
+                }
+
+
+                Log.i(TAG, "beginPartnerSearch:");
+
+            }
+        }
+
+    }
+    private int minuteConversion(String hours) {
+
+        return (Integer.parseInt((hours.charAt(0) +"")) * 10 * 60) +
+                (Integer.parseInt((hours.charAt(1) +"")) * 60) +
+                (Integer.parseInt((hours.substring(3))));
 
     }
 

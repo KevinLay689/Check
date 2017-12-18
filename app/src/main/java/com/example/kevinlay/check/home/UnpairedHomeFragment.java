@@ -107,6 +107,7 @@ public class UnpairedHomeFragment extends Fragment {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 int format;
+                String serverHour, serverMinute;
 
                 if(selectedHour > 11) {
                     amPm = "PM";
@@ -119,7 +120,6 @@ public class UnpairedHomeFragment extends Fragment {
                 if(format == 0) {
                     format = 12;
                 }
-
                 timeHour = format;
                 timeMinute = selectedMinute;
 
@@ -129,10 +129,25 @@ public class UnpairedHomeFragment extends Fragment {
                     textView.setText(timeHour + ":" + timeMinute + " " + amPm);
                 }
 
-                if(isTimeStart) {
-                    databaseObject.changeData(DatabaseObject.TIME_START_REFERENCE, timeHour+""+timeMinute+amPm);
+                if(timeMinute < 10) {
+                    serverMinute = "0" + timeMinute;
+                    if (timeMinute == 0) {
+                        serverMinute = "00";
+                    }
                 } else {
-                    databaseObject.changeData(DatabaseObject.TIME_END_REFERENCE, timeHour+""+timeMinute+amPm);
+                    serverMinute = selectedMinute + "";
+                }
+
+                if(selectedHour < 1 || selectedHour < 10 ) {
+                    serverHour = "0" + selectedHour + ":";
+                } else {
+                    serverHour = selectedHour + ":";
+                }
+
+                if(isTimeStart) {
+                    databaseObject.changeData(DatabaseObject.TIME_START_REFERENCE, serverHour + serverMinute);
+                } else {
+                    databaseObject.changeData(DatabaseObject.TIME_END_REFERENCE, serverHour + serverMinute);
                 }
             }
         }, hour, minute, false);
