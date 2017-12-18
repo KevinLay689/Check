@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity{
     }
 
     private void insertUserIntoDatabase(String firstName, String lastName, String homeTown, String major, String email, String id){
-       User user = new User(firstName, lastName, homeTown, major, email);
+       User user = new User(firstName, lastName, homeTown, major, email, id);
        databaseReference.child("users").child(id).setValue(user);
     }
 

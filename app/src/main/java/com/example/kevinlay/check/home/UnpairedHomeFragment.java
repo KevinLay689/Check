@@ -184,6 +184,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mFindPartner.setEnabled(false);
                 mFindPartner.setText(R.string.searching_partner);
                 databaseObject.changeData(DatabaseObject.USER_STATE, "Searching");
+                databaseObject.beginPartnerSearch();
             }
         });
 

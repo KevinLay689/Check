@@ -171,15 +171,13 @@ public class DatabaseObject {
 
     public void beginPartnerSearch() {
 
-        String yourTimeStart = "";
-        String yourTimeEnd = "";
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 yourInfo.clear();
                 otherProfiles.clear();
+
                 for(DataSnapshot snapshot : dataSnapshot.child(USERS_REFERENCE).getChildren()) {
                     User user = snapshot.getValue(User.class);
                     if(snapshot.getKey().equals(mAuth.getUid())) {
@@ -188,8 +186,48 @@ public class DatabaseObject {
                         }
                     } else {
                         otherProfiles.add(user);
+                        Log.i(TAG, "size" + otherProfiles.size());
                     }
                 }
+
+                String yourTimeStart = "";
+                String yourTimeEnd = "";
+
+                yourTimeStart = yourInfo.get(0).getTimeStart();
+                yourTimeEnd = yourInfo.get(0).getTimeEnd();
+
+                for(int i = 0; i < otherProfiles.size(); i++) {
+
+                    if(otherProfiles.get(i).getUserState().equals("Searching")) {
+                        String otherUserTimeStart, otherUserTimeEnd;
+
+                        int eatTime = 20;
+
+                        otherUserTimeStart = otherProfiles.get(i).getTimeStart();
+                        otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
+
+                        int yourTotalMinute, otherTotalMinute;
+
+                        yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
+
+                        otherTotalMinute = minuteConversion(otherUserTimeEnd) - minuteConversion(otherUserTimeStart);
+
+                        if( (yourTotalMinute + minuteConversion(yourTimeStart)) <= (minuteConversion(otherUserTimeStart)+19)) {
+                            Log.i(TAG, "beginPartnerSearch:  there not a free window ");
+                            break;
+                        }
+                        else {
+                            Log.i(TAG, "beginPartnerSearch:  there is a free window");
+
+                            if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
+                                //databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).
+                            }
+                            break;
+                        }
+
+                    }
+                }
+
             }
 
             @Override
@@ -197,45 +235,6 @@ public class DatabaseObject {
 
             }
         });
-
-        yourTimeStart = yourInfo.get(0).getTimeStart();
-        yourTimeEnd = yourInfo.get(0).getTimeEnd();
-
-        for(int i = 0; i < otherProfiles.size(); i++) {
-
-            if(otherProfiles.get(i).getUserState().equals("Searching")) {
-                String otherUserTimeStart, otherUserTimeEnd;
-
-                int eatTime = 20;
-
-                otherUserTimeStart = otherProfiles.get(i).getTimeStart();
-                otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
-
-
-                int yourTotalMinute, otherTotalMinute;
-
-                yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
-
-                otherTotalMinute = minuteConversion(otherUserTimeEnd) - minuteConversion(otherUserTimeStart);
-
-                int yourRange = yourTotalMinute + minuteConversion(yourTimeStart);
-                int otherRange = otherTotalMinute + minuteConversion(otherUserTimeStart);
-
-
-                if( (yourTotalMinute + minuteConversion(yourTimeStart)) <= (minuteConversion(otherUserTimeStart)+20)) {
-                    return;
-                } else if((otherTotalMinute + minuteConversion(otherUserTimeStart)) <= (minuteConversion(yourTimeStart)+20)) {
-                    return;
-                } else {
-//                    int timeDate = yourTimeStart+20;
-                }
-
-
-                Log.i(TAG, "beginPartnerSearch:");
-
-            }
-        }
-
     }
     private int minuteConversion(String hours) {
 

@@ -10,13 +10,13 @@ public class User {
     private String hometown;
     private String email;
     private String major;
-    private String timeStart, timeEnd, userState, partner, aboutMe, profilePic;
+    private String timeStart, timeEnd, userState, partner, aboutMe, profilePic, id, lunchTime;
 
     public User() {
 
     }
 
-    public User(String firstName, String lastName, String hometown, String major, String email) {
+    public User(String firstName, String lastName, String hometown, String major, String email, String id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.hometown = hometown;
@@ -28,6 +28,8 @@ public class User {
         this.partner = "";
         this.aboutMe = "";
         this.profilePic = "";
+        this.id = id;
+        this.lunchTime = "";
     }
 
     public String getFirstName() {
