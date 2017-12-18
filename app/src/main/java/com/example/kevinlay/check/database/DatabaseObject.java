@@ -42,6 +42,7 @@ public class DatabaseObject {
     public static final String PROFILE_PIC_REFERENCE = "profilePic";
     public static final String ABOUT_ME_REFERENCE = "aboutMe";
     public static final String HOMETOWN_REFERENCE = "hometown";
+    public static final String LUNCH_TIME_REFERENCE = "lunchTime";
 
     private static DatabaseObject obj;
 
@@ -220,8 +221,19 @@ public class DatabaseObject {
                             Log.i(TAG, "beginPartnerSearch:  there is a free window");
 
                             if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
-                                //databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).
+                                String time = otherProfiles.get(i).getTimeStart();
+                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(time);
+                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(time);
+                            } else {
+                                String time = yourInfo.get(0).getTimeStart();
+                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(time);
+                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(time);
                             }
+
+                            databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue(otherProfiles.get(i).getId());
+                            databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(PARTNER_REFERENCE).setValue(mAuth.getUid());
+                            databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(USER_STATE).setValue("Paired");
+                            databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(USER_STATE).setValue("Paired");
                             break;
                         }
 

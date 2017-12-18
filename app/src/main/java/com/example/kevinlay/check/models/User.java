@@ -26,10 +26,10 @@ public class User {
         this.timeEnd = "";
         this.userState = "";
         this.partner = "";
-        this.aboutMe = "";
-        this.profilePic = "";
         this.id = id;
         this.lunchTime = "";
+        this.aboutMe = "";
+        this.profilePic = "";
     }
 
     public String getFirstName() {
@@ -118,5 +118,21 @@ public class User {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLunchTime() {
+        return lunchTime;
+    }
+
+    public void setLunchTime(String lunchTime) {
+        this.lunchTime = lunchTime;
     }
 }
