@@ -130,9 +130,9 @@ public class UnpairedHomeFragment extends Fragment {
                 }
 
                 if(isTimeStart) {
-                    //databaseObject.updateTimeStart(timeHour, timeMinute);
+                    databaseObject.changeData(DatabaseObject.TIME_START_REFERENCE, timeHour+""+timeMinute);
                 } else {
-                    //databaseObject.updateTimeEnd(timeHour, timeMinute);
+                    databaseObject.changeData(DatabaseObject.TIME_END_REFERENCE, timeHour+""+timeMinute);
                 }
             }
         }, hour, minute, false);
