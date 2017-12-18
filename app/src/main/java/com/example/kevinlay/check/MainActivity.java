@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
         fragmentTransaction.commit();
         setupNavigationView();
+
+
     }
 
     private void setupNavigationView() {

@@ -3,11 +3,13 @@ package com.example.kevinlay.check.home;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +87,13 @@ public class UnpairedHomeFragment extends Fragment {
         databaseObject.getProfilePic(mUserProfileImage);
 
         setupOnClickListeners();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        // then you use
+        String major = prefs.getString("major", "any");
+        Boolean isAcceptingNotifications = prefs.getBoolean("notifications", true);
+
+
     }
 
     private void showTimePickerDialog(final TextView textView, final boolean isTimeStart) {
