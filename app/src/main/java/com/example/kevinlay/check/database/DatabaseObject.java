@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,6 +47,9 @@ public class DatabaseObject {
 
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+
+    private List<User> yourInfo = new ArrayList<>();
+    private List<User> otherProfiles = new ArrayList<>();
 
     private DatabaseObject() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -163,6 +167,39 @@ public class DatabaseObject {
 
             }
         });
+    }
+
+    public void beginPartnerSearch() {
+
+        String yourTimeStart = "";
+        String yourTimeEnd = "";
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                yourInfo.clear();
+                otherProfiles.clear();
+                for(DataSnapshot snapshot : dataSnapshot.child(USERS_REFERENCE).getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    if(snapshot.getKey().equals(mAuth.getUid())) {
+                        if(user.getTimeStart().length() > 1 && user.getTimeEnd().length() > 1) {
+                            yourInfo.add(user);
+                        } else {
+
+                        }
+                    } else {
+                        otherProfiles.add(user);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public static DatabaseObject getInstance(){

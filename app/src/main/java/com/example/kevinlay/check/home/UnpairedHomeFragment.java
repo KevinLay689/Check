@@ -182,6 +182,7 @@ public class UnpairedHomeFragment extends Fragment {
                 mCancelSearch.setVisibility(View.INVISIBLE);
 //                mTimeStart.setVisibility(View.INVISIBLE);
 //                mTimeEnd.setVisibility(View.INVISIBLE);
+                databaseObject.changeData(DatabaseObject.USER_STATE, "Idle");
                 stopAnimations();
             }
         });
