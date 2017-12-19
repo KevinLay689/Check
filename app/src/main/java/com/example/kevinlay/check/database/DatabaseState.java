@@ -1,5 +1,7 @@
 package com.example.kevinlay.check.database;
 
+import android.util.Log;
+
 import com.example.kevinlay.check.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DatabaseState {
 
+    private static final String TAG = "DatabaseState";
+
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private DatabaseCallback databaseCallback;
@@ -25,14 +29,13 @@ public class DatabaseState {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        databaseReference.child(DatabaseObject.USERS_REFERENCE).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if(user.getId().equals(mAuth.getUid())) {
-                   databaseCallback.updateUserStateFragment();
-                }
-                //Log.i(TAG, "onDataChange: " + user.getMajor());
+
+                String state = dataSnapshot.getValue(String.class);
+
+                Log.i(TAG, "onDataChange: " + state);
             }
 
             @Override
@@ -43,7 +46,7 @@ public class DatabaseState {
     }
 
     public interface DatabaseCallback {
-        void updateUserStateFragment();
+        void updateUserStateFragment(String updateType);
     }
 
 }
