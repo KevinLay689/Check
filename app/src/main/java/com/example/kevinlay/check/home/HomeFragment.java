@@ -55,8 +55,8 @@ public class HomeFragment extends Fragment {
         databaseObject = DatabaseObject.getInstance();
 
         databaseObject.setUserData(mMeetTime, DatabaseObject.LUNCH_TIME_REFERENCE);
-        databaseObject.getProfilePic(mUserProfile);
         databaseObject.getOtherProfilePic(mOtherProfile);
+        databaseObject.getProfilePic(mUserProfile);
     }
 
     @Override

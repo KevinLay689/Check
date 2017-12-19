@@ -162,6 +162,9 @@ public class DatabaseObject {
                         break;
                     case LAST_NAME_REFERENCE:
                         break;
+                    case LUNCH_TIME_REFERENCE:
+                        textView.setText(user.getLunchTime());
+                        break;
                 }
             }
 
@@ -267,6 +270,7 @@ public class DatabaseObject {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 User user = dataSnapshot.getValue(User.class);
                 // Check to see if the profile pic has been uploaded yet
                 if(user.getProfilePic().length() > 1) {
@@ -285,20 +289,45 @@ public class DatabaseObject {
         });
     }
 
-    public void getOtherProfilePic(CircleImageView circleImageView) {
+    public void getOtherProfilePic(final CircleImageView circleImageView) {
 
-        for(int i = 0; i < otherProfiles.size(); i++) {
+        Log.i(TAG, "getOtherProfilePic: " + otherProfiles.size());
 
-            if(otherProfiles.get(i).getPartner().equals(mAuth.getUid())) {
-                if(otherProfiles.get(i).getProfilePic().length() > 1) {
-                    byte[] decodedString = Base64.decode(otherProfiles.get(i).getProfilePic(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-                    circleImageView.setImageBitmap(decodedByte);
-                    decodedByte = null;
+        databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    Log.i(TAG, "getOtherProfilePic: " + user.getId());
+                    // Check to see if the profile pic has been uploaded yet
+                    if(user.getProfilePic().length() > 1 && user.getPartner().equals(mAuth.getUid())) {
+                        byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+                        circleImageView.setImageBitmap(decodedByte);
+                        decodedByte = null;
+                    }
                 }
             }
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        for(int i = 0; i < otherProfiles.size(); i++) {
+//            if(otherProfiles.get(i).getPartner().equals(mAuth.getUid())) {
+//                if(otherProfiles.get(i).getProfilePic().length() > 1) {
+//                    byte[] decodedString = Base64.decode(otherProfiles.get(i).getProfilePic(), Base64.DEFAULT);
+//                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+//                    circleImageView.setImageBitmap(decodedByte);
+//                    decodedByte = null;
+//                }
+//            }
+//        }
     }
 
     public void setProfilePic(String encoded) {
