@@ -20,10 +20,10 @@
         android:layout_below="@id/matchText"
         android:layout_marginTop="20dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
             android:src="@drawable/medium_circle_shape"
             android:layout_toLeftOf="@id/smallCircle3"
             style="@style/ProfileImageStyle"/>
@@ -52,10 +52,10 @@
             android:layout_toLeftOf="@id/smallCircle1"
             style="@style/SmallCircleStyle"/>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/otherProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
             android:src="@drawable/medium_circle_shape"
             android:layout_toRightOf="@id/smallCircle2"
             style="@style/ProfileImageStyle"/>

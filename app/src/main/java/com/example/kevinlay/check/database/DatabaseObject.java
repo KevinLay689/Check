@@ -285,6 +285,22 @@ public class DatabaseObject {
         });
     }
 
+    public void getOtherProfilePic(CircleImageView circleImageView) {
+
+        for(int i = 0; i < otherProfiles.size(); i++) {
+
+            if(otherProfiles.get(i).getPartner().equals(mAuth.getUid())) {
+                if(otherProfiles.get(i).getProfilePic().length() > 1) {
+                    byte[] decodedString = Base64.decode(otherProfiles.get(i).getProfilePic(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+                    circleImageView.setImageBitmap(decodedByte);
+                    decodedByte = null;
+                }
+            }
+        }
+    }
+
     public void setProfilePic(String encoded) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PROFILE_PIC_REFERENCE).setValue(encoded);
     }
