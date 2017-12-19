@@ -29,7 +29,6 @@ public class DatabaseObject {
     private static final String TAG = "DatabaseObject";
 
     public static final String USERS_REFERENCE = "users";
-    public static final String USER_REFERENCE = "userReference";
     public static final String FIRST_NAME_REFERENCE = "firstName";
     public static final String LAST_NAME_REFERENCE = "lastName";
     public static final String TIME_START_REFERENCE = "timeStart";
@@ -56,18 +55,21 @@ public class DatabaseObject {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                //Log.i(TAG, "onDataChange: " + user.getMajor());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        databaseReference.child(USERS_REFERENCE).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//                if(user.getId().equals(mAuth.getUid())) {
+//                    // Make interface call here
+//                }
+//                //Log.i(TAG, "onDataChange: " + user.getMajor());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 //        databaseReference.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -200,18 +202,14 @@ public class DatabaseObject {
                 for(int i = 0; i < otherProfiles.size(); i++) {
 
                     if(otherProfiles.get(i).getUserState().equals("Searching")) {
-                        String otherUserTimeStart, otherUserTimeEnd;
-
-                        int eatTime = 20;
+                        String otherUserTimeStart;
 
                         otherUserTimeStart = otherProfiles.get(i).getTimeStart();
-                        otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
 
-                        int yourTotalMinute, otherTotalMinute;
+                        int yourTotalMinute;
 
                         yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
 
-                        otherTotalMinute = minuteConversion(otherUserTimeEnd) - minuteConversion(otherUserTimeStart);
 
                         if( (yourTotalMinute + minuteConversion(yourTimeStart)) <= (minuteConversion(otherUserTimeStart)+19)) {
                             Log.i(TAG, "beginPartnerSearch:  there not a free window ");
@@ -248,6 +246,7 @@ public class DatabaseObject {
             }
         });
     }
+
     private int minuteConversion(String hours) {
 
         return (Integer.parseInt((hours.charAt(0) +"")) * 10 * 60) +

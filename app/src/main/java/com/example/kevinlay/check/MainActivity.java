@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
     private MyProfileFragment myProfileFragment;
-    DatabaseObject databaseObject;
+    private DatabaseObject databaseObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
