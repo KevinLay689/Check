@@ -16,19 +16,25 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.kevinlay.check.database.DatabaseObject;
+import com.example.kevinlay.check.database.DatabaseState;
+import com.example.kevinlay.check.home.HomeFragment;
 import com.example.kevinlay.check.login.LoginActivity;
 import com.example.kevinlay.check.profile.MyProfileFragment;
 import com.example.kevinlay.check.preferences.PreferencesFragment;
 import com.example.kevinlay.check.home.UnpairedHomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatabaseState.DatabaseCallback{
 
     private static final String NAV_HOME = "nav_home";
     private static final String NAV_PROFILE = "nav_profile";
     private static final String NAV_PREFERENCES = "nav_preferences";
     private static final String NAV_LOGOUT = "nav_logout";
     private static final String FRAGMENT_TAG = "fragmentTag";
+
+    private static final String SEARCHING_STATE = "Searching";
+    private static final String IDLE_STATE = "Idle";
+    private static final String PAIRED_STATE = "Paired";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MyProfileFragment myProfileFragment;
     private DatabaseObject databaseObject;
+    private DatabaseState databaseState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseObject = DatabaseObject.getInstance();
+        databaseState = new DatabaseState(this);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToolbar = (Toolbar) findViewById(R.id.nav_action);
@@ -172,5 +180,41 @@ public class MainActivity extends AppCompatActivity {
         if (myProfileFragment != null ) {
             myProfileFragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void updateUserStateFragment(String updateType) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+
+        switch (updateType) {
+            case IDLE_STATE:
+                if (fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                }
+            break;
+
+//            case SEARCHING_STATE:
+//                if (fragment == null) {
+//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//                } else {
+//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//                }
+//            break;
+
+            case PAIRED_STATE:
+                if (fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+                }
+            break;
+        }
+
+        fragmentTransaction.addToBackStack("");
+        fragmentTransaction.commit();
+
     }
 }

@@ -36,6 +36,7 @@ public class DatabaseState {
                 String state = dataSnapshot.getValue(String.class);
 
                 Log.i(TAG, "onDataChange: " + state);
+                databaseCallback.updateUserStateFragment(state);
             }
 
             @Override
