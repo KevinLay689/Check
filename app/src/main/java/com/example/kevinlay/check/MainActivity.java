@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                     break;
 
                     case DatabaseObject.ACCEPTED_STATE:
-                        Toast.makeText(getApplicationContext(), "Accepted Lunch Data", Toast.LENGTH_SHORT).show();
                         if (fragment == null) {
                             fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                         } else {
@@ -307,7 +306,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     }
 
     @Override
-    public void updateUI(String userState) {
+    public void updateUI(String userState, boolean updateOtherUser) {
         updateUserStateFragment(userState);
+        databaseObject.updateStates(DatabaseObject.USER_STATE, userState, updateOtherUser);
+
     }
 }

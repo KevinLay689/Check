@@ -59,7 +59,7 @@ public class PairedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //databaseObject.changeData(DatabaseObject.USER_STATE, DatabaseObject.IDLE_STATE);
-                pairedFragmentCallback.updateUI(DatabaseObject.IDLE_STATE);
+                pairedFragmentCallback.updateUI(DatabaseObject.IDLE_STATE, false);
             }
         });
 
@@ -67,7 +67,9 @@ public class PairedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //databaseObject.changeData(DatabaseObject.USER_STATE, DatabaseObject.ACCEPTED_STATE);
-                pairedFragmentCallback.updateUI(DatabaseObject.ACCEPTED_STATE);
+                pairedFragmentCallback.updateUI(DatabaseObject.ACCEPTED_STATE, true);
+                mAccept.setText("Awaiting other Response...");
+                mAccept.setEnabled(false);
             }
         });
 
@@ -104,6 +106,6 @@ public class PairedFragment extends Fragment {
     }
     
     public interface PairedFragmentCallback {
-        void updateUI(String userState);
+        void updateUI(String userState, boolean updateOtherUser);
     }
 }

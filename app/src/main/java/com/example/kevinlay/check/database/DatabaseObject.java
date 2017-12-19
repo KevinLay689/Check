@@ -308,8 +308,6 @@ public class DatabaseObject {
 
     public void getOtherProfilePic(final CircleImageView circleImageView) {
 
-        Log.i(TAG, "getOtherProfilePic: " + otherProfiles.size());
-
         databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -337,5 +335,51 @@ public class DatabaseObject {
 
     public void setProfilePic(String encoded) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PROFILE_PIC_REFERENCE).setValue(encoded);
+    }
+
+    public void updateStates(final String reference, final String value, final boolean updateOtherUser) {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                yourInfo.clear();
+                otherProfiles.clear();
+
+                for(DataSnapshot snapshot : dataSnapshot.child(USERS_REFERENCE).getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    if(snapshot.getKey().equals(mAuth.getUid())) {
+                        yourInfo.add(user);
+                    } else {
+                        otherProfiles.add(user);
+                    }
+                }
+
+               for(int i = 0; i < otherProfiles.size(); i++) {
+                    if(yourInfo.get(0).getPartner().equals(otherProfiles.get(i).getId())) {
+                        databaseReference.child(USERS_REFERENCE)
+                                .child(yourInfo.get(0).getId())
+                                .child(reference)
+                                .setValue(value);
+                        if(!updateOtherUser) {
+                            databaseReference.child(USERS_REFERENCE)
+                                    .child(otherProfiles.get(i).getId())
+                                    .child(reference)
+                                    .setValue(DatabaseObject.SEARCHING_STATE);
+                        } else {
+                            databaseReference.child(USERS_REFERENCE)
+                                    .child(otherProfiles.get(i).getId())
+                                    .child(reference)
+                                    .setValue(DatabaseObject.PAIRED_STATE);
+                        }
+                    }
+               }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
