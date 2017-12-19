@@ -119,7 +119,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     private void setUserData() {
         databaseObject.setProfileUserData(mTextMajor, mTextAboutMe, mTextHometown);
         databaseObject.getProfilePic(mUserProfileImage);
-        databaseObject.setUserData(mProfileUsername, DatabaseObject.FIRST_NAME_REFERENCE);
+        databaseObject.setUserData(mProfileUsername, DatabaseObject.FIRST_NAME_REFERENCE, "");
 //        mImageProfilePic.setImageBitmap(database.getProfileImage());
     }
 

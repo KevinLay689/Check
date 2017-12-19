@@ -11,6 +11,7 @@ public class User {
     private String email;
     private String major;
     private String timeStart, timeEnd, userState, partner, aboutMe, profilePic, id, lunchTime;
+    private String location, flakeRating;
 
     public User() {
 
@@ -30,6 +31,8 @@ public class User {
         this.lunchTime = "";
         this.aboutMe = "";
         this.profilePic = "";
+        this.flakeRating = "";
+        this.location = "";
     }
 
     public String getFirstName() {
@@ -134,5 +137,21 @@ public class User {
 
     public void setLunchTime(String lunchTime) {
         this.lunchTime = lunchTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getFlakeRating() {
+        return flakeRating;
+    }
+
+    public void setFlakeRating(String flakeRating) {
+        this.flakeRating = flakeRating;
     }
 }

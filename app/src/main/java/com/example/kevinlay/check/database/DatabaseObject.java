@@ -42,6 +42,8 @@ public class DatabaseObject {
     public static final String ABOUT_ME_REFERENCE = "aboutMe";
     public static final String HOMETOWN_REFERENCE = "hometown";
     public static final String LUNCH_TIME_REFERENCE = "lunchTime";
+    public static final String FLAKE_RATING_REFERENCE = "flakeRating";
+    public static final String LOCATION_REFERENCE = "location";
 
     private static DatabaseObject obj;
 
@@ -113,6 +115,9 @@ public class DatabaseObject {
             case ABOUT_ME_REFERENCE:
                 databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(ABOUT_ME_REFERENCE).setValue(newData);
                 break;
+            case LOCATION_REFERENCE:
+                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LOCATION_REFERENCE).setValue(newData);
+                break;
         }
     }
 
@@ -137,7 +142,7 @@ public class DatabaseObject {
         });
     }
 
-    public void setUserData(final TextView textView, final String reference) {
+    public void setUserData(final TextView textView, final String reference, final String extraText) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -162,8 +167,14 @@ public class DatabaseObject {
                         break;
                     case LAST_NAME_REFERENCE:
                         break;
+                    case LOCATION_REFERENCE:
+                        textView.setText(extraText + " " + user.getLocation());
+                        break;
                     case LUNCH_TIME_REFERENCE:
-                        textView.setText(user.getLunchTime());
+                        textView.setText(extraText + " " + user.getLunchTime());
+                        break;
+                    case FLAKE_RATING_REFERENCE:
+                        textView.setText(extraText + " " + user.getFlakeRating());
                         break;
                 }
             }

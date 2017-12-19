@@ -50,11 +50,13 @@ public class HomeFragment extends Fragment {
         mOtherProfile = (CircleImageView) view.findViewById(R.id.otherProfile);
         mLocation = (TextView) view.findViewById(R.id.locationText);
         mMeetTime = (TextView) view.findViewById(R.id.timeText);
-        mMatchText = (TextView) view.findViewById(R.id.ratingText);
+        mFlakeRating = (TextView) view.findViewById(R.id.ratingText);
 
         databaseObject = DatabaseObject.getInstance();
 
-        databaseObject.setUserData(mMeetTime, DatabaseObject.LUNCH_TIME_REFERENCE);
+        databaseObject.setUserData(mLocation, DatabaseObject.LOCATION_REFERENCE, mLocation.getText().toString());
+        databaseObject.setUserData(mMeetTime, DatabaseObject.LUNCH_TIME_REFERENCE, mMeetTime.getText().toString());
+        databaseObject.setUserData(mFlakeRating, DatabaseObject.FLAKE_RATING_REFERENCE, mFlakeRating.getText().toString());
         databaseObject.getOtherProfilePic(mOtherProfile);
         databaseObject.getProfilePic(mUserProfile);
     }

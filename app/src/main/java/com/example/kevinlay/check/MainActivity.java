@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 return true;
             }
         });
-        databaseObject.setUserData(navigationUsername, DatabaseObject.FIRST_NAME_REFERENCE);
+        databaseObject.setUserData(navigationUsername, DatabaseObject.FIRST_NAME_REFERENCE, "");
 
     }
 
