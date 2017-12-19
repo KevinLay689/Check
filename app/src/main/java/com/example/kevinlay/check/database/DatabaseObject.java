@@ -45,6 +45,12 @@ public class DatabaseObject {
     public static final String FLAKE_RATING_REFERENCE = "flakeRating";
     public static final String LOCATION_REFERENCE = "location";
 
+    public static final String SEARCHING_STATE = "Searching";
+    public static final String IDLE_STATE = "Idle";
+    public static final String PAIRED_STATE = "Paired";
+    public static final String ACCEPTED_STATE = "Accepted";
+
+
     private static DatabaseObject obj;
 
     private FirebaseAuth mAuth;
@@ -215,7 +221,7 @@ public class DatabaseObject {
 
                 for(int i = 0; i < otherProfiles.size(); i++) {
 
-                    if(otherProfiles.get(i).getUserState().equals("Searching")) {
+                    if(otherProfiles.get(i).getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
                         String otherUserTimeStart;
 
                         otherUserTimeStart = otherProfiles.get(i).getTimeStart();
@@ -244,8 +250,8 @@ public class DatabaseObject {
 
                             databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue(otherProfiles.get(i).getId());
                             databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(PARTNER_REFERENCE).setValue(mAuth.getUid());
-                            databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(USER_STATE).setValue("Paired");
-                            databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(USER_STATE).setValue("Paired");
+                            databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
+                            databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
                             break;
                         }
 
@@ -263,8 +269,8 @@ public class DatabaseObject {
 
     private int minuteConversion(String hours) {
 
-        return (Integer.parseInt((hours.charAt(0) +"")) * 10 * 60) +
-                (Integer.parseInt((hours.charAt(1) +"")) * 60) +
+        return (Integer.parseInt((hours.charAt(0) + "")) * 10 * 60) +
+                (Integer.parseInt((hours.charAt(1) + "")) * 60) +
                 (Integer.parseInt((hours.substring(3))));
 
     }

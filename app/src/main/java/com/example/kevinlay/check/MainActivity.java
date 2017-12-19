@@ -14,17 +14,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kevinlay.check.database.DatabaseObject;
 import com.example.kevinlay.check.database.DatabaseState;
-import com.example.kevinlay.check.home.HomeFragment;
+import com.example.kevinlay.check.home.PairedFragment;
 import com.example.kevinlay.check.login.LoginActivity;
 import com.example.kevinlay.check.profile.MyProfileFragment;
 import com.example.kevinlay.check.preferences.PreferencesFragment;
 import com.example.kevinlay.check.home.UnpairedHomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements DatabaseState.DatabaseCallback{
+public class MainActivity extends AppCompatActivity implements DatabaseState.DatabaseCallback, PairedFragment.PairedFragmentCallback{
 
     private static final String NAV_HOME = "nav_home";
     private static final String NAV_PROFILE = "nav_profile";
@@ -46,10 +52,14 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     private DatabaseObject databaseObject;
     private DatabaseState databaseState;
 
+    private PairedFragment pairedFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pairedFragment = new PairedFragment();
 
         databaseObject = DatabaseObject.getInstance();
         databaseState = new DatabaseState(this);
@@ -78,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     private void setupNavigationView() {
 
         View headerView =  mNavigationView.getHeaderView(0);
-//      ImageView navigationUserImage = (ImageView) headerView.findViewById(R.id.navigation_header_image);
         TextView navigationUsername = (TextView)headerView.findViewById(R.id.navigation_header_text);
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -111,19 +120,94 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
     }
 
+    private void displayUserStateFragment(final FragmentTransaction fragmentTransaction, final Fragment fragment) {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String state = dataSnapshot.getValue(String.class);
+
+                switch (state) {
+                    case DatabaseObject.PAIRED_STATE:
+                        if (fragment == null) {
+                            fragmentTransaction.add(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
+                        } else {
+                            fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
+                        }
+
+                        fragmentTransaction.addToBackStack("");
+                        fragmentTransaction.commit();
+                    break;
+
+                    case DatabaseObject.IDLE_STATE:
+                        if (fragment == null) {
+                            fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        } else {
+                            fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        }
+
+                        fragmentTransaction.addToBackStack("");
+                        fragmentTransaction.commit();
+                    break;
+
+                    case DatabaseObject.ACCEPTED_STATE:
+                        Toast.makeText(getApplicationContext(), "Accepted Lunch Data", Toast.LENGTH_SHORT).show();
+                        if (fragment == null) {
+                            fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        } else {
+                            fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        }
+
+                        fragmentTransaction.addToBackStack("");
+                        fragmentTransaction.commit();
+                    break;
+
+                    case DatabaseObject.SEARCHING_STATE:
+                        if (fragment == null) {
+                            fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        } else {
+                            fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        }
+
+                        fragmentTransaction.addToBackStack("");
+                        fragmentTransaction.commit();
+                    break;
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void createFragment(String fragmentName) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
         switch (fragmentName) {
             case NAV_HOME:
-                if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-                } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-                }
 
-                fragmentTransaction.addToBackStack("");
-                fragmentTransaction.commit();
+//                Toast.makeText(this, "Home clicked", Toast.LENGTH_SHORT).show();
+//
+//                if (fragment == null) {
+//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//                } else {
+//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//                }
+                displayUserStateFragment(fragmentTransaction, fragment);
+//
+//                if(fragment == null) {
+//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//                } else {
+//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//                }
+//
+//                fragmentTransaction.addToBackStack("");
+//                fragmentTransaction.commit();
                 break;
 
             case NAV_PROFILE:
@@ -156,9 +240,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 startActivity(i);
 
 //                if(fragment == null) {
-//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
 //                } else {
-//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
 //                }
 //                fragmentTransaction.addToBackStack("");
 //                fragmentTransaction.commit();
@@ -196,6 +280,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 }
             break;
 
+            case DatabaseObject.ACCEPTED_STATE:
+                Toast.makeText(getApplicationContext(), "Accepted Lunch Data", Toast.LENGTH_SHORT).show();
+            break;
+
 //            case SEARCHING_STATE:
 //                if (fragment == null) {
 //                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
@@ -206,9 +294,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
             case PAIRED_STATE:
                 if (fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new HomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 }
             break;
         }
@@ -216,5 +304,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         fragmentTransaction.addToBackStack("");
         fragmentTransaction.commit();
 
+    }
+
+    @Override
+    public void updateUI(String userState) {
+        updateUserStateFragment(userState);
     }
 }

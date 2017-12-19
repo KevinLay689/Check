@@ -46,6 +46,14 @@ public class DatabaseState {
         });
     }
 
+    private void changeData(String newData) {
+
+        databaseReference.child(DatabaseObject.USERS_REFERENCE)
+                .child(mAuth.getUid())
+                .child(DatabaseObject.USER_STATE)
+                .setValue(newData);
+    }
+
     public interface DatabaseCallback {
         void updateUserStateFragment(String updateType);
     }
