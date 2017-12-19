@@ -134,9 +134,6 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
-    // This will eventually just update the UI page
-    // Data will be saved in the edit profile dialog fragment,
-    // then this will pull the new data from firebase
     @Override
     public void onFinishEditDialog(String majorText, String aboutMeText, String hometownText) {
         Toast.makeText(getActivity(), "Data updated", Toast.LENGTH_SHORT).show();
@@ -158,7 +155,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] b = baos.toByteArray();
 
-            Toast.makeText(getActivity(),"Success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Image added to database", Toast.LENGTH_SHORT).show();
 
             String encodedPicture = Base64.encodeToString(b, Base64.DEFAULT);
 
