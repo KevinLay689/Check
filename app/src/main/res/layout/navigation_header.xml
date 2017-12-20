@@ -12,6 +12,10 @@
         android:layout_height="96dp">
 
     </LinearLayout>
+    <!--<com.example.kevinlay.check.CustomHeaderView-->
+        <!--android:id="@+id/navigation_header_image"-->
+        <!--android:layout_width="96dp"-->
+        <!--android:layout_height="96dp" />-->
 
     <TextView
         android:id="@+id/navigation_header_text"
@@ -21,6 +25,7 @@
         android:textSize="20sp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
+        android:text="Placeholder"
         android:layout_below="@+id/navigation_header_image"/>
 
 </RelativeLayout>

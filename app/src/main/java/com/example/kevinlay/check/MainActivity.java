@@ -77,9 +77,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
 
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//        fragmentTransaction.commit();
         createFragment(NAV_HOME);
         setupNavigationView();
 
@@ -90,10 +87,12 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
         View headerView =  mNavigationView.getHeaderView(0);
         TextView navigationUsername = (TextView)headerView.findViewById(R.id.navigation_header_text);
+//        CustomHeaderView customHeaderView = (CustomHeaderView) headerView.findViewById(R.id.navigation_header_image);
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         createFragment(NAV_HOME);
@@ -109,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         break;
                     case R.id.nav_logout:
                         createFragment(NAV_LOGOUT);
+                        invalidateOptionsMenu();
                         mDrawerLayout.closeDrawers();
                         break;
                     default:
@@ -117,8 +117,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 return true;
             }
         });
+        
         databaseObject.setUserData(navigationUsername, DatabaseObject.FIRST_NAME_REFERENCE, "");
-
+//        databaseObject.setViewData(customHeaderView, DatabaseObject.HEADER_IMAGE_REFERENCE, "");
     }
 
     private void displayUserStateFragment(final FragmentTransaction fragmentTransaction, final Fragment fragment) {
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
-                    break;
+                        break;
 
                     case DatabaseObject.IDLE_STATE:
                         if (fragment == null) {
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
-                    break;
+                        break;
 
                     case DatabaseObject.ACCEPTED_STATE:
                         if (fragment == null) {
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
-                    break;
+                        break;
 
                     case DatabaseObject.SEARCHING_STATE:
                         if (fragment == null) {
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
-                    break;
+                        break;
 
                     case DatabaseObject.MATCHED_STATE:
                         PairedFragment pairedFragment = new PairedFragment();
@@ -191,7 +192,18 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
-                    break;
+                        break;
+
+                    default:
+                        if (fragment == null) {
+                            fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        } else {
+                            fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        }
+
+                        fragmentTransaction.addToBackStack("");
+                        fragmentTransaction.commit();
+                        break;
                 }
 
             }
@@ -206,25 +218,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
         switch (fragmentName) {
+            
             case NAV_HOME:
-
-//                Toast.makeText(this, "Home clicked", Toast.LENGTH_SHORT).show();
-//
-//                if (fragment == null) {
-//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//                } else {
-//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//                }
                 displayUserStateFragment(fragmentTransaction, fragment);
-//
-//                if(fragment == null) {
-//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//                } else {
-//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//                }
-//
-//                fragmentTransaction.addToBackStack("");
-//                fragmentTransaction.commit();
                 break;
 
             case NAV_PROFILE:
@@ -250,26 +246,16 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 break;
 
             case NAV_LOGOUT:
-
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
-
-//                if(fragment == null) {
-//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
-//                } else {
-//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
-//                }
-//                fragmentTransaction.addToBackStack("");
-//                fragmentTransaction.commit();
                 break;
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if(mToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -295,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 }
-            break;
+                break;
 
             case DatabaseObject.MATCHED_STATE:
                 PairedFragment pairedFragment = new PairedFragment();
@@ -308,15 +294,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
                 }
-            break;
-
-//            case SEARCHING_STATE:
-//                if (fragment == null) {
-//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//                } else {
-//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-//                }
-//            break;
+                break;
 
             case PAIRED_STATE:
                 if (fragment == null) {
@@ -324,18 +302,15 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 }
-            break;
+                break;
         }
-
         fragmentTransaction.addToBackStack("");
         fragmentTransaction.commit();
-
     }
 
     @Override
     public void updateUI(String userState, boolean acceptClicked) {
         updateUserStateFragment(userState);
         databaseObject.updateStates(DatabaseObject.USER_STATE, userState, acceptClicked);
-
     }
 }

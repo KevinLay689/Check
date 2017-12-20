@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.kevinlay.check.CustomHeaderView;
 import com.example.kevinlay.check.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +46,7 @@ public class DatabaseObject {
     public static final String LUNCH_TIME_REFERENCE = "lunchTime";
     public static final String FLAKE_RATING_REFERENCE = "flakeRating";
     public static final String LOCATION_REFERENCE = "location";
+    public static final String HEADER_IMAGE_REFERENCE = "header";
 
     public static final String SEARCHING_STATE = "Searching";
     public static final String IDLE_STATE = "Idle";
@@ -140,6 +143,27 @@ public class DatabaseObject {
                 major.setText(user.getMajor());
                 aboutMe.setText(user.getAboutMe());
                 hometown.setText(user.getHometown());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setViewData(final View view, final String reference, final String extraText) {
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                switch (reference) {
+                    case HEADER_IMAGE_REFERENCE:
+                        ((CustomHeaderView) view).setLetter(user.getFirstName().charAt(0)+"");
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override

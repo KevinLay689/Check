@@ -22,6 +22,8 @@ public class CustomHeaderView extends View {
     private Rect areaRect;
     private RectF bounds;
 
+    private String nameLetter;
+
     public CustomHeaderView(Context context) {
         super(context);
 
@@ -32,6 +34,8 @@ public class CustomHeaderView extends View {
         areaRect = new Rect(75, 75, 300, 300);
 
         bounds = new RectF(areaRect);
+
+        nameLetter = "";
 
     }
 
@@ -45,12 +49,19 @@ public class CustomHeaderView extends View {
         areaRect = new Rect(75, 75, 300, 300);
 
         bounds = new RectF(areaRect);
+
+        nameLetter = "";
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawItem(canvas, "K");
+        drawItem(canvas, nameLetter );
+    }
+
+    public void setLetter(String nameLetter) {
+        this.nameLetter = nameLetter;
+        invalidate();
     }
 
     private void drawItem(Canvas canvas, String text) {
