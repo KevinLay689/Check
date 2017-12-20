@@ -152,6 +152,38 @@ public class DatabaseObject {
         });
     }
 
+    public void getOtherProfile(final CircleImageView circleImageView, final TextView major, final TextView aboutMe, final TextView hometown, final TextView username) {
+
+        databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    Log.i(TAG, "getOtherProfilePic: " + user.getId());
+                    if(user.getPartner().equals(mAuth.getUid())) {
+                        if (user.getProfilePic().length() > 1) {
+                            byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+                            circleImageView.setImageBitmap(decodedByte);
+                            decodedByte = null;
+                        }
+                        major.setText(user.getMajor());
+                        aboutMe.setText(user.getAboutMe());
+                        hometown.setText(user.getHometown());
+                        username.setText(user.getFirstName());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void setViewData(final View view, final String reference, final String extraText) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

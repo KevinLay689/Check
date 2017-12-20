@@ -52,6 +52,8 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle bundle = getArguments();
+
         databaseObject = DatabaseObject.getInstance();
 
         mTextMajor = (TextView) view.findViewById(R.id.profileUserMajor);
@@ -60,44 +62,49 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         mProfileUsername = (TextView) view.findViewById(R.id.profileUsername);
 
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
-
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showEditDialog();
-            }
-        });
-
         mUserProfileImage = view.findViewById(R.id.editProfileImage);
 
-        mUserProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ArrayList<Image> images = new ArrayList<>();
-                ImagePicker.with(getActivity())                         //  Initialize ImagePicker with activity or fragment context
-                        .setToolbarColor("#212121")         //  Toolbar color
-                        .setStatusBarColor("#000000")       //  StatusBar color (works with SDK >= 21  )
-                        .setToolbarTextColor("#FFFFFF")     //  Toolbar text color (Title and Done button)
-                        .setToolbarIconColor("#FFFFFF")     //  Toolbar icon color (Back and Camera button)
-                        .setProgressBarColor("#4CAF50")     //  ProgressBar color
-                        .setBackgroundColor("#212121")      //  Background color
-                        .setCameraOnly(false)               //  Camera mode
-                        .setMultipleMode(true)              //  Select multiple images or single image
-                        .setFolderMode(true)                //  Folder mode
-                        .setShowCamera(true)                //  Show camera button
-                        .setFolderTitle("Albums")           //  Folder title (works with FolderMode = true)
-                        .setImageTitle("Galleries")         //  Image title (works with FolderMode = false)
-                        .setDoneTitle("Done")               //  Done button title
-                        .setLimitMessage("You have reached selection limit")    // Selection limit message
-                        .setMaxSize(1)                     //  Max images can be selected
-                        .setSavePath("ImagePicker")         //  Image capture folder name
-                        .setSelectedImages(images)          //  Selected images
-                        .setKeepScreenOn(true)              //  Keep screen on when selecting images
-                        .start();
-            }
-        });
+        if(bundle == null) {
+            mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showEditDialog();
+                }
+            });
 
-        setUserData();
+            mUserProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ArrayList<Image> images = new ArrayList<>();
+                    ImagePicker.with(getActivity())                         //  Initialize ImagePicker with activity or fragment context
+                            .setToolbarColor("#212121")         //  Toolbar color
+                            .setStatusBarColor("#000000")       //  StatusBar color (works with SDK >= 21  )
+                            .setToolbarTextColor("#FFFFFF")     //  Toolbar text color (Title and Done button)
+                            .setToolbarIconColor("#FFFFFF")     //  Toolbar icon color (Back and Camera button)
+                            .setProgressBarColor("#4CAF50")     //  ProgressBar color
+                            .setBackgroundColor("#212121")      //  Background color
+                            .setCameraOnly(false)               //  Camera mode
+                            .setMultipleMode(true)              //  Select multiple images or single image
+                            .setFolderMode(true)                //  Folder mode
+                            .setShowCamera(true)                //  Show camera button
+                            .setFolderTitle("Albums")           //  Folder title (works with FolderMode = true)
+                            .setImageTitle("Galleries")         //  Image title (works with FolderMode = false)
+                            .setDoneTitle("Done")               //  Done button title
+                            .setLimitMessage("You have reached selection limit")    // Selection limit message
+                            .setMaxSize(1)                     //  Max images can be selected
+                            .setSavePath("ImagePicker")         //  Image capture folder name
+                            .setSelectedImages(images)          //  Selected images
+                            .setKeepScreenOn(true)              //  Keep screen on when selecting images
+                            .start();
+                }
+            });
+
+            setUserData();
+        } else {
+            setOtherUserData();
+            mFloatingActionButton.setVisibility(View.INVISIBLE);
+        }
+
 
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 //        boolean strUserName = sharedPreferences.getBoolean("notifications", false);
@@ -114,6 +121,10 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         // SETS the target fragment for use later when sending results
         editNameDialogFragment.setTargetFragment(MyProfileFragment.this, 300);
         editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
+    private void setOtherUserData() {
+        databaseObject.getOtherProfile(mUserProfileImage, mTextMajor, mTextAboutMe, mTextHometown, mProfileUsername);
     }
 
     private void setUserData() {

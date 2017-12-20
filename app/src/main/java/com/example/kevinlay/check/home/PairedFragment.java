@@ -1,19 +1,23 @@
 package com.example.kevinlay.check.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.kevinlay.check.R;
 import com.example.kevinlay.check.database.DatabaseObject;
+import com.example.kevinlay.check.profile.MyProfileFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,7 +33,6 @@ public class PairedFragment extends Fragment {
 
     private DatabaseObject databaseObject;
     private PairedFragmentCallback pairedFragmentCallback;
-
 
     @Nullable
     @Override
@@ -88,6 +91,14 @@ public class PairedFragment extends Fragment {
         databaseObject.setUserData(mFlakeRating, DatabaseObject.FLAKE_RATING_REFERENCE, mFlakeRating.getText().toString());
         databaseObject.getOtherProfilePic(mOtherProfile);
         databaseObject.getProfilePic(mUserProfile);
+
+        mOtherProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), OtherProfileActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
