@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         mAuth = FirebaseAuth.getInstance();
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String state = dataSnapshot.getValue(String.class);
@@ -277,10 +277,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 }
-            break;
-
-            case DatabaseObject.ACCEPTED_STATE:
-                Toast.makeText(getApplicationContext(), "Accepted Lunch Data", Toast.LENGTH_SHORT).show();
             break;
 
 //            case SEARCHING_STATE:

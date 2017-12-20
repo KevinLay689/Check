@@ -240,12 +240,14 @@ public class DatabaseObject {
 
                             if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
                                 String time = otherProfiles.get(i).getTimeStart();
-                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(time);
-                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(time);
+                                String finalTime = clockConversion(time);
+                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
+                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
                             } else {
                                 String time = yourInfo.get(0).getTimeStart();
-                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(time);
-                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(time);
+                                String finalTime =  clockConversion(time);
+                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
+                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
                             }
 
                             databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue(otherProfiles.get(i).getId());
@@ -265,6 +267,36 @@ public class DatabaseObject {
 
             }
         });
+    }
+
+    private String clockConversion(String hours) {
+
+        int first = (Integer.parseInt((hours.charAt(0) + "")));
+        int second = (Integer.parseInt((hours.charAt(1) + "")));
+        int third = (Integer.parseInt((hours.charAt(3) + "")));
+        int fourth = (Integer.parseInt((hours.charAt(4) + "")));
+
+        String totalHour = first+""+second+""+third+""+fourth;
+
+        String amPM = " am";
+
+        String hourTimeAsString = first+""+second;
+
+        int hourTime = Integer.parseInt(hourTimeAsString);
+
+        if(hourTime >= 12) {
+            amPM = " pm";
+            hourTime = hourTime - 12;
+        }
+
+        if(hourTime == 0) {
+            hourTime = 12;
+        }
+
+        Log.i(TAG, "clockConversion: "+ hourTime+""+third+""+fourth);
+
+        return hourTime+":"+third+""+fourth+amPM;
+
     }
 
     private int minuteConversion(String hours) {

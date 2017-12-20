@@ -196,8 +196,6 @@ public class UnpairedHomeFragment extends Fragment {
                 mFindPartner.setText(R.string.find_partner);
                 mFindPartner.setEnabled(true);
                 mCancelSearch.setVisibility(View.INVISIBLE);
-//                mTimeStart.setVisibility(View.INVISIBLE);
-//                mTimeEnd.setVisibility(View.INVISIBLE);
                 databaseObject.changeData(DatabaseObject.USER_STATE, "Idle");
                 stopAnimations();
             }
