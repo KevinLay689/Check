@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 //                }
 //                fragmentTransaction.addToBackStack("");
 //                fragmentTransaction.commit();
-//                break;
+                break;
         }
     }
 
@@ -298,10 +298,15 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
             break;
 
             case DatabaseObject.MATCHED_STATE:
+                PairedFragment pairedFragment = new PairedFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("matched", true);
+                pairedFragment.setArguments(bundle);
+
                 if (fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
                 }
             break;
 
