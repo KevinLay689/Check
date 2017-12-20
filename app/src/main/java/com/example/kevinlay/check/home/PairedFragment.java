@@ -106,6 +106,6 @@ public class PairedFragment extends Fragment {
     }
     
     public interface PairedFragmentCallback {
-        void updateUI(String userState, boolean updateOtherUser);
+        void updateUI(String userState, boolean acceptClicked);
     }
 }

@@ -49,6 +49,7 @@ public class DatabaseObject {
     public static final String IDLE_STATE = "Idle";
     public static final String PAIRED_STATE = "Paired";
     public static final String ACCEPTED_STATE = "Accepted";
+    public static final String MATCHED_STATE = "Matched";
 
 
     private static DatabaseObject obj;
@@ -278,14 +279,14 @@ public class DatabaseObject {
 
         String totalHour = first+""+second+""+third+""+fourth;
 
-        String amPM = " am";
+        String amPM = " AM";
 
         String hourTimeAsString = first+""+second;
 
         int hourTime = Integer.parseInt(hourTimeAsString);
 
         if(hourTime >= 12) {
-            amPM = " pm";
+            amPM = " PM";
             hourTime = hourTime - 12;
         }
 
@@ -369,7 +370,7 @@ public class DatabaseObject {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PROFILE_PIC_REFERENCE).setValue(encoded);
     }
 
-    public void updateStates(final String reference, final String value, final boolean updateOtherUser) {
+    public void updateStates(final String reference, final String value, final boolean acceptClicked) {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -392,16 +393,28 @@ public class DatabaseObject {
                                 .child(yourInfo.get(0).getId())
                                 .child(reference)
                                 .setValue(value);
-                        if(!updateOtherUser) {
+                        if(!acceptClicked) {
                             databaseReference.child(USERS_REFERENCE)
                                     .child(otherProfiles.get(i).getId())
                                     .child(reference)
                                     .setValue(DatabaseObject.SEARCHING_STATE);
                         } else {
-                            databaseReference.child(USERS_REFERENCE)
-                                    .child(otherProfiles.get(i).getId())
-                                    .child(reference)
-                                    .setValue(DatabaseObject.PAIRED_STATE);
+                            if(otherProfiles.get(i).getUserState().equals(DatabaseObject.ACCEPTED_STATE)) {
+                                databaseReference.child(USERS_REFERENCE)
+                                        .child(yourInfo.get(0).getId())
+                                        .child(reference)
+                                        .setValue(DatabaseObject.MATCHED_STATE);
+
+                                databaseReference.child(USERS_REFERENCE)
+                                        .child(otherProfiles.get(i).getId())
+                                        .child(reference)
+                                        .setValue(DatabaseObject.MATCHED_STATE);
+                            } else {
+                                databaseReference.child(USERS_REFERENCE)
+                                        .child(otherProfiles.get(i).getId())
+                                        .child(reference)
+                                        .setValue(DatabaseObject.PAIRED_STATE);
+                            }
                         }
                     }
                }
