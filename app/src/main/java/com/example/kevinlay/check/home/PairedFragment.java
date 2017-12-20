@@ -42,6 +42,8 @@ public class PairedFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle bundle = getArguments();
+
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "blacklist.ttf");
         mMatchText = (TextView) view.findViewById(R.id.matchText);
         mMatchText.setTypeface(typeface);
@@ -54,6 +56,12 @@ public class PairedFragment extends Fragment {
 
         mAccept = (Button) view.findViewById(R.id.acceptButton);
         mDecline = (Button) view.findViewById(R.id.declineButton);
+
+        if(bundle != null) {
+            mDecline.setVisibility(View.INVISIBLE);
+            mAccept.setEnabled(false);
+            mAccept.setText("Lunch has been CONFIRMED");
+        }
 
         mDecline.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -77,9 +77,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentManager = getSupportFragmentManager();
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
-        fragmentTransaction.commit();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+//        fragmentTransaction.commit();
+        createFragment(NAV_HOME);
         setupNavigationView();
 
 
@@ -169,6 +170,23 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                             fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                         } else {
                             fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                        }
+
+                        fragmentTransaction.addToBackStack("");
+                        fragmentTransaction.commit();
+                    break;
+
+                    case DatabaseObject.MATCHED_STATE:
+                        PairedFragment pairedFragment = new PairedFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("matched", true);
+                        pairedFragment.setArguments(bundle);
+
+
+                        if (fragment == null) {
+                            fragmentTransaction.add(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
+                        } else {
+                            fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
                         }
 
                         fragmentTransaction.addToBackStack("");
@@ -276,6 +294,14 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                     fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
+                }
+            break;
+
+            case DatabaseObject.MATCHED_STATE:
+                if (fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 }
             break;
 
