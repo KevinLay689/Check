@@ -1,4 +1,4 @@
-package com.example.kevinlay.check.home;
+package com.example.kevinlay.check.alternative_home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
