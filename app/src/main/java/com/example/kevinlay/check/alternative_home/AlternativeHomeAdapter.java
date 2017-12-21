@@ -18,9 +18,13 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
 
     private List<User> users;
 
+    public AlternativeHomeAdapter(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public AhViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_alternative_home, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_list_row, parent, false);
 
         return new AhViewHolder(view);
     }
@@ -32,7 +36,7 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
 
     @Override
     public int getItemCount() {
-        return 0;
+        return users.size();
     }
 
     public class AhViewHolder extends RecyclerView.ViewHolder {
