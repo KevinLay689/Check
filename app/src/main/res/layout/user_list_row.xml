@@ -10,7 +10,6 @@
         android:id="@+id/card1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
         android:layout_margin="10dp"
         android:elevation="5dp"
         app:cardBackgroundColor="@color/cardview_dark_background">
@@ -28,17 +27,20 @@
                 android:paddingRight="5dp">
 
                 <ImageView
+                    android:id="@+id/freeProfiles"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:src="@drawable/gradient_home_background" />
 
                 <ImageView
+                    android:id="@+id/freeOverlay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@color/forty_opacity_black" />
 
                 <TextView
+                    android:id="@+id/freeStartTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="10:00am "
@@ -46,6 +48,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/freeEndTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -65,6 +68,7 @@
                 android:padding="5dp">
 
                 <TextView
+                    android:id="@+id/freeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Kevin L."
@@ -72,16 +76,10 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/freeMajor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Computer Science"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Quickley or Ike's"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
@@ -94,6 +92,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/freeRequest"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

@@ -1,9 +1,16 @@
 package com.example.kevinlay.check.alternative_home;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kevinlay.check.R;
 import com.example.kevinlay.check.models.User;
@@ -31,7 +38,18 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
 
     @Override
     public void onBindViewHolder(AhViewHolder holder, int position) {
+        if(users.get(position).getProfilePic().length() > 1 && users.get(position).getPartner().length() < 1) {
+            byte[] decodedString = Base64.decode(users.get(position).getProfilePic(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+            holder.mFreeProfile.setImageBitmap(decodedByte);
+            decodedByte = null;
+        }
 
+        holder.mFreeName.setText(users.get(position).getFirstName());
+        holder.mFreeMajor.setText(users.get(position).getMajor());
+        holder.mFreeStart.setText(users.get(position).getTimeStart());
+        holder.mFreeEnd.setText(users.get(position).getTimeEnd());
     }
 
     @Override
@@ -40,8 +58,25 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
     }
 
     public class AhViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView mFreeProfile;
+        private TextView mFreeName, mFreeStart, mFreeEnd, mFreeMajor;
+        private Button mFreeRequest;
         public AhViewHolder(View itemView) {
             super(itemView);
+
+            mFreeProfile = (ImageView) itemView.findViewById(R.id.freeProfiles);
+            mFreeName = (TextView)itemView.findViewById(R.id.freeName);
+            mFreeStart = (TextView)itemView.findViewById(R.id.freeStartTime);
+            mFreeEnd = (TextView)itemView.findViewById(R.id.freeEndTime);
+            mFreeMajor = (TextView)itemView.findViewById(R.id.freeMajor);
+            mFreeRequest = (Button) itemView.findViewById(R.id.freeRequest);
+            mFreeRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
 }
