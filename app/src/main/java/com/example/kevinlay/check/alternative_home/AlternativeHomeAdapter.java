@@ -62,6 +62,7 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
         private ImageView mFreeProfile;
         private TextView mFreeName, mFreeStart, mFreeEnd, mFreeMajor;
         private Button mFreeRequest;
+
         public AhViewHolder(View itemView) {
             super(itemView);
 
