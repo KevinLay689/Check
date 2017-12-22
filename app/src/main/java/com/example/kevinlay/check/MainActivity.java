@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity implements DatabaseState.DatabaseCallback, PairedFragment.PairedFragmentCallback{
 
     private static final String NAV_HOME = "nav_home";
+    private static final String NAV_BROWSE = "nav_browse";
     private static final String NAV_PROFILE = "nav_profile";
     private static final String NAV_PREFERENCES = "nav_preferences";
     private static final String NAV_LOGOUT = "nav_logout";
@@ -97,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         createFragment(NAV_HOME);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_browse:
+                        createFragment(NAV_BROWSE);
                         mDrawerLayout.closeDrawers();
                         break;
                     case R.id.nav_profile:
@@ -224,6 +229,18 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 displayUserStateFragment(fragmentTransaction, fragment);
                 break;
 
+            case NAV_BROWSE:
+                if(fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new AlternativeHomeFragment(), FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new AlternativeHomeFragment(), FRAGMENT_TAG);
+                }
+
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+                break;
+
+
             case NAV_PROFILE:
                 myProfileFragment = new MyProfileFragment();
                 if(fragment == null) {
@@ -238,21 +255,13 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
             case NAV_PREFERENCES:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new AlternativeHomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new AlternativeHomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
                 }
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
                 break;
-//                if(fragment == null) {
-//                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
-//                } else {
-//                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
-//                }
-//                fragmentTransaction.addToBackStack("");
-//                fragmentTransaction.commit();
-//                break;
 
             case NAV_LOGOUT:
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();

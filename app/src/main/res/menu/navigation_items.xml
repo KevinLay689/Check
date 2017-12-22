@@ -5,9 +5,13 @@
         android:title="@string/home_menu"
         android:icon="@drawable/ic_menu_home"/>
 
+    <item android:id="@+id/nav_browse"
+        android:title="@string/browse_menu"
+        android:icon="@drawable/ic_menu_browse"/>
+
     <item android:id="@+id/nav_profile"
         android:title="@string/my_profile_menu"
-        android:icon="@drawable/ic_menu_account"/>
+        android:icon="@drawable/ic_menu_profile"/>
 
     <item android:id="@+id/nav_preferences"
         android:title="@string/preferences_menu"
