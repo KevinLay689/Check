@@ -51,6 +51,9 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
 
+    <string name="searching_users">People currently searching</string>
+
+
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
         <item name="biology">Biology</item>

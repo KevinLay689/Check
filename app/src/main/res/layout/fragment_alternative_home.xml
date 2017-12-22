@@ -5,30 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/headerImage"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image_header_background"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Find Random Partner"
-        android:layout_marginTop="25dp"
-        android:layout_alignParentTop="true"
-        style="@style/ButtonLoginStyle" />
-
     <TextView
         android:id="@+id/searchingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headerImage"
         android:layout_centerHorizontal="true"
-        android:text="People currently searching"
+        android:text="@string/searching_users"
         style="@style/TextViewLabelStyle"/>
 
     <android.support.v7.widget.RecyclerView

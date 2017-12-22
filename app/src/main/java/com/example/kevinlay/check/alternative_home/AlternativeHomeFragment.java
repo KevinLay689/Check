@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
 import com.example.kevinlay.check.database.DatabaseObject;
@@ -31,7 +32,7 @@ import java.util.List;
  * Created by kevinlay on 12/15/17.
  */
 
-public class AlternativeHomeFragment extends Fragment {
+public class AlternativeHomeFragment extends Fragment implements AlternativeHomeAdapter.OnItemClicked {
 
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
@@ -70,6 +71,7 @@ public class AlternativeHomeFragment extends Fragment {
                 AlternativeHomeAdapter adapter = new AlternativeHomeAdapter(users);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                adapter.setOnClick(AlternativeHomeFragment.this);
             }
 
             @Override
@@ -77,5 +79,10 @@ public class AlternativeHomeFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(getActivity(), "clicked position " + position, Toast.LENGTH_SHORT).show();
     }
 }

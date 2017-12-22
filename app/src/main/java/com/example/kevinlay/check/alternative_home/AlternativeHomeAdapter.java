@@ -24,6 +24,7 @@ import java.util.List;
 public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHomeAdapter.AhViewHolder> {
 
     private List<User> users;
+    private OnItemClicked onItemClicked;
 
     public AlternativeHomeAdapter(List<User> users) {
         this.users = users;
@@ -36,8 +37,12 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
         return new AhViewHolder(view);
     }
 
+    public interface OnItemClicked {
+        void onItemClick(int position);
+    }
+
     @Override
-    public void onBindViewHolder(AhViewHolder holder, int position) {
+    public void onBindViewHolder(AhViewHolder holder, final int position) {
         if(users.get(position).getProfilePic().length() > 1 && users.get(position).getPartner().length() < 1) {
             byte[] decodedString = Base64.decode(users.get(position).getProfilePic(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -50,6 +55,17 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
         holder.mFreeMajor.setText(users.get(position).getMajor());
         holder.mFreeStart.setText(users.get(position).getTimeStart());
         holder.mFreeEnd.setText(users.get(position).getTimeEnd());
+
+        holder.mFreeRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClicked.onItemClick(position);
+            }
+        });
+    }
+
+    public void setOnClick(OnItemClicked onItemClicked) {
+        this.onItemClicked = onItemClicked;
     }
 
     @Override
@@ -72,12 +88,6 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
             mFreeEnd = (TextView)itemView.findViewById(R.id.freeEndTime);
             mFreeMajor = (TextView)itemView.findViewById(R.id.freeMajor);
             mFreeRequest = (Button) itemView.findViewById(R.id.freeRequest);
-            mFreeRequest.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }
     }
 }
