@@ -10,6 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:gravity="center"
         android:text="@string/searching_users"
         style="@style/TextViewLabelStyle"/>
 

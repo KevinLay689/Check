@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kevinlay.check.R;
@@ -37,7 +38,9 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private DatabaseObject databaseObject;
     private ArrayList<User> users = new ArrayList<>();
+    private TextView textView;
 
     @Nullable
     @Override
@@ -51,7 +54,26 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         recyclerView = (RecyclerView) view.findViewById(R.id.browseRecyclerView);
-        populateRecyclerView();
+        textView = (TextView) view.findViewById(R.id.searchingText);
+
+        databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String state = dataSnapshot.getValue(String.class);
+
+                if(state.equals(DatabaseObject.IDLE_STATE)) {
+                    populateRecyclerView();
+                } else {
+                    textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void populateRecyclerView() {
