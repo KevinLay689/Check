@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.kevinlay.check.R;
 import com.example.kevinlay.check.models.User;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -44,8 +46,14 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
     @Override
     public void onBindViewHolder(AhViewHolder holder, final int position) {
         if(users.get(position).getProfilePic().length() > 1 && users.get(position).getPartner().length() < 1) {
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 30;
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
             byte[] decodedString = Base64.decode(users.get(position).getProfilePic(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            InputStream is = new ByteArrayInputStream(decodedString);
+            Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
             Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
             holder.mFreeProfile.setImageBitmap(decodedByte);
             decodedByte = null;

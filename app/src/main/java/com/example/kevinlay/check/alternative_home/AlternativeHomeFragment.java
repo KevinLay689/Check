@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private DatabaseObject databaseObject;
+    private ProgressBar progressBar;
     private ArrayList<User> users = new ArrayList<>();
     private TextView textView;
 
@@ -55,6 +57,7 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
         mAuth = FirebaseAuth.getInstance();
         recyclerView = (RecyclerView) view.findViewById(R.id.browseRecyclerView);
         textView = (TextView) view.findViewById(R.id.searchingText);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
 
         databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -89,6 +92,8 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
                         users.add(user);
                     }
                 }
+
+                progressBar.setVisibility(View.INVISIBLE);
 
                 AlternativeHomeAdapter adapter = new AlternativeHomeAdapter(users);
                 recyclerView.setAdapter(adapter);

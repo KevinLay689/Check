@@ -1,5 +1,6 @@
 package com.example.kevinlay.check.profile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -64,6 +65,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
         mUserProfileImage = view.findViewById(R.id.editProfileImage);
 
+
         if(bundle == null) {
             mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -104,8 +106,6 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
             setOtherUserData();
             mFloatingActionButton.setVisibility(View.INVISIBLE);
         }
-
-
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 //        boolean strUserName = sharedPreferences.getBoolean("notifications", false);
 //        String downloadType = sharedPreferences.getString("major","none");

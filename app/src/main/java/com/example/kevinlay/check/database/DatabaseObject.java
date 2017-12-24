@@ -182,14 +182,25 @@ public class DatabaseObject {
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    Log.i(TAG, "getOtherProfilePic: " + user.getId());
                     if(user.getPartner().equals(mAuth.getUid())) {
                         if (user.getProfilePic().length() > 1) {
+//                            byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+//                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//                            Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+//                            circleImageView.setImageBitmap(decodedByte);
+//                            decodedByte = null;
+
+                            BitmapFactory.Options options = new BitmapFactory.Options();
+                            options.inSampleSize = 8;
+                            options.inPreferredConfig = Bitmap.Config.RGB_565;
                             byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            InputStream is = new ByteArrayInputStream(decodedString);
+                            Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
                             Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
                             circleImageView.setImageBitmap(decodedByte);
                             decodedByte = null;
+
                         }
                         major.setText(user.getMajor());
                         aboutMe.setText(user.getAboutMe());
@@ -297,7 +308,6 @@ public class DatabaseObject {
                         }
                     } else {
                         otherProfiles.add(user);
-                        Log.i(TAG, "size" + otherProfiles.size());
                     }
                 }
 
@@ -445,7 +455,6 @@ public class DatabaseObject {
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    Log.i(TAG, "getOtherProfilePic: " + user.getId());
                     // Check to see if the profile pic has been uploaded yet
                     if(user.getProfilePic().length() > 1 && user.getPartner().equals(mAuth.getUid())) {
 

@@ -37,7 +37,7 @@
         android:id="@+id/profileUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kevin Lay"
+        android:text=""
         android:layout_below="@+id/editProfileImage"
         style="@style/TextViewNameProfileStyle"/>
 
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/profileUserMajorLabel"
-                    android:text="Computer Science"
+                    android:text=""
                     style="@style/TextViewDescriptionStyle"/>
 
             </android.support.v7.widget.CardView>
@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus egestas lorem, nec facili von nec sem. Etiam lacus mauris, pharetra ac eleifend eget, sagittis ut sapien. Etiam ut sem vehicula nisi bibendum eleifend eu quis velit. Nullam quis augue consequat massa rutrum maximus sit amet id nisl."
+                    android:text=""
                     style="@style/TextViewDescriptionStyle"/>
 
             </android.support.v7.widget.CardView>
@@ -121,7 +121,7 @@
                     android:id="@+id/profileUserHometown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="San Diego"
+                    android:text=""
                     style="@style/TextViewDescriptionStyle"/>
 
             </android.support.v7.widget.CardView>
