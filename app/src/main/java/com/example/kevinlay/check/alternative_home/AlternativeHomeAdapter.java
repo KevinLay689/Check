@@ -49,19 +49,20 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
             Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
             holder.mFreeProfile.setImageBitmap(decodedByte);
             decodedByte = null;
+
+            holder.mFreeName.setText(users.get(position).getFirstName());
+            holder.mFreeMajor.setText(users.get(position).getMajor());
+            holder.mFreeStart.setText(users.get(position).getTimeStart());
+            holder.mFreeEnd.setText(users.get(position).getTimeEnd());
+
+            holder.mFreeRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClicked.onItemClick(position);
+                }
+            });
+
         }
-
-        holder.mFreeName.setText(users.get(position).getFirstName());
-        holder.mFreeMajor.setText(users.get(position).getMajor());
-        holder.mFreeStart.setText(users.get(position).getTimeStart());
-        holder.mFreeEnd.setText(users.get(position).getTimeEnd());
-
-        holder.mFreeRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClicked.onItemClick(position);
-            }
-        });
     }
 
     public void setOnClick(OnItemClicked onItemClicked) {

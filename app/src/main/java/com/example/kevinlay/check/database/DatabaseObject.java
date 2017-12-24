@@ -152,6 +152,26 @@ public class DatabaseObject {
         });
     }
 
+    public void setBothPartnersEmpty() {
+        databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    if (user.getPartner().equals(mAuth.getUid())) {
+                        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue("");
+                        databaseReference.child(USERS_REFERENCE).child(user.getId()).child(PARTNER_REFERENCE).setValue("");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void getOtherProfile(final CircleImageView circleImageView, final TextView major, final TextView aboutMe, final TextView hometown, final TextView username) {
 
         databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -454,6 +474,7 @@ public class DatabaseObject {
                                     .child(otherProfiles.get(i).getId())
                                     .child(reference)
                                     .setValue(DatabaseObject.SEARCHING_STATE);
+                            setBothPartnersEmpty();
                         } else {
                             if(otherProfiles.get(i).getUserState().equals(DatabaseObject.ACCEPTED_STATE)) {
                                 databaseReference.child(USERS_REFERENCE)

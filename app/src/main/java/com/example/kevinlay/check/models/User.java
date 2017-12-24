@@ -25,7 +25,7 @@ public class User {
         this.email = email;
         this.timeStart = "";
         this.timeEnd = "";
-        this.userState = "";
+        this.userState = "Idle";
         this.partner = "";
         this.id = id;
         this.lunchTime = "";

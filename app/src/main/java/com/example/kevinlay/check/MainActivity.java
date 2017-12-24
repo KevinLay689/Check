@@ -330,5 +330,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     public void updateUI(String userState, boolean acceptClicked) {
         updateUserStateFragment(userState);
         databaseObject.updateStates(DatabaseObject.USER_STATE, userState, acceptClicked);
+
     }
 }
