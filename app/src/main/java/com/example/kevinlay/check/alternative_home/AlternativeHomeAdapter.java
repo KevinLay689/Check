@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kevinlay.check.R;
+import com.example.kevinlay.check.database.DatabaseObject;
 import com.example.kevinlay.check.models.User;
 
 import java.io.ByteArrayInputStream;
@@ -60,8 +61,8 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
 
             holder.mFreeName.setText(users.get(position).getFirstName());
             holder.mFreeMajor.setText(users.get(position).getMajor());
-            holder.mFreeStart.setText(users.get(position).getTimeStart());
-            holder.mFreeEnd.setText(users.get(position).getTimeEnd());
+            holder.mFreeStart.setText(DatabaseObject.clockConversion(users.get(position).getTimeStart()));
+            holder.mFreeEnd.setText(DatabaseObject.clockConversion(users.get(position).getTimeEnd()));
 
             holder.mFreeRequest.setOnClickListener(new View.OnClickListener() {
                 @Override

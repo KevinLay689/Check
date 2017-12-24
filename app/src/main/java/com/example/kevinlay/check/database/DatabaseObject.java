@@ -367,7 +367,7 @@ public class DatabaseObject {
         });
     }
 
-    private String clockConversion(String hours) {
+    public static String clockConversion(String hours) {
 
         int first = (Integer.parseInt((hours.charAt(0) + "")));
         int second = (Integer.parseInt((hours.charAt(1) + "")));
