@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -409,8 +411,19 @@ public class DatabaseObject {
                 User user = dataSnapshot.getValue(User.class);
                 // Check to see if the profile pic has been uploaded yet
                 if(user.getProfilePic().length() > 1) {
+//                    byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+//                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+//                    circleImageView.setImageBitmap(decodedByte);
+//                    decodedByte = null;
+
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 8;
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
                     byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    InputStream is = new ByteArrayInputStream(decodedString);
+                    Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
                     Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
                     circleImageView.setImageBitmap(decodedByte);
                     decodedByte = null;
@@ -435,8 +448,14 @@ public class DatabaseObject {
                     Log.i(TAG, "getOtherProfilePic: " + user.getId());
                     // Check to see if the profile pic has been uploaded yet
                     if(user.getProfilePic().length() > 1 && user.getPartner().equals(mAuth.getUid())) {
+
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inSampleSize = 8;
+                        options.inPreferredConfig = Bitmap.Config.RGB_565;
                         byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        InputStream is = new ByteArrayInputStream(decodedString);
+                        Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
                         Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
                         circleImageView.setImageBitmap(decodedByte);
                         decodedByte = null;
