@@ -213,6 +213,15 @@ public class DatabaseObject {
                     case HEADER_IMAGE_REFERENCE:
                         ((CustomHeaderView) view).setLetter(user.getFirstName().charAt(0)+"");
                         break;
+
+                    case TIME_START_REFERENCE:
+                        ((TextView)view).setText(clockConversion(user.getTimeStart()));
+                        break;
+
+                    case TIME_END_REFERENCE:
+                        ((TextView)view).setText(clockConversion(user.getTimeEnd()));
+                        break;
+
                     default:
                         break;
                 }

@@ -88,6 +88,12 @@ public class UnpairedHomeFragment extends Fragment {
 
         setupOnClickListeners();
 
+        Bundle b = getArguments();
+
+        if(b != null) {
+            loadWithAnimations();
+        }
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         // then you use
         String major = prefs.getString("major", "any");
@@ -200,6 +206,18 @@ public class UnpairedHomeFragment extends Fragment {
                 stopAnimations();
             }
         });
+    }
+
+    private void loadWithAnimations() {
+        mSelectEndTime.setVisibility(View.INVISIBLE);
+        mSelectStartTime.setVisibility(View.INVISIBLE);
+        startAnimations();
+        mFindPartner.setEnabled(false);
+        mCancelSearch.setVisibility(View.VISIBLE);
+        mFindPartner.setText(R.string.searching_partner);
+        mFindPartner.setVisibility(View.VISIBLE);
+        databaseObject.setViewData(mTimeStart, DatabaseObject.TIME_START_REFERENCE, "");
+        databaseObject.setViewData(mTimeEnd, DatabaseObject.TIME_END_REFERENCE, "");
     }
 
     private void stopAnimations() {
