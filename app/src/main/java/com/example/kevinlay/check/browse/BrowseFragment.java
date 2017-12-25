@@ -53,6 +53,7 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
         recyclerView = (RecyclerView) view.findViewById(R.id.browseRecyclerView);
         textView = (TextView) view.findViewById(R.id.searchingText);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
+        databaseObject = DatabaseObject.getInstance();
 
         databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -104,8 +105,9 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
     }
 
     @Override
-    public void onItemClick(String id) {
-        Toast.makeText(getActivity(), "clicked position " + id, Toast.LENGTH_SHORT).show();
+    public void onItemClick(String id, String timeStart) {
+        //Toast.makeText(getActivity(), "Request sent! Head to home page to accept ", Toast.LENGTH_LONG).show();
+        databaseObject.sendRequestWithId(id, timeStart);
         recyclerView.setVisibility(View.INVISIBLE);
         textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
     }

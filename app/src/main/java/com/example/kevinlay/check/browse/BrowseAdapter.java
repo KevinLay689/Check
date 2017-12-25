@@ -40,7 +40,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHold
     }
 
     public interface OnItemClicked {
-        void onItemClick(String id);
+        void onItemClick(String id, String startTime);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHold
             holder.mFreeRequest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClicked.onItemClick(users.get(position).getId());
+                    onItemClicked.onItemClick(users.get(position).getId(), users.get(position).getTimeStart());
                 }
             });
 

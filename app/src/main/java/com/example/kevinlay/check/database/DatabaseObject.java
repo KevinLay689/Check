@@ -482,6 +482,18 @@ public class DatabaseObject {
         });
     }
 
+    public void sendRequestWithId(String otherId, String timeStart) {
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue(otherId);
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(USER_STATE).setValue(PAIRED_STATE);
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(TIME_START_REFERENCE).setValue(timeStart);
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(TIME_END_REFERENCE).setValue(timeStart);
+        databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(clockConversion(timeStart));
+        databaseReference.child(USERS_REFERENCE).child(otherId).child(LUNCH_TIME_REFERENCE).setValue(clockConversion(timeStart));
+        databaseReference.child(USERS_REFERENCE).child(otherId).child(PARTNER_REFERENCE).setValue(mAuth.getUid());
+        databaseReference.child(USERS_REFERENCE).child(otherId).child(USER_STATE).setValue(PAIRED_STATE);
+
+    }
+
     public void setProfilePic(String encoded) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PROFILE_PIC_REFERENCE).setValue(encoded);
     }
