@@ -320,22 +320,25 @@ public class DatabaseObject {
                 for(int i = 0; i < otherProfiles.size(); i++) {
 
                     if(otherProfiles.get(i).getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
-                        String otherUserTimeStart;
+                        String otherUserTimeStart, otherUserTimeEnd;
 
                         otherUserTimeStart = otherProfiles.get(i).getTimeStart();
+                        otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
 
+                        Log.i(TAG, "onDataChange: your time end: " + minuteConversion(yourTimeEnd));
+                        Log.i(TAG, "onDataChange: other time start is " + minuteConversion(otherUserTimeStart));
                         int yourTotalMinute;
 
                         yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
+                        int yourTotalTimeStart = yourTotalMinute + minuteConversion(yourTimeStart);
 
-
-                        if( (yourTotalMinute + minuteConversion(yourTimeStart)) <= (minuteConversion(otherUserTimeStart)+19)) {
-                            Log.i(TAG, "beginPartnerSearch:  there not a free window ");
-                            break;
-                        }
-                        else {
+                        if( minuteConversion(yourTimeEnd) <= (minuteConversion(otherUserTimeStart)+19)) {
+                            Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+                        } else if(minuteConversion(yourTimeStart) > minuteConversion(otherUserTimeEnd)) {
+                            Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+                        } else {
                             Log.i(TAG, "beginPartnerSearch:  there is a free window");
-
+                            Log.i(TAG, "onDataChange: size of otherProfiles is" + otherProfiles.size());
                             if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
                                 String time = otherProfiles.get(i).getTimeStart();
                                 String finalTime = clockConversion(time);
@@ -391,7 +394,7 @@ public class DatabaseObject {
             hourTime = 12;
         }
 
-        Log.i(TAG, "clockConversion: "+ hourTime+""+third+""+fourth);
+        //Log.i(TAG, "clockConversion: "+ hourTime+""+third+""+fourth);
 
         return hourTime+":"+third+""+fourth+amPM;
 
