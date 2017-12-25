@@ -1,5 +1,6 @@
 package com.example.kevinlay.check.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -34,6 +35,8 @@ public class PairedFragment extends Fragment {
     private DatabaseObject databaseObject;
     private PairedFragmentCallback pairedFragmentCallback;
 
+    private ProgressDialog progressDialog;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,11 +54,15 @@ public class PairedFragment extends Fragment {
         mMatchText = (TextView) view.findViewById(R.id.matchText);
         mMatchText.setTypeface(typeface);
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+
         mUserProfile = (CircleImageView) view.findViewById(R.id.userProfile);
         mOtherProfile = (CircleImageView) view.findViewById(R.id.otherProfile);
         mLocation = (TextView) view.findViewById(R.id.locationText);
         mMeetTime = (TextView) view.findViewById(R.id.timeText);
-        mFlakeRating = (TextView) view.findViewById(R.id.ratingText);
+        //mFlakeRating = (TextView) view.findViewById(R.id.ratingText);
 
         mAccept = (Button) view.findViewById(R.id.acceptButton);
         mDecline = (Button) view.findViewById(R.id.declineButton);
@@ -88,9 +95,9 @@ public class PairedFragment extends Fragment {
 
         databaseObject.setUserData(mLocation, DatabaseObject.LOCATION_REFERENCE, mLocation.getText().toString());
         databaseObject.setUserData(mMeetTime, DatabaseObject.LUNCH_TIME_REFERENCE, mMeetTime.getText().toString());
-        databaseObject.setUserData(mFlakeRating, DatabaseObject.FLAKE_RATING_REFERENCE, mFlakeRating.getText().toString());
+        //databaseObject.setUserData(mFlakeRating, DatabaseObject.FLAKE_RATING_REFERENCE, mFlakeRating.getText().toString());
         databaseObject.getOtherProfilePic(mOtherProfile);
-        databaseObject.getProfilePic(mUserProfile);
+        databaseObject.getProfilePic(mUserProfile, progressDialog);
 
         mOtherProfile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.example.kevinlay.check.database;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -415,7 +416,7 @@ public class DatabaseObject {
         return obj;
     }
 
-    public void getProfilePic(final CircleImageView circleImageView) {
+    public void getProfilePic(final CircleImageView circleImageView, final ProgressDialog progressDialog) {
 
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -440,6 +441,10 @@ public class DatabaseObject {
                     Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
                     circleImageView.setImageBitmap(decodedByte);
                     decodedByte = null;
+
+                    if(progressDialog != null ) {
+                        progressDialog.dismiss();
+                    }
                 }
             }
 

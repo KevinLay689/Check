@@ -32,7 +32,7 @@ public class User {
         this.aboutMe = "";
         this.profilePic = "";
         this.flakeRating = "";
-        this.location = "";
+        this.location = "Cafe Russo";
     }
 
     public String getFirstName() {

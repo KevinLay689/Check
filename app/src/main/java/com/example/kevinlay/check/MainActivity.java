@@ -1,6 +1,7 @@
 package com.example.kevinlay.check;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
     private PairedFragment pairedFragment;
 
+    private SharedPreferences prefs;
+    private String major;
+    private Boolean isAcceptingNotifications;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         createFragment(NAV_HOME);
         setupNavigationView();
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        major = prefs.getString("major", "any");
+        isAcceptingNotifications = prefs.getBoolean("notifications", true);
 
     }
 

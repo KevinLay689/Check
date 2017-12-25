@@ -15,21 +15,11 @@
         android:text="@string/searching_users"
         style="@style/TextViewLabelStyle"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:indeterminate="true"
-        android:layout_below="@id/searchingText"
-        style="?android:attr/progressBarStyle"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/browseRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/progressBar2">
+        android:layout_below="@id/searchingText">
 
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

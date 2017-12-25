@@ -41,6 +41,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     private CircleImageView mUserProfileImage;
     private FloatingActionButton mFloatingActionButton;
     private DatabaseObject databaseObject;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -65,6 +66,9 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
         mUserProfileImage = view.findViewById(R.id.editProfileImage);
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         if(bundle == null) {
             mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +133,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
 
     private void setUserData() {
         databaseObject.setProfileUserData(mTextMajor, mTextAboutMe, mTextHometown);
-        databaseObject.getProfilePic(mUserProfileImage);
+        databaseObject.getProfilePic(mUserProfileImage, progressDialog);
         databaseObject.setUserData(mProfileUsername, DatabaseObject.FIRST_NAME_REFERENCE, "");
 //        mImageProfilePic.setImageBitmap(database.getProfileImage());
     }
@@ -171,7 +175,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
             String encodedPicture = Base64.encodeToString(b, Base64.DEFAULT);
 
             databaseObject.setProfilePic(encodedPicture);
-            databaseObject.getProfilePic(mUserProfileImage);
+            databaseObject.getProfilePic(mUserProfileImage, progressDialog);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_above="@+id/containerLinear3"
+        android:layout_above="@+id/acceptButton"
         android:orientation="horizontal">
 
         <ImageView
@@ -110,29 +110,29 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/containerLinear3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/acceptButton"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/containerLinear3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/acceptButton"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:orientation="horizontal">-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="@color/white"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_star_white"/>
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:tint="@color/white"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:src="@drawable/ic_star_white"/>-->
 
-        <TextView
-            android:id="@+id/ratingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rating_label"
-            style="@style/TextViewProfile"/>
+        <!--<TextView-->
+            <!--android:id="@+id/ratingText"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/rating_label"-->
+            <!--style="@style/TextViewProfile"/>-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <Button
         android:id="@+id/acceptButton"

@@ -84,7 +84,7 @@ public class UnpairedHomeFragment extends Fragment {
 
         mUserProfileImage = view.findViewById(R.id.userProfileImage);
 
-        databaseObject.getProfilePic(mUserProfileImage);
+        databaseObject.getProfilePic(mUserProfileImage, null);
 
         setupOnClickListeners();
 

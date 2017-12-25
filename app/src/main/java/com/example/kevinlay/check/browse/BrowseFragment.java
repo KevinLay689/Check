@@ -1,5 +1,6 @@
 package com.example.kevinlay.check.browse;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,9 +36,10 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private DatabaseObject databaseObject;
-    private ProgressBar progressBar;
     private ArrayList<User> users = new ArrayList<>();
     private TextView textView;
+
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -52,8 +54,11 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
         mAuth = FirebaseAuth.getInstance();
         recyclerView = (RecyclerView) view.findViewById(R.id.browseRecyclerView);
         textView = (TextView) view.findViewById(R.id.searchingText);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
         databaseObject = DatabaseObject.getInstance();
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -89,7 +94,7 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
                     }
                 }
 
-                progressBar.setVisibility(View.INVISIBLE);
+                progressDialog.dismiss();
 
                 BrowseAdapter adapter = new BrowseAdapter(users);
                 recyclerView.setAdapter(adapter);
@@ -106,7 +111,7 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
 
     @Override
     public void onItemClick(String id, String timeStart) {
-        //Toast.makeText(getActivity(), "Request sent! Head to home page to accept ", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Request sent!", Toast.LENGTH_SHORT).show();
         databaseObject.sendRequestWithId(id, timeStart);
         recyclerView.setVisibility(View.INVISIBLE);
         textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
