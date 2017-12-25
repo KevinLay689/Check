@@ -175,7 +175,7 @@ public class DatabaseObject {
         });
     }
 
-    public void getOtherProfile(final CircleImageView circleImageView, final TextView major, final TextView aboutMe, final TextView hometown, final TextView username) {
+    public void getOtherProfile(final CircleImageView circleImageView, final TextView major, final TextView aboutMe, final TextView hometown, final TextView username, final ProgressDialog progressDialog) {
 
         databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -207,6 +207,7 @@ public class DatabaseObject {
                         aboutMe.setText(user.getAboutMe());
                         hometown.setText(user.getHometown());
                         username.setText(user.getFirstName());
+                        progressDialog.dismiss();
                     }
                 }
             }
@@ -358,10 +359,8 @@ public class DatabaseObject {
                             databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
                             break;
                         }
-
                     }
                 }
-
             }
 
             @Override
@@ -552,7 +551,6 @@ public class DatabaseObject {
                         }
                     }
                }
-
             }
 
             @Override

@@ -31,6 +31,5 @@ public class OtherProfileActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, myProfileFragment);
         fragmentTransaction.commit();
-
     }
 }

@@ -128,7 +128,7 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
     }
 
     private void setOtherUserData() {
-        databaseObject.getOtherProfile(mUserProfileImage, mTextMajor, mTextAboutMe, mTextHometown, mProfileUsername);
+        databaseObject.getOtherProfile(mUserProfileImage, mTextMajor, mTextAboutMe, mTextHometown, mProfileUsername, progressDialog);
     }
 
     private void setUserData() {

@@ -115,7 +115,7 @@ public class PairedFragment extends Fragment {
             pairedFragmentCallback = (PairedFragmentCallback) context;
         } else {
             throw new ClassCastException(context.toString()
-                    + " must implement MyListFragment.OnItemSelectedListener");
+                    + " must implement PairedFragment.Listener");
         }
     }
 
