@@ -1,15 +1,11 @@
-package com.example.kevinlay.check.alternative_home;
+package com.example.kevinlay.check.browse;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kevinlay on 12/15/17.
  */
 
-public class AlternativeHomeFragment extends Fragment implements AlternativeHomeAdapter.OnItemClicked {
+public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClicked {
 
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
@@ -95,10 +90,10 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
 
                 progressBar.setVisibility(View.INVISIBLE);
 
-                AlternativeHomeAdapter adapter = new AlternativeHomeAdapter(users);
+                BrowseAdapter adapter = new BrowseAdapter(users);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                adapter.setOnClick(AlternativeHomeFragment.this);
+                adapter.setOnClick(BrowseFragment.this);
             }
 
             @Override
@@ -109,7 +104,9 @@ public class AlternativeHomeFragment extends Fragment implements AlternativeHome
     }
 
     @Override
-    public void onItemClick(int position) {
-        Toast.makeText(getActivity(), "clicked position " + position, Toast.LENGTH_SHORT).show();
+    public void onItemClick(String id) {
+        Toast.makeText(getActivity(), "clicked position " + id, Toast.LENGTH_SHORT).show();
+        recyclerView.setVisibility(View.INVISIBLE);
+        textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
     }
 }

@@ -1,8 +1,7 @@
-package com.example.kevinlay.check.alternative_home;
+package com.example.kevinlay.check.browse;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -24,12 +23,12 @@ import java.util.List;
  * Created by kevinlay on 12/21/17.
  */
 
-public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHomeAdapter.AhViewHolder> {
+public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHolder> {
 
     private List<User> users;
     private OnItemClicked onItemClicked;
 
-    public AlternativeHomeAdapter(List<User> users) {
+    public BrowseAdapter(List<User> users) {
         this.users = users;
     }
 
@@ -41,7 +40,7 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
     }
 
     public interface OnItemClicked {
-        void onItemClick(int position);
+        void onItemClick(String id);
     }
 
     @Override
@@ -67,7 +66,7 @@ public class AlternativeHomeAdapter extends RecyclerView.Adapter<AlternativeHome
             holder.mFreeRequest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClicked.onItemClick(position);
+                    onItemClicked.onItemClick(users.get(position).getId());
                 }
             });
 

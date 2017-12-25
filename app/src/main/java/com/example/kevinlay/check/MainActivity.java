@@ -14,9 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kevinlay.check.alternative_home.AlternativeHomeFragment;
+import com.example.kevinlay.check.browse.BrowseFragment;
 import com.example.kevinlay.check.database.DatabaseObject;
 import com.example.kevinlay.check.database.DatabaseState;
 import com.example.kevinlay.check.home.PairedFragment;
@@ -236,9 +235,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
             case NAV_BROWSE:
                 if(fragment == null) {
-                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new AlternativeHomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new BrowseFragment(), FRAGMENT_TAG);
                 } else {
-                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new AlternativeHomeFragment(), FRAGMENT_TAG);
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new BrowseFragment(), FRAGMENT_TAG);
                 }
 
                 fragmentTransaction.addToBackStack("");
