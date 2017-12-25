@@ -319,6 +319,20 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 }
                 break;
 
+            case DatabaseObject.SEARCHING_STATE:
+                UnpairedHomeFragment unpairedHomeFragment = new UnpairedHomeFragment();
+                Bundle b = new Bundle();
+                b.putBoolean("matched", true);
+                unpairedHomeFragment.setArguments(b);
+
+                if (fragment == null) {
+                    fragmentTransaction.add(R.id.frameLayoutPlaceHolder, unpairedHomeFragment, FRAGMENT_TAG);
+                } else {
+                    fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, unpairedHomeFragment, FRAGMENT_TAG);
+                }
+                break;
+
+
             case PAIRED_STATE:
                 if (fragment == null) {
                     fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
