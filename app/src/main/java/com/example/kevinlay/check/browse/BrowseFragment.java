@@ -68,6 +68,7 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
                 if(state.equals(DatabaseObject.IDLE_STATE)) {
                     populateRecyclerView();
                 } else {
+                    progressDialog.dismiss();
                     textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
                 }
             }

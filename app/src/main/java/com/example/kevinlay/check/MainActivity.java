@@ -2,6 +2,7 @@ package com.example.kevinlay.check;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
+
                         break;
 
                     case DatabaseObject.IDLE_STATE:
@@ -367,6 +369,12 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
     private void createNotification(String notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            Intent intent = new Intent(this, MainActivity.class);
+            int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+            int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+            PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
+
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("myChannelId", "My Channel", importance);
             channel.setDescription("Reminders");
@@ -379,16 +387,25 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                     // Builder class for devices targeting API 26+ requires a channel ID
                     new NotificationCompat.Builder(this, "myChannelId")
                             .setContentTitle("Check: ")
-                            .setContentText(notification);
+                            .setContentText(notification)
+                            .setContentIntent(pIntent)
+                            .setAutoCancel(true);
 
             mNotificationManager.notify(56, mBuilder.build());
         } else {
+
+            Intent intent = new Intent(this, MainActivity.class);
+            int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+            int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+            PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
 
             NotificationCompat.Builder mBuilder =
                     // this Builder class is deprecated
                     new NotificationCompat.Builder(this)
                             .setContentTitle("Check: ")
-                            .setContentText(notification);
+                            .setContentText(notification)
+                            .setContentIntent(pIntent)
+                            .setAutoCancel(true);
 
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
