@@ -1,12 +1,17 @@
 package com.example.kevinlay.check;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -211,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commit();
+
                         break;
 
                     default:
@@ -357,5 +363,36 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     public void updateUI(String userState, boolean acceptClicked) {
         updateUserStateFragment(userState);
         databaseObject.updateStates(DatabaseObject.USER_STATE, userState, acceptClicked);
+    }
+
+    private void createNotification(String notification) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("myChannelId", "My Channel", importance);
+            channel.setDescription("Reminders");
+            // Register the channel with the notifications manager
+            NotificationManager mNotificationManager =
+                    (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.createNotificationChannel(channel);
+
+            NotificationCompat.Builder mBuilder =
+                    // Builder class for devices targeting API 26+ requires a channel ID
+                    new NotificationCompat.Builder(this, "myChannelId")
+                            .setContentTitle("Check: ")
+                            .setContentText(notification);
+
+            mNotificationManager.notify(56, mBuilder.build());
+        } else {
+
+            NotificationCompat.Builder mBuilder =
+                    // this Builder class is deprecated
+                    new NotificationCompat.Builder(this)
+                            .setContentTitle("Check: ")
+                            .setContentText(notification);
+
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(1, mBuilder.build());
+        }
     }
 }
