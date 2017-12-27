@@ -199,7 +199,7 @@ public class DatabaseObject {
 //                            decodedByte = null;
 
                             BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inSampleSize = 8;
+                            options.inSampleSize = 2;
                             options.inPreferredConfig = Bitmap.Config.RGB_565;
                             byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
                             //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -487,7 +487,7 @@ public class DatabaseObject {
 //                    decodedByte = null;
 
                     BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 8;
+                    options.inSampleSize = 2;
                     options.inPreferredConfig = Bitmap.Config.RGB_565;
                     byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
                     //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -522,7 +522,7 @@ public class DatabaseObject {
                     if(user.getProfilePic().length() > 1 && user.getPartner().equals(mAuth.getUid())) {
 
                         BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inSampleSize = 8;
+                        options.inSampleSize = 2;
                         options.inPreferredConfig = Bitmap.Config.RGB_565;
                         byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
                         //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

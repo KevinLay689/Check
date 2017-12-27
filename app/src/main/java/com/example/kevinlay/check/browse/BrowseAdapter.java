@@ -48,7 +48,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHold
         if(users.get(position).getProfilePic().length() > 1 && users.get(position).getPartner().length() < 1) {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 30;
+            options.inSampleSize = 50;
             options.inPreferredConfig = Bitmap.Config.RGB_565;
             byte[] decodedString = Base64.decode(users.get(position).getProfilePic(), Base64.DEFAULT);
             //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
