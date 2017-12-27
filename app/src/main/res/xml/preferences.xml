@@ -16,7 +16,7 @@
             android:summary="@string/major_summary"
             android:entries="@array/entries_list_preference"
             android:entryValues="@array/entryvalues_list_preference"
-            android:defaultValue="anyMajor"/>
+            android:defaultValue="any"/>
 
     </android.support.v7.preference.PreferenceCategory>
 

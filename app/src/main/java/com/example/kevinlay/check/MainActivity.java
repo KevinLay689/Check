@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -39,6 +40,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements DatabaseState.DatabaseCallback, PairedFragment.PairedFragmentCallback{
+
+    private static final String TAG = "MainActivity";
 
     private static final String NAV_HOME = "nav_home";
     private static final String NAV_BROWSE = "nav_browse";
@@ -161,8 +164,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         }
 
                         fragmentTransaction.addToBackStack("");
-                        fragmentTransaction.commit();
-
+                        fragmentTransaction.commitAllowingStateLoss();
+                        
                         break;
 
                     case DatabaseObject.IDLE_STATE:
@@ -173,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         }
 
                         fragmentTransaction.addToBackStack("");
-                        fragmentTransaction.commit();
+                        fragmentTransaction.commitAllowingStateLoss();
                         break;
 
                     case DatabaseObject.ACCEPTED_STATE:
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         }
 
                         fragmentTransaction.addToBackStack("");
-                        fragmentTransaction.commit();
+                        fragmentTransaction.commitAllowingStateLoss();
                         break;
 
                     case DatabaseObject.SEARCHING_STATE:
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         }
 
                         fragmentTransaction.addToBackStack("");
-                        fragmentTransaction.commit();
+                        fragmentTransaction.commitAllowingStateLoss();
                         break;
 
                     case DatabaseObject.MATCHED_STATE:
@@ -217,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         }
 
                         fragmentTransaction.addToBackStack("");
-                        fragmentTransaction.commit();
+                        fragmentTransaction.commitAllowingStateLoss();
 
                         break;
 
@@ -229,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         }
 
                         fragmentTransaction.addToBackStack("");
-                        fragmentTransaction.commit();
+                        fragmentTransaction.commitAllowingStateLoss();
                         break;
                 }
 
@@ -258,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 }
 
                 fragmentTransaction.addToBackStack("");
-                fragmentTransaction.commit();
+                fragmentTransaction.commitAllowingStateLoss();
                 break;
 
 
@@ -271,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 }
 
                 fragmentTransaction.addToBackStack("");
-                fragmentTransaction.commit();
+                fragmentTransaction.commitAllowingStateLoss();
                 break;
 
             case NAV_PREFERENCES:
@@ -281,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PreferencesFragment(), FRAGMENT_TAG);
                 }
                 fragmentTransaction.addToBackStack("");
-                fragmentTransaction.commit();
+                fragmentTransaction.commitAllowingStateLoss();
                 break;
 
             case NAV_LOGOUT:
@@ -310,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
     @Override
     public void updateUserStateFragment(String updateType) {
+        Log.i(TAG, "updateUserStateFragment: ");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 
@@ -333,6 +337,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
                 }
+                createNotification("The other user has accepted!", "Tap to view confirmation");
                 break;
 
             case DatabaseObject.SEARCHING_STATE:
@@ -355,10 +360,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 }
+                createNotification("You've been paired up!", "Tap to view match");
                 break;
         }
         fragmentTransaction.addToBackStack("");
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -367,7 +373,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         databaseObject.updateStates(DatabaseObject.USER_STATE, userState, acceptClicked);
     }
 
-    private void createNotification(String notification) {
+    private void createNotification(String title, String notification) {
+        Log.i(TAG, "createNotification: ");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -386,7 +393,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
             NotificationCompat.Builder mBuilder =
                     // Builder class for devices targeting API 26+ requires a channel ID
                     new NotificationCompat.Builder(this, "myChannelId")
-                            .setContentTitle("Check: ")
+                            .setContentTitle(title)
+                            .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
                             .setContentText(notification)
                             .setContentIntent(pIntent)
                             .setAutoCancel(true);
@@ -402,7 +410,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
             NotificationCompat.Builder mBuilder =
                     // this Builder class is deprecated
                     new NotificationCompat.Builder(this)
-                            .setContentTitle("Check: ")
+                            .setContentTitle(title)
+                            .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
                             .setContentText(notification)
                             .setContentIntent(pIntent)
                             .setAutoCancel(true);
@@ -411,5 +420,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(1, mBuilder.build());
         }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
     }
 }

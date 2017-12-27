@@ -64,12 +64,12 @@
     </array>
 
     <array name="entryvalues_list_preference">
-        <item>computerScienceMajor</item>
-        <item>biologyMajor</item>
-        <item>artMajor</item>
-        <item>marketingMajor</item>
-        <item>businessMajor</item>
-        <item>anyMajor</item>
+        <item>computerScience</item>
+        <item>biology</item>
+        <item>art</item>
+        <item>marketing</item>
+        <item>business</item>
+        <item>any</item>
     </array>
 
 </resources>
