@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     private static final String NAV_LOGOUT = "nav_logout";
     private static final String FRAGMENT_TAG = "fragmentTag";
 
-    private static final String SEARCHING_STATE = "Searching";
-    private static final String IDLE_STATE = "Idle";
-    private static final String PAIRED_STATE = "Paired";
-
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
@@ -318,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 
         switch (updateType) {
-            case IDLE_STATE:
+            case DatabaseObject.IDLE_STATE:
                 if (fragment == null) {
                     fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new UnpairedHomeFragment(), FRAGMENT_TAG);
                 } else {
@@ -354,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 break;
 
 
-            case PAIRED_STATE:
+            case DatabaseObject.PAIRED_STATE:
                 if (fragment == null) {
                     fragmentTransaction.add(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 } else {
@@ -374,7 +370,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     }
 
     private void createNotification(String title, String notification) {
-        Log.i(TAG, "createNotification: ");
+
+        final int NOTIFICATION_O_ID = 1;
+        final int NOTIFICATION_PRE_O_ID = 0;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -399,7 +398,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                             .setContentIntent(pIntent)
                             .setAutoCancel(true);
 
-            mNotificationManager.notify(56, mBuilder.build());
+            mNotificationManager.notify(NOTIFICATION_O_ID, mBuilder.build());
+
         } else {
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -418,9 +418,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(1, mBuilder.build());
+            mNotificationManager.notify(NOTIFICATION_PRE_O_ID, mBuilder.build());
         }
     }
+
+    // Left empty on purpose
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
