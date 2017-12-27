@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         major = prefs.getString("major", "any");
-        isAcceptingNotifications = prefs.getBoolean("notifications", true);
 
     }
 
@@ -374,51 +373,56 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         final int NOTIFICATION_O_ID = 1;
         final int NOTIFICATION_PRE_O_ID = 0;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        isAcceptingNotifications = prefs.getBoolean("notifications", true);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-            int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
-            PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
+        if(isAcceptingNotifications) {
 
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("myChannelId", "My Channel", importance);
-            channel.setDescription("Reminders");
-            // Register the channel with the notifications manager
-            NotificationManager mNotificationManager =
-                    (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.createNotificationChannel(channel);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            NotificationCompat.Builder mBuilder =
-                    // Builder class for devices targeting API 26+ requires a channel ID
-                    new NotificationCompat.Builder(this, "myChannelId")
-                            .setContentTitle(title)
-                            .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
-                            .setContentText(notification)
-                            .setContentIntent(pIntent)
-                            .setAutoCancel(true);
+                Intent intent = new Intent(this, MainActivity.class);
+                int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+                int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+                PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
 
-            mNotificationManager.notify(NOTIFICATION_O_ID, mBuilder.build());
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel("myChannelId", "My Channel", importance);
+                channel.setDescription("Reminders");
+                // Register the channel with the notifications manager
+                NotificationManager mNotificationManager =
+                        (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.createNotificationChannel(channel);
 
-        } else {
+                NotificationCompat.Builder mBuilder =
+                        // Builder class for devices targeting API 26+ requires a channel ID
+                        new NotificationCompat.Builder(this, "myChannelId")
+                                .setContentTitle(title)
+                                .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
+                                .setContentText(notification)
+                                .setContentIntent(pIntent)
+                                .setAutoCancel(true);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-            int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
-            PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
+                mNotificationManager.notify(NOTIFICATION_O_ID, mBuilder.build());
 
-            NotificationCompat.Builder mBuilder =
-                    // this Builder class is deprecated
-                    new NotificationCompat.Builder(this)
-                            .setContentTitle(title)
-                            .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
-                            .setContentText(notification)
-                            .setContentIntent(pIntent)
-                            .setAutoCancel(true);
+            } else {
 
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(NOTIFICATION_PRE_O_ID, mBuilder.build());
+                Intent intent = new Intent(this, MainActivity.class);
+                int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+                int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+                PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
+
+                NotificationCompat.Builder mBuilder =
+                        // this Builder class is deprecated
+                        new NotificationCompat.Builder(this)
+                                .setContentTitle(title)
+                                .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
+                                .setContentText(notification)
+                                .setContentIntent(pIntent)
+                                .setAutoCancel(true);
+
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.notify(NOTIFICATION_PRE_O_ID, mBuilder.build());
+            }
         }
     }
 
