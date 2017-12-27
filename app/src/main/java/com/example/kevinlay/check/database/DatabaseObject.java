@@ -1,8 +1,10 @@
 package com.example.kevinlay.check.database;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +52,7 @@ public class DatabaseObject {
     public static final String FLAKE_RATING_REFERENCE = "flakeRating";
     public static final String LOCATION_REFERENCE = "location";
     public static final String HEADER_IMAGE_REFERENCE = "header";
+    public static final String PREFERRED_MAJOR_REFERENCE = "preferredMajor";
 
     public static final String SEARCHING_STATE = "Searching";
     public static final String IDLE_STATE = "Idle";
@@ -66,10 +69,11 @@ public class DatabaseObject {
     private List<User> yourInfo = new ArrayList<>();
     private List<User> otherProfiles = new ArrayList<>();
 
+    private String major;
+
     private DatabaseObject() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-
 //        databaseReference.child(USERS_REFERENCE).addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,6 +134,9 @@ public class DatabaseObject {
                 break;
             case LOCATION_REFERENCE:
                 databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LOCATION_REFERENCE).setValue(newData);
+                break;
+            case PREFERRED_MAJOR_REFERENCE:
+                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PREFERRED_MAJOR_REFERENCE).setValue(newData);
                 break;
         }
     }
@@ -293,7 +300,7 @@ public class DatabaseObject {
         });
     }
 
-    public void beginPartnerSearch() {
+    public void beginPartnerSearch(final String major) {
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -319,6 +326,8 @@ public class DatabaseObject {
                 yourTimeStart = yourInfo.get(0).getTimeStart();
                 yourTimeEnd = yourInfo.get(0).getTimeEnd();
 
+                boolean runAgain = true;
+
                 for(int i = 0; i < otherProfiles.size(); i++) {
 
                     if(otherProfiles.get(i).getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
@@ -334,9 +343,9 @@ public class DatabaseObject {
                         yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
                         int yourTotalTimeStart = yourTotalMinute + minuteConversion(yourTimeStart);
 
-                        if( minuteConversion(yourTimeEnd) <= (minuteConversion(otherUserTimeStart)+19)) {
+                        if( minuteConversion(yourTimeEnd) <= (minuteConversion(otherUserTimeStart)+19) && !major.equals(otherProfiles.get(i).getMajor())) {
                             Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
-                        } else if(minuteConversion(yourTimeStart) > minuteConversion(otherUserTimeEnd)) {
+                        } else if(minuteConversion(yourTimeStart) > minuteConversion(otherUserTimeEnd) && !major.equals(otherProfiles.get(i).getMajor())) {
                             Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
                         } else {
                             Log.i(TAG, "beginPartnerSearch:  there is a free window");
@@ -353,11 +362,58 @@ public class DatabaseObject {
                                 databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
                             }
 
+                            runAgain = false;
+
                             databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue(otherProfiles.get(i).getId());
                             databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(PARTNER_REFERENCE).setValue(mAuth.getUid());
                             databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
                             databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
                             break;
+                        }
+                    }
+                }
+
+                if(runAgain) {
+                    for(int i = 0; i < otherProfiles.size(); i++) {
+
+                        if(otherProfiles.get(i).getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
+                            String otherUserTimeStart, otherUserTimeEnd;
+
+                            otherUserTimeStart = otherProfiles.get(i).getTimeStart();
+                            otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
+
+                            Log.i(TAG, "onDataChange: your time end: " + minuteConversion(yourTimeEnd));
+                            Log.i(TAG, "onDataChange: other time start is " + minuteConversion(otherUserTimeStart));
+                            int yourTotalMinute;
+
+                            yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
+                            int yourTotalTimeStart = yourTotalMinute + minuteConversion(yourTimeStart);
+
+                            if( minuteConversion(yourTimeEnd) <= (minuteConversion(otherUserTimeStart)+19)) {
+                                Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+                            } else if(minuteConversion(yourTimeStart) > minuteConversion(otherUserTimeEnd)) {
+                                Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+                            } else {
+                                Log.i(TAG, "beginPartnerSearch:  there is a free window");
+                                Log.i(TAG, "onDataChange: size of otherProfiles is" + otherProfiles.size());
+                                if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
+                                    String time = otherProfiles.get(i).getTimeStart();
+                                    String finalTime = clockConversion(time);
+                                    databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
+                                    databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
+                                } else {
+                                    String time = yourInfo.get(0).getTimeStart();
+                                    String finalTime =  clockConversion(time);
+                                    databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
+                                    databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(LUNCH_TIME_REFERENCE).setValue(finalTime);
+                                }
+
+                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue(otherProfiles.get(i).getId());
+                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(PARTNER_REFERENCE).setValue(mAuth.getUid());
+                                databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
+                                databaseReference.child(USERS_REFERENCE).child(otherProfiles.get(i).getId()).child(USER_STATE).setValue(DatabaseObject.PAIRED_STATE);
+                                break;
+                            }
                         }
                     }
                 }

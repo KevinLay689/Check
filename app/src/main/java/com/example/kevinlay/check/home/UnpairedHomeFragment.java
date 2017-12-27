@@ -49,7 +49,7 @@ public class UnpairedHomeFragment extends Fragment {
 
     private int timeHour, timeMinute;
     private String amPm;
-
+    private String major;
     private CircleImageView mUserProfileImage;
 
     private DatabaseObject databaseObject;
@@ -96,10 +96,8 @@ public class UnpairedHomeFragment extends Fragment {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         // then you use
-        String major = prefs.getString("major", "any");
+        major = prefs.getString("major", "any");
         Boolean isAcceptingNotifications = prefs.getBoolean("notifications", true);
-
-
     }
 
     private void showTimePickerDialog(final TextView textView, final boolean isTimeStart) {
@@ -189,8 +187,9 @@ public class UnpairedHomeFragment extends Fragment {
                 startAnimations();
                 mFindPartner.setEnabled(false);
                 mFindPartner.setText(R.string.searching_partner);
+                databaseObject.changeData(DatabaseObject.PREFERRED_MAJOR_REFERENCE, major);
                 databaseObject.changeData(DatabaseObject.USER_STATE, "Searching");
-                databaseObject.beginPartnerSearch();
+                databaseObject.beginPartnerSearch(major);
             }
         });
 

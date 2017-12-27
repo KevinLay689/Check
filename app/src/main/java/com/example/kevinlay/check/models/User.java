@@ -11,7 +11,7 @@ public class User {
     private String email;
     private String major;
     private String timeStart, timeEnd, userState, partner, aboutMe, profilePic, id, lunchTime;
-    private String location, flakeRating;
+    private String location, flakeRating, preferredMajor;
 
     public User() {
 
@@ -33,6 +33,8 @@ public class User {
         this.profilePic = "";
         this.flakeRating = "";
         this.location = "Cafe Russo";
+        this.preferredMajor = "any";
+
     }
 
     public String getFirstName() {
@@ -153,5 +155,13 @@ public class User {
 
     public void setFlakeRating(String flakeRating) {
         this.flakeRating = flakeRating;
+    }
+
+    public String getPreferredMajor() {
+        return preferredMajor;
+    }
+
+    public void setPreferredMajor(String preferredMajor) {
+        this.preferredMajor = preferredMajor;
     }
 }
