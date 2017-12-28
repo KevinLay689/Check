@@ -301,13 +301,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (myProfileFragment != null ) {
-            myProfileFragment.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
     public void updateUserStateFragment(String updateType) {
         Log.i(TAG, "updateUserStateFragment: ");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -367,6 +360,13 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     public void updateUI(String userState, boolean acceptClicked) {
         updateUserStateFragment(userState);
         databaseObject.updateStates(DatabaseObject.USER_STATE, userState, acceptClicked);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (myProfileFragment != null ) {
+            myProfileFragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     // Left empty on purpose

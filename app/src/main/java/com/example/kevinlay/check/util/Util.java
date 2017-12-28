@@ -25,12 +25,16 @@ import java.io.InputStream;
 
 public class Util {
 
+    private static final int NOTIFICATION_O_ID = 1;
+    private static final int NOTIFICATION_PRE_O_ID = 0;
+    private static final String NOTIFICATION_KEY = "notifications";
+
     public static Bitmap getProfileImage(int sampleSize, String image) {
-//                    byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-//                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-//                    circleImageView.setImageBitmap(decodedByte);
-//                    decodedByte = null;
+//        byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
+//        circleImageView.setImageBitmap(decodedByte);
+//        decodedByte = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = sampleSize;
         options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -44,9 +48,7 @@ public class Util {
 
     public static void createNotification(String title, String notification, Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final int NOTIFICATION_O_ID = 1;
-        final int NOTIFICATION_PRE_O_ID = 0;
-        boolean isAcceptingNotifications = prefs.getBoolean("notifications", true);
+        boolean isAcceptingNotifications = prefs.getBoolean(NOTIFICATION_KEY, true);
 
         if(isAcceptingNotifications) {
 
