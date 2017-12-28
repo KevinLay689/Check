@@ -55,6 +55,12 @@
 
     <string name="browse_default_text">Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.</string>
 
+    <string name="confirm_lunch">Lunch has been confirmed</string>
+    <string name="flake">Flake</string>
+    <string name="loading">Loading...</string>
+    <string name="awaiting_response">Awaiting other Response...</string>
+    <string name="required">Required</string>
+
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
         <item name="biology">Biology</item>

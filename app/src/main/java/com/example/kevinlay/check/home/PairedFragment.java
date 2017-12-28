@@ -47,10 +47,9 @@ public class PairedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         final Bundle bundle = getArguments();
-
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "blacklist.ttf");
+
         mMatchText = (TextView) view.findViewById(R.id.matchText);
         mMatchText.setTypeface(typeface);
 
@@ -69,8 +68,8 @@ public class PairedFragment extends Fragment {
 
         if(bundle != null) {
             mAccept.setEnabled(false);
-            mAccept.setText("Lunch has been confirmed");
-            mDecline.setText("Flake");
+            mAccept.setText(R.string.confirm_lunch);
+            mDecline.setText(R.string.flake);
         }
 
         mDecline.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +85,7 @@ public class PairedFragment extends Fragment {
             public void onClick(View view) {
                 //databaseObject.changeData(DatabaseObject.USER_STATE, DatabaseObject.ACCEPTED_STATE);
                 pairedFragmentCallback.updateUI(DatabaseObject.ACCEPTED_STATE, true);
-                mAccept.setText("Awaiting other Response...");
+                mAccept.setText(R.string.awaiting_response);
                 mAccept.setEnabled(false);
             }
         });
@@ -121,7 +120,7 @@ public class PairedFragment extends Fragment {
 
     @Override
     public void onStop() {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Check");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         super.onStop();
     }
 

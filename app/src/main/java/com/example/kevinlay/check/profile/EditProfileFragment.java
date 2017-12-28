@@ -68,7 +68,6 @@ public class EditProfileFragment extends DialogFragment {
     }
 
     // Call this method to send the data back to the parent fragment
-    // This will eventually need to save data to the database before calling onFinishEditDialog
     public void sendBackResult() {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         EditDialogListener listener = (EditDialogListener) getTargetFragment();
