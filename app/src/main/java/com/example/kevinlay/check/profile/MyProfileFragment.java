@@ -62,7 +62,6 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         mTextAboutMe = (TextView) view.findViewById(R.id.profileUserAboutMe);
         mTextHometown = (TextView) view.findViewById(R.id.profileUserHometown);
         mProfileUsername = (TextView) view.findViewById(R.id.profileUsername);
-
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.editProfileActionButton);
         mUserProfileImage = view.findViewById(R.id.editProfileImage);
 
@@ -110,12 +109,6 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
             setOtherUserData();
             mFloatingActionButton.setVisibility(View.INVISIBLE);
         }
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//        boolean strUserName = sharedPreferences.getBoolean("notifications", false);
-//        String downloadType = sharedPreferences.getString("major","none");
-//        Toast.makeText(getActivity(),
-//                "Notifications :" + strUserName + " Major :" + downloadType,
-//                Toast.LENGTH_SHORT).show();
     }
 
     // This allows a callback to the dialog fragment
@@ -135,7 +128,6 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
         databaseObject.setProfileUserData(mTextMajor, mTextAboutMe, mTextHometown);
         databaseObject.getProfilePic(mUserProfileImage, progressDialog);
         databaseObject.setUserData(mProfileUsername, DatabaseObject.FIRST_NAME_REFERENCE, "");
-//        mImageProfilePic.setImageBitmap(database.getProfileImage());
     }
 
     @Override
@@ -161,19 +153,15 @@ public class MyProfileFragment extends Fragment implements EditProfileFragment.E
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == Config.RC_PICK_IMAGES && resultCode == RESULT_OK && data != null) {
             ArrayList<Image> images2 = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
-            //addImageButton.setText("Image Added: " + images2.get(0).getName());
-
             Bitmap bm = BitmapFactory.decodeFile(images2.get(0).getPath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] b = baos.toByteArray();
-
             Toast.makeText(getActivity(),"Image added to database", Toast.LENGTH_SHORT).show();
-
             String encodedPicture = Base64.encodeToString(b, Base64.DEFAULT);
-
             databaseObject.setProfilePic(encodedPicture);
             databaseObject.getProfilePic(mUserProfileImage, progressDialog);
         }

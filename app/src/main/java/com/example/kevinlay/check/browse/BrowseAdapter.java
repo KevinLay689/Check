@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.kevinlay.check.R;
 import com.example.kevinlay.check.database.DatabaseObject;
 import com.example.kevinlay.check.models.User;
+import com.example.kevinlay.check.util.Util;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -45,19 +46,10 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHold
 
     @Override
     public void onBindViewHolder(AhViewHolder holder, final int position) {
+
         if(users.get(position).getProfilePic().length() > 1 && users.get(position).getPartner().length() < 1) {
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 50;
-            options.inPreferredConfig = Bitmap.Config.RGB_565;
-            byte[] decodedString = Base64.decode(users.get(position).getProfilePic(), Base64.DEFAULT);
-            //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            InputStream is = new ByteArrayInputStream(decodedString);
-            Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
-            Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-            holder.mFreeProfile.setImageBitmap(decodedByte);
-            decodedByte = null;
-
+            holder.mFreeProfile.setImageBitmap(Util.getProfileImage(50, users.get(position).getProfilePic()));
             holder.mFreeName.setText(users.get(position).getFirstName());
             holder.mFreeMajor.setText(users.get(position).getMajor());
             holder.mFreeStart.setText(DatabaseObject.clockConversion(users.get(position).getTimeStart()));
@@ -69,7 +61,6 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHold
                     onItemClicked.onItemClick(users.get(position).getId(), users.get(position).getTimeStart());
                 }
             });
-
         }
     }
 

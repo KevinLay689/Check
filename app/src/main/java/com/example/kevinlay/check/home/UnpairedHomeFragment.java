@@ -38,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UnpairedHomeFragment extends Fragment {
 
     private static final String TAG = "UnpairedHomeFragment";
+
     private final int ANIMATION_DURATION = 2000;
     private final float SCALE_ANIMATION_END = 3.5f;
     private final long START_DELAY = 1000;
@@ -46,18 +47,17 @@ public class UnpairedHomeFragment extends Fragment {
     private TextView mTimeStartLabel, mTimeEndLabel, mTimeEnd, mTimeStart;
     private ImageView mUserProfilePicture ,mRingImage1 ,mRingImage2;
     private AnimatorSet animatorSet, animatorSet2;
+    private CircleImageView mUserProfileImage;
 
     private int timeHour, timeMinute;
     private String amPm;
     private String major;
-    private CircleImageView mUserProfileImage;
 
     private DatabaseObject databaseObject;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_unpaired_home, container, false);
         return view;
     }
@@ -72,32 +72,24 @@ public class UnpairedHomeFragment extends Fragment {
         mSelectEndTime = (Button) view.findViewById(R.id.selectEndTime);
         mFindPartner = (Button) view.findViewById(R.id.findPartner);
         mCancelSearch = (Button) view.findViewById(R.id.cancelPartner);
-
         mTimeStartLabel = (TextView) view.findViewById(R.id.timeStartLabel);
         mTimeEndLabel = (TextView) view.findViewById(R.id.timeEndLabel);
-
         mTimeStart = (TextView) view.findViewById(R.id.timeStart);
         mTimeEnd = (TextView) view.findViewById(R.id.timeEnd);
-
         mRingImage1 = (ImageView) view.findViewById(R.id.ringImage1);
         mRingImage2 = (ImageView) view.findViewById(R.id.ringImage2);
-
         mUserProfileImage = view.findViewById(R.id.userProfileImage);
-
         databaseObject.getProfilePic(mUserProfileImage, null);
 
         setupOnClickListeners();
 
         Bundle b = getArguments();
-
         if(b != null) {
             loadWithAnimations();
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        // then you use
         major = prefs.getString("major", "any");
-        Boolean isAcceptingNotifications = prefs.getBoolean("notifications", true);
     }
 
     private void showTimePickerDialog(final TextView textView, final boolean isTimeStart) {

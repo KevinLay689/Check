@@ -63,8 +63,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validateForm() {
         boolean valid = true;
-
         String email = mEmail.getText().toString();
+
         if (TextUtils.isEmpty(email)) {
             mEmail.setError("Required.");
             valid = false;
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         String password = mPassword.getText().toString();
+
         if (TextUtils.isEmpty(password)) {
             mPassword.setError("Required.");
             valid = false;
@@ -84,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-
         mProgressBar.setVisibility(View.INVISIBLE);
 
         if (user != null) {
@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();

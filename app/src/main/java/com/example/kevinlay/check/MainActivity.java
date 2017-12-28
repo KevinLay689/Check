@@ -32,6 +32,7 @@ import com.example.kevinlay.check.login.LoginActivity;
 import com.example.kevinlay.check.profile.MyProfileFragment;
 import com.example.kevinlay.check.preferences.PreferencesFragment;
 import com.example.kevinlay.check.home.UnpairedHomeFragment;
+import com.example.kevinlay.check.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -300,13 +301,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (myProfileFragment != null ) {
-            myProfileFragment.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
     public void updateUserStateFragment(String updateType) {
         Log.i(TAG, "updateUserStateFragment: ");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -332,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
                 }
-                createNotification("The other user has accepted!", "Tap to view confirmation");
+                Util.createNotification("The other user has accepted!", "Tap to view confirmation", this);
                 break;
 
             case DatabaseObject.SEARCHING_STATE:
@@ -355,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                 } else {
                     fragmentTransaction.replace(R.id.frameLayoutPlaceHolder, new PairedFragment(), FRAGMENT_TAG);
                 }
-                createNotification("You've been paired up!", "Tap to view match");
+                Util.createNotification("You've been paired up!", "Tap to view match", this);
                 break;
         }
         fragmentTransaction.addToBackStack("");
@@ -368,61 +362,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         databaseObject.updateStates(DatabaseObject.USER_STATE, userState, acceptClicked);
     }
 
-    private void createNotification(String title, String notification) {
-
-        final int NOTIFICATION_O_ID = 1;
-        final int NOTIFICATION_PRE_O_ID = 0;
-
-        isAcceptingNotifications = prefs.getBoolean("notifications", true);
-
-        if(isAcceptingNotifications) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                Intent intent = new Intent(this, MainActivity.class);
-                int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-                int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
-                PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
-
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                NotificationChannel channel = new NotificationChannel("myChannelId", "My Channel", importance);
-                channel.setDescription("Reminders");
-                // Register the channel with the notifications manager
-                NotificationManager mNotificationManager =
-                        (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-                mNotificationManager.createNotificationChannel(channel);
-
-                NotificationCompat.Builder mBuilder =
-                        // Builder class for devices targeting API 26+ requires a channel ID
-                        new NotificationCompat.Builder(this, "myChannelId")
-                                .setContentTitle(title)
-                                .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
-                                .setContentText(notification)
-                                .setContentIntent(pIntent)
-                                .setAutoCancel(true);
-
-                mNotificationManager.notify(NOTIFICATION_O_ID, mBuilder.build());
-
-            } else {
-
-                Intent intent = new Intent(this, MainActivity.class);
-                int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-                int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
-                PendingIntent pIntent = PendingIntent.getActivity(this, requestID, intent, flags);
-
-                NotificationCompat.Builder mBuilder =
-                        // this Builder class is deprecated
-                        new NotificationCompat.Builder(this)
-                                .setContentTitle(title)
-                                .setSmallIcon(R.drawable.ic_local_dining_black_96dp)
-                                .setContentText(notification)
-                                .setContentIntent(pIntent)
-                                .setAutoCancel(true);
-
-                NotificationManager mNotificationManager =
-                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                mNotificationManager.notify(NOTIFICATION_PRE_O_ID, mBuilder.build());
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (myProfileFragment != null ) {
+            myProfileFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
