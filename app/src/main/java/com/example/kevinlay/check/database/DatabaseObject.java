@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.kevinlay.check.CustomHeaderView;
 import com.example.kevinlay.check.models.User;
+import com.example.kevinlay.check.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,7 +42,6 @@ public class DatabaseObject {
     public static final String TIME_START_REFERENCE = "timeStart";
     public static final String TIME_END_REFERENCE = "timeEnd";
     public static final String USER_STATE = "userState";
-    public static final String NOTIFICATION_REFERENCE = "notification";
     public static final String MAJOR__PREFERENCE_REFERENCE = "majorPreference";
     public static final String PARTNER_REFERENCE = "partner";
     public static final String MAJOR_REFERENCE = "major";
@@ -74,38 +74,6 @@ public class DatabaseObject {
     private DatabaseObject() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-//        databaseReference.child(USERS_REFERENCE).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-//                if(user.getId().equals(mAuth.getUid())) {
-//                    // Make interface call here
-//                }
-//                //Log.i(TAG, "onDataChange: " + user.getMajor());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot snapshot : dataSnapshot.child(USERS_REFERENCE).getChildren()) {
-//                    User user = snapshot.getValue(User.class);
-//                    Log.i(TAG, "onDataChange: "+ user.getEmail());
-//                }
-////                User user = dataSnapshot.child(USER_REFERENCE).child(mAuth.getUid()).getValue(User.class);
-////                Log.i(TAG, "onDataChange: "+ user.getEmail());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     public void changeData(String reference, String newData) {
@@ -141,10 +109,6 @@ public class DatabaseObject {
         }
     }
 
-    public String searchDatabase(String reference, String search) {
-        return null;
-    }
-
     public void setProfileUserData(final TextView major, final TextView aboutMe, final TextView hometown) {
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -154,10 +118,8 @@ public class DatabaseObject {
                 aboutMe.setText(user.getAboutMe());
                 hometown.setText(user.getHometown());
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -168,47 +130,30 @@ public class DatabaseObject {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
+
                     if (user.getPartner().equals(mAuth.getUid())) {
                         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).child(PARTNER_REFERENCE).setValue("");
                         databaseReference.child(USERS_REFERENCE).child(user.getId()).child(PARTNER_REFERENCE).setValue("");
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
 
     public void getOtherProfile(final CircleImageView circleImageView, final TextView major, final TextView aboutMe, final TextView hometown, final TextView username, final ProgressDialog progressDialog) {
-
         databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
+
                     if(user.getPartner().equals(mAuth.getUid())) {
+
                         if (user.getProfilePic().length() > 1) {
-//                            byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-//                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                            Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-//                            circleImageView.setImageBitmap(decodedByte);
-//                            decodedByte = null;
-
-                            BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inSampleSize = 2;
-                            options.inPreferredConfig = Bitmap.Config.RGB_565;
-                            byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                            //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                            InputStream is = new ByteArrayInputStream(decodedString);
-                            Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
-                            Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-                            circleImageView.setImageBitmap(decodedByte);
-                            decodedByte = null;
-
+                            circleImageView.setImageBitmap(Util.getProfileImage(2, user.getProfilePic()));
                         }
                         major.setText(user.getMajor());
                         aboutMe.setText(user.getAboutMe());
@@ -218,10 +163,8 @@ public class DatabaseObject {
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -231,27 +174,23 @@ public class DatabaseObject {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+
                 switch (reference) {
                     case HEADER_IMAGE_REFERENCE:
-                        ((CustomHeaderView) view).setLetter(user.getFirstName().charAt(0)+"");
+                        ((CustomHeaderView) view).setLetter(user.getFirstName().charAt(0) + "");
                         break;
-
                     case TIME_START_REFERENCE:
                         ((TextView)view).setText(clockConversion(user.getTimeStart()));
                         break;
-
                     case TIME_END_REFERENCE:
                         ((TextView)view).setText(clockConversion(user.getTimeEnd()));
                         break;
-
                     default:
                         break;
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -261,6 +200,7 @@ public class DatabaseObject {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+
                 switch (reference) {
                     case USER_STATE:
                         break;
@@ -292,26 +232,23 @@ public class DatabaseObject {
                         break;
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
 
     public void beginPartnerSearch(final String major) {
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 yourInfo.clear();
                 otherProfiles.clear();
-
                 for(DataSnapshot snapshot : dataSnapshot.child(USERS_REFERENCE).getChildren()) {
                     User user = snapshot.getValue(User.class);
+
                     if(snapshot.getKey().equals(mAuth.getUid())) {
+
                         if(user.getTimeStart().length() > 1 && user.getTimeEnd().length() > 1) {
                             yourInfo.add(user);
                         }
@@ -319,37 +256,27 @@ public class DatabaseObject {
                         otherProfiles.add(user);
                     }
                 }
-
                 String yourTimeStart = "";
                 String yourTimeEnd = "";
-
                 yourTimeStart = yourInfo.get(0).getTimeStart();
                 yourTimeEnd = yourInfo.get(0).getTimeEnd();
-
                 boolean runAgain = true;
-
                 for(int i = 0; i < otherProfiles.size(); i++) {
 
                     if(otherProfiles.get(i).getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
                         String otherUserTimeStart, otherUserTimeEnd;
-
                         otherUserTimeStart = otherProfiles.get(i).getTimeStart();
                         otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
 
-                        Log.i(TAG, "onDataChange: your time end: " + minuteConversion(yourTimeEnd));
-                        Log.i(TAG, "onDataChange: other time start is " + minuteConversion(otherUserTimeStart));
-                        int yourTotalMinute;
-
-                        yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
-                        int yourTotalTimeStart = yourTotalMinute + minuteConversion(yourTimeStart);
-
                         if( minuteConversion(yourTimeEnd) <= (minuteConversion(otherUserTimeStart)+19) && !major.equals(otherProfiles.get(i).getMajor())) {
                             Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+
                         } else if(minuteConversion(yourTimeStart) > minuteConversion(otherUserTimeEnd) && !major.equals(otherProfiles.get(i).getMajor())) {
                             Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+
                         } else {
                             Log.i(TAG, "beginPartnerSearch:  there is a free window");
-                            Log.i(TAG, "onDataChange: size of otherProfiles is" + otherProfiles.size());
+
                             if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
                                 String time = otherProfiles.get(i).getTimeStart();
                                 String finalTime = clockConversion(time);
@@ -378,24 +305,19 @@ public class DatabaseObject {
 
                         if(otherProfiles.get(i).getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
                             String otherUserTimeStart, otherUserTimeEnd;
-
                             otherUserTimeStart = otherProfiles.get(i).getTimeStart();
                             otherUserTimeEnd = otherProfiles.get(i).getTimeEnd();
 
-                            Log.i(TAG, "onDataChange: your time end: " + minuteConversion(yourTimeEnd));
-                            Log.i(TAG, "onDataChange: other time start is " + minuteConversion(otherUserTimeStart));
-                            int yourTotalMinute;
-
-                            yourTotalMinute = minuteConversion(yourTimeEnd) - minuteConversion(yourTimeStart);
-                            int yourTotalTimeStart = yourTotalMinute + minuteConversion(yourTimeStart);
-
                             if( minuteConversion(yourTimeEnd) <= (minuteConversion(otherUserTimeStart)+19)) {
                                 Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+
                             } else if(minuteConversion(yourTimeStart) > minuteConversion(otherUserTimeEnd)) {
                                 Log.i(TAG, "beginPartnerSearch:  theres not a free window ");
+
                             } else {
                                 Log.i(TAG, "beginPartnerSearch:  there is a free window");
                                 Log.i(TAG, "onDataChange: size of otherProfiles is" + otherProfiles.size());
+
                                 if(minuteConversion(yourTimeStart) < minuteConversion(otherUserTimeStart)) {
                                     String time = otherProfiles.get(i).getTimeStart();
                                     String finalTime = clockConversion(time);
@@ -418,10 +340,8 @@ public class DatabaseObject {
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -433,11 +353,9 @@ public class DatabaseObject {
         int third = (Integer.parseInt((hours.charAt(3) + "")));
         int fourth = (Integer.parseInt((hours.charAt(4) + "")));
 
-        String totalHour = first+""+second+""+third+""+fourth;
-
+        String totalHour = first + "" + second + "" + third + "" + fourth;
         String amPM = " AM";
-
-        String hourTimeAsString = first+""+second;
+        String hourTimeAsString = first + "" + second;
 
         int hourTime = Integer.parseInt(hourTimeAsString);
 
@@ -450,10 +368,7 @@ public class DatabaseObject {
             hourTime = 12;
         }
 
-        //Log.i(TAG, "clockConversion: "+ hourTime+""+third+""+fourth);
-
         return hourTime+":"+third+""+fourth+amPM;
-
     }
 
     private int minuteConversion(String hours) {
@@ -461,83 +376,53 @@ public class DatabaseObject {
         return (Integer.parseInt((hours.charAt(0) + "")) * 10 * 60) +
                 (Integer.parseInt((hours.charAt(1) + "")) * 60) +
                 (Integer.parseInt((hours.substring(3))));
-
     }
 
     public static DatabaseObject getInstance(){
+
         if(obj == null){
             obj = new DatabaseObject();
         }
+
         return obj;
     }
 
     public void getProfilePic(final CircleImageView circleImageView, final ProgressDialog progressDialog) {
-
         databaseReference.child(USERS_REFERENCE).child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 User user = dataSnapshot.getValue(User.class);
+
                 // Check to see if the profile pic has been uploaded yet
                 if(user.getProfilePic().length() > 1) {
-//                    byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-//                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-//                    circleImageView.setImageBitmap(decodedByte);
-//                    decodedByte = null;
-
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 2;
-                    options.inPreferredConfig = Bitmap.Config.RGB_565;
-                    byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                    //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    InputStream is = new ByteArrayInputStream(decodedString);
-                    Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
-                    Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-                    circleImageView.setImageBitmap(decodedByte);
-                    decodedByte = null;
+                    circleImageView.setImageBitmap(Util.getProfileImage(2, user.getProfilePic()));
 
                     if(progressDialog != null ) {
                         progressDialog.dismiss();
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
 
     public void getOtherProfilePic(final CircleImageView circleImageView) {
-
         databaseReference.child(USERS_REFERENCE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
+
                     // Check to see if the profile pic has been uploaded yet
                     if(user.getProfilePic().length() > 1 && user.getPartner().equals(mAuth.getUid())) {
-
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inSampleSize = 2;
-                        options.inPreferredConfig = Bitmap.Config.RGB_565;
-                        byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-                        //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        InputStream is = new ByteArrayInputStream(decodedString);
-                        Bitmap decodedByte = BitmapFactory.decodeStream(is, null, options);
-                        Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-                        circleImageView.setImageBitmap(decodedByte);
-                        decodedByte = null;
+                        circleImageView.setImageBitmap(Util.getProfileImage(2, user.getProfilePic()));
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -565,22 +450,23 @@ public class DatabaseObject {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 yourInfo.clear();
                 otherProfiles.clear();
-
                 for(DataSnapshot snapshot : dataSnapshot.child(USERS_REFERENCE).getChildren()) {
                     User user = snapshot.getValue(User.class);
+
                     if(snapshot.getKey().equals(mAuth.getUid())) {
                         yourInfo.add(user);
                     } else {
                         otherProfiles.add(user);
                     }
                 }
-
                for(int i = 0; i < otherProfiles.size(); i++) {
+
                     if(yourInfo.get(0).getPartner().equals(otherProfiles.get(i).getId())) {
                         databaseReference.child(USERS_REFERENCE)
                                 .child(yourInfo.get(0).getId())
                                 .child(reference)
                                 .setValue(value);
+
                         if(!acceptClicked) {
                             databaseReference.child(USERS_REFERENCE)
                                     .child(otherProfiles.get(i).getId())
@@ -588,6 +474,7 @@ public class DatabaseObject {
                                     .setValue(DatabaseObject.SEARCHING_STATE);
                             setBothPartnersEmpty();
                         } else {
+
                             if(otherProfiles.get(i).getUserState().equals(DatabaseObject.ACCEPTED_STATE)) {
                                 databaseReference.child(USERS_REFERENCE)
                                         .child(yourInfo.get(0).getId())
@@ -608,10 +495,8 @@ public class DatabaseObject {
                     }
                }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }

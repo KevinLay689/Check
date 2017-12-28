@@ -23,39 +23,24 @@ public class DatabaseState {
     private DatabaseCallback databaseCallback;
 
     public DatabaseState(final DatabaseCallback databaseCallback) {
-
         this.databaseCallback = databaseCallback;
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
         databaseReference.child(DatabaseObject.USERS_REFERENCE).child(mAuth.getUid()).child(DatabaseObject.USER_STATE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 String state = dataSnapshot.getValue(String.class);
-
                 Log.i(TAG, "onDataChange: " + state);
                 databaseCallback.updateUserStateFragment(state);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-    }
-
-    private void changeData(String newData) {
-
-        databaseReference.child(DatabaseObject.USERS_REFERENCE)
-                .child(mAuth.getUid())
-                .child(DatabaseObject.USER_STATE)
-                .setValue(newData);
     }
 
     public interface DatabaseCallback {
         void updateUserStateFragment(String updateType);
     }
-
 }

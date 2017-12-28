@@ -33,13 +33,14 @@ import java.util.ArrayList;
 public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClicked {
 
     private RecyclerView recyclerView;
+    private TextView textView;
+    private ProgressDialog progressDialog;
+
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private DatabaseObject databaseObject;
-    private ArrayList<User> users = new ArrayList<>();
-    private TextView textView;
 
-    private ProgressDialog progressDialog;
+    private ArrayList<User> users = new ArrayList<>();
 
     @Nullable
     @Override
@@ -50,11 +51,14 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        databaseObject = DatabaseObject.getInstance();
+
         recyclerView = (RecyclerView) view.findViewById(R.id.browseRecyclerView);
         textView = (TextView) view.findViewById(R.id.searchingText);
-        databaseObject = DatabaseObject.getInstance();
+
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
@@ -69,7 +73,7 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
                     populateRecyclerView();
                 } else {
                     progressDialog.dismiss();
-                    textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
+                    textView.setText(R.string.browse_default_text);
                 }
             }
 
@@ -87,14 +91,13 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 users.clear();
-
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
+
                     if(user.getUserState().equals(DatabaseObject.SEARCHING_STATE)) {
                         users.add(user);
                     }
                 }
-
                 progressDialog.dismiss();
 
                 BrowseAdapter adapter = new BrowseAdapter(users);
@@ -102,7 +105,6 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 adapter.setOnClick(BrowseFragment.this);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -112,9 +114,8 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
 
     @Override
     public void onItemClick(String id, String timeStart) {
-        Toast.makeText(getActivity(), "Request sent!", Toast.LENGTH_SHORT).show();
         databaseObject.sendRequestWithId(id, timeStart);
         recyclerView.setVisibility(View.INVISIBLE);
-        textView.setText("Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.");
+        textView.setText(R.string.browse_default_text);
     }
 }

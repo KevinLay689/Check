@@ -53,6 +53,7 @@
 
     <string name="searching_users">People currently searching</string>
 
+    <string name="browse_default_text">Cannot view profiles while looking for partners or while paired up. Stop search or end match and return to view profiles.</string>
 
     <array name="entries_list_preference">
         <item name="computer_science">Computer Science</item>
