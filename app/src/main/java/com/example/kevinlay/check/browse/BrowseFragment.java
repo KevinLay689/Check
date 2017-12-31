@@ -103,8 +103,8 @@ public class BrowseFragment extends Fragment implements BrowseAdapter.OnItemClic
 
                 BrowseAdapter adapter = new BrowseAdapter(users);
                 recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                //recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 adapter.setOnClick(BrowseFragment.this);
             }
             @Override
