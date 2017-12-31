@@ -63,10 +63,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
     private PairedFragment pairedFragment;
 
-    private SharedPreferences prefs;
-    private String major;
-    private Boolean isAcceptingNotifications;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +89,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
         createFragment(NAV_HOME);
         setupNavigationView();
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        major = prefs.getString("major", "any");
-
     }
 
     private void setupNavigationView() {
@@ -113,23 +106,28 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         createFragment(NAV_HOME);
                         mDrawerLayout.closeDrawers();
                         break;
+
                     case R.id.nav_browse:
                         createFragment(NAV_BROWSE);
                         mDrawerLayout.closeDrawers();
                         break;
+
                     case R.id.nav_profile:
                         createFragment(NAV_PROFILE);
                         mDrawerLayout.closeDrawers();
                         break;
+
                     case R.id.nav_preferences:
                         createFragment(NAV_PREFERENCES);
                         mDrawerLayout.closeDrawers();
                         break;
+
                     case R.id.nav_logout:
                         createFragment(NAV_LOGOUT);
                         invalidateOptionsMenu();
                         mDrawerLayout.closeDrawers();
                         break;
+
                     default:
                         break;
                 }
@@ -161,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
                         fragmentTransaction.addToBackStack("");
                         fragmentTransaction.commitAllowingStateLoss();
-                        
                         break;
 
                     case DatabaseObject.IDLE_STATE:
@@ -207,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("matched", true);
                         pairedFragment.setArguments(bundle);
-
 
                         if (fragment == null) {
                             fragmentTransaction.add(R.id.frameLayoutPlaceHolder, pairedFragment, FRAGMENT_TAG);
@@ -302,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseState.Dat
 
     @Override
     public void updateUserStateFragment(String updateType) {
-        Log.i(TAG, "updateUserStateFragment: ");
+//        Log.i(TAG, "updateUserStateFragment: ");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 

@@ -30,11 +30,6 @@ public class Util {
     private static final String NOTIFICATION_KEY = "notifications";
 
     public static Bitmap getProfileImage(int sampleSize, String image) {
-//        byte[] decodedString = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        Bitmap.createScaledBitmap(decodedByte, 100, 100, false);
-//        circleImageView.setImageBitmap(decodedByte);
-//        decodedByte = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = sampleSize;
         options.inPreferredConfig = Bitmap.Config.RGB_565;
