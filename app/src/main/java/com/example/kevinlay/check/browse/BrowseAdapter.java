@@ -35,7 +35,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.AhViewHold
 
     @Override
     public AhViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_list_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.alternative_row, parent, false);
 
         return new AhViewHolder(view);
     }
