@@ -23,8 +23,8 @@ public class User {
         this.hometown = hometown;
         this.major = major;
         this.email = email;
-        this.timeStart = "";
-        this.timeEnd = "";
+        this.timeStart = "12:00";
+        this.timeEnd = "14:00";
         this.userState = "Idle";
         this.partner = "";
         this.id = id;
