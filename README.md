@@ -13,6 +13,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 After you installed the prerequisites, build and run.
 
+## To-do
+-Implement feature to not allow users to match the same person they declined within a 24 hour span.
+-Redo the UI for UnpairedHomeFragment and BrowseFragment
+
 ## Built With
 
 * Android Studio
