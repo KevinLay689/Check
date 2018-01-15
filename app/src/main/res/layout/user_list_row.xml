@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
+        android:layout_margin="12dp"
         android:elevation="5dp"
         app:cardBackgroundColor="@color/cardview_dark_background">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
+            android:layout_height="170dp"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_height="100dp"
                 android:paddingRight="5dp">
 
                 <ImageView
@@ -31,6 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/gradient_home_background" />
 
                 <ImageView
@@ -54,6 +52,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:gravity="end"
                     android:text="12:00pm "
                     android:textColor="@color/white"
                     android:textSize="12sp" />
@@ -63,7 +62,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -88,14 +86,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/freeRequest"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_gravity="end"
                     android:background="@drawable/browse_button"
                     android:text="+"/>
             </LinearLayout>
@@ -104,5 +101,112 @@
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</RelativeLayout>
 
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="vertical">-->
+
+<!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/card1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="2dp"-->
+    <!--android:elevation="5dp"-->
+    <!--app:cardBackgroundColor="@color/cardview_dark_background">-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="7">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="2"-->
+            <!--android:paddingRight="5dp">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/freeProfiles"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:src="@drawable/gradient_home_background" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/freeOverlay"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:src="@color/forty_opacity_black" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/freeStartTime"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="10:00am "-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="12sp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/freeEndTime"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:text="12:00pm "-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="12sp" />-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="2"-->
+            <!--android:orientation="vertical"-->
+            <!--android:padding="5dp">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/freeName"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Kevin L."-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="12sp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/freeMajor"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Computer Science"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="10sp" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="3"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/freeRequest"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:background="@drawable/browse_button"-->
+                <!--android:text="+"/>-->
+        <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+<!--</android.support.v7.widget.CardView>-->
+
+<!--</LinearLayout>-->

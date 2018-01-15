@@ -34,7 +34,7 @@
     <string name="save">Save</string>
 
     <string name="home_fragment_header">Youve been paired up!</string>
-    <string name="location_label">Location: Cafe Russo</string>
+    <string name="location_label">Location: </string>
     <string name="time_label">Meet time: </string>
     <string name="rating_label">Flake rating: </string>
 
