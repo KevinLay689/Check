@@ -1,5 +1,5 @@
 # Check
-Android application that will pair S.F. State students together to have lunch together. This android application pairs students up, whenever both students are free. The student can either choose from a list of blurred students, or go for a different pairing with a randomized student.
+Android application that will pair S.F. State students together to have lunch. This android application pairs students up, whenever both students are free. The student can either choose from a list of blurred students, or go for a different pairing with a randomized student.
 
 ## Getting Started
 
@@ -12,6 +12,12 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 
 After you installed the prerequisites, build and run.
+
+## To-do
+
+-Implement feature to not allow users to match the same person they declined within a 24 hour span.
+
+-Redo the UI for UnpairedHomeFragment and BrowseFragment
 
 ## Built With
 
